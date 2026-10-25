@@ -1,0 +1,62 @@
+# AGENTS.md
+
+このリポジトリで作業する人間・AI エージェント向けの共通ルール。
+
+## 言語・文字コード
+
+- やり取り、文書、レビュー、コミットメッセージは原則日本語。
+- プレイヤー向けテキストは lang を使う。config の comment、Issue フォームなど言語選択できない部分は英語。GameTest の assertion、例外、ログなど診断文字列も検索性のため英語にする。
+- コメントは「なぜ」を日本語で説明する。UTF-8（BOM なし）を使用する。日本語・翻訳・Markdown・Skill の編集前に `.codex/skills/text-encoding-hygiene/SKILL.md` を読む。
+
+## 対象と環境
+
+- Constellation 'n Spells: Minecraft 1.21.1 / NeoForge / Java 21。バージョンの正は `gradle.properties`。
+- MOD ID は `constellationandspells`、package は `jp.aquafactory.constellationandspells`。
+- `main` が開発基準。現在 1.20.1 / Forge の保守・backport 運用は設けない。
+- Iron's Spells 'n Spellbooks 向けアドオンを予定しているが、現在は MDK 初期コードで外部 MOD 依存は未導入。参照元の互換 MOD・実行プロファイルを存在すると仮定しない。
+- IntelliJ IDEA では JetBrains MCP を優先してシンボル・型・依存・Inspection・実行構成を確認する。利用できない場合は代替手段で続行し報告する。
+
+## 実行と検証
+
+```powershell
+.\scripts\use-java.ps1
+./gradlew.bat build
+./gradlew.bat runGameTestServer
+# データ生成を変更したとき
+./gradlew.bat runData
+# 人間によるクライアント確認用
+./gradlew.bat runClient
+# IntelliJ IDEA 実行構成の同期
+./gradlew.bat neoForgeIdeSync
+```
+
+- Java スクリプトは `JDK21_HOME` またはユーザーの `.jdks` / `.gradle/jdks` を使う。CI は workflow で Java 21 を設定する。
+- 通常確認に `clean` は付けない。コード・依存・リソース・ビルド設定変更では `build`、サーバー登録・データ読込・GameTest 変更では `runGameTestServer` も実行する。文書だけならビルド省略理由を報告してよい。
+- `build` は `checkTextEncodingHygiene` を含む。同タスクは単独実行も可能。
+- GameTest は専用 world `run/constellation_gametest_clean` を初期化する。手動用 `run/world` は削除しない。同じ run ディレクトリの GameTest は直列実行し、先行プロセスの終了を待つ。
+- 実行ツールの GameTest 強制終了 timeout は初回から最低 120 秒。yield は終了ではなく wait で追跡する。ツール timeout なら記録を保持し、前回の 2 倍以上で追加実行する。GameTest 自身の test timeout とは区別する。
+- 一度でも GameTest が失敗した場合は `report-gametest-failure` Skill で初回失敗と追加実行を最終報告する。
+- Codex の通常自動検証は build、必要な GameTest / datagen / Inspection まで。`runClient` や同等の GUI 起動・操作は通常行わない。ユーザーが明示した場合はその範囲で実施できる。起動依頼は自動操作の許可とみなさない。
+- client の表示・入力・描画・音声等を変更した場合は `report-client-verification` で必要な手動確認シナリオと確認状態を引き継ぐ。無関係な変更に定型確認を追加しない。人間確認結果の未把握だけで作業を継続しない。
+
+## 実装規約
+
+- クラスは PascalCase、メソッド・変数は camelCase、定数は UPPER_SNAKE_CASE、リソース ID は snake_case。
+- Java の型参照は import と単純名を使う。名前衝突で必要な場合だけ FQCN を使う。変更した Java の未使用 import を整理し、無関係な一括整形をしない。
+- `UnnecessaryFullyQualifiedName` は共有 IDEA Inspection で ERROR。Gradle による強制はない。
+- 登録は既存の DeferredRegister / EventBus と整合させる。client 専用参照は共通コードから隔離する。外部仕様依存・回避策・順序依存は理由をコメントする。
+- データ生成先は `src/generated/resources`。生成 JSON は provider を編集して再生成する。手置きとの重複と旧出力の削除を確認する。Git 管理外 `.cache` にない旧 JSON は `runData` で削除されない場合がある。
+- 依存バージョンは `gradle.properties` に集約。必須依存追加時は `src/main/templates/META-INF/neoforge.mods.toml` も更新し、`THIRD_PARTY_NOTICES.md` の追記要否を確認する。
+- レビュー重大度、保存済み資産・管理設定の保護、意図したリソース変更の扱いは [レビュー方針](docs/review-policy.md) に従う。
+
+## 変更・PR フロー
+
+1. 変更目的と影響範囲を定め、実装する。
+2. staged / unstaged / untracked を確認し、依頼外の整形・削除・文字化けを混ぜない。
+3. 影響に合う検証を行い、`review-local-change` でコミット前差分を読み取り専用レビューする。
+4. commit / push は依頼・許可された範囲で行う。
+5. 機能ブランチ全体と PR 状態は `review-feature-branch`、C2S 入力の変更は `review-client-server-authority` も使う。
+6. `main` へはブランチ + PR。バージョン更新を含め merge commit のみ使用する。rebase merge と squash merge は使わない。
+7. `PR CI / build` と `PR CI / gametest`、人間の判断を確認する。Codex Cloud は設定・実行を確認できた場合の補助であり、CI を代替しない。
+
+GitHub の実設定・制約・bootstrap 手順は [GitHub 設定](docs/github-pr-protection.md) を確認する。workflow 未反映の段階で required check を有効化しない。実行手順変更ではこのファイル、GitHub 運用変更では設定文書も更新する。事前合意なしの大規模リファクタ、機密情報のコミットは禁止する。

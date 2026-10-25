@@ -16,7 +16,7 @@ sourceSets.main.resources {
     srcDir('src/generated/resources')
 
     exclude("**/*.bbmodel")
-    exclude("src/generated/**/.cache")
+    exclude('**/.cache/**')
 }
 
 repositories {
@@ -27,6 +27,8 @@ base {
 }
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(21)
+
+def gameTestWorldName = 'constellation_gametest_clean'
 
 neoForge {
     version = project.neo_version
@@ -51,6 +53,7 @@ neoForge {
         gameTestServer {
             type = "gameTestServer"
             systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
+            programArguments.addAll '--world', gameTestWorldName
         }
 
         data {
@@ -70,6 +73,21 @@ neoForge {
             sourceSet(sourceSets.main)
         }
     }
+}
+
+// 手動確認用 run/world は保持し、テスト専用 world だけを初期化する。
+tasks.register('cleanGameTestServerWorld', Delete) {
+    delete layout.projectDirectory.dir("run/${gameTestWorldName}")
+}
+tasks.named('runGameTestServer').configure {
+    dependsOn tasks.named('cleanGameTestServerWorld')
+}
+
+apply from: 'scripts/text-encoding.gradle'
+
+tasks.named('jar', Jar).configure {
+    exclude('jp/aquafactory/constellationandspells/gametest/**')
+    exclude('data/constellationandspells/structure/gametest/**')
 }
 
 configurations {
