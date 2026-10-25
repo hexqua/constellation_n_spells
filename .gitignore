@@ -1,0 +1,36 @@
+# eclipse
+bin
+*.launch
+.settings
+.metadata
+.classpath
+.project
+
+# idea
+out
+*.ipr
+*.iws
+*.iml
+.idea/*
+!.idea/inspectionProfiles/
+.idea/inspectionProfiles/*
+!.idea/inspectionProfiles/Project_Default.xml
+
+# gradle
+build
+.gradle
+
+# other
+eclipse
+run
+runs
+run-data
+repo
+.cache
+
+# Codex-Search
+.tmp*
+tmp
+
+# Files from Forge MDK
+forge*changelog.txt
