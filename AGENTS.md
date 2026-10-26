@@ -13,7 +13,7 @@
 - Constellation 'n Spells: Minecraft 1.21.1 / NeoForge / Java 21。バージョンの正は `gradle.properties`。
 - MOD ID は `constellationandspells`、package は `jp.aquafactory.constellationandspells`。
 - `main` が開発基準。現在 1.20.1 / Forge の保守・backport 運用は設けない。
-- Iron's Spells 'n Spellbooks 向けアドオンを予定しているが、現在は MDK 初期コードで外部 MOD 依存は未導入。参照元の互換 MOD・実行プロファイルを存在すると仮定しない。
+- Iron's Spells 'n Spellbooks / Curios / GeckoLib はコード参照可能な必須依存。Iron's Lib / playerAnimator も共通実行環境に含む。Optional MOD と開発用 MOD の構成は `build.gradle` と README を確認する。
 - IntelliJ IDEA では JetBrains MCP を優先してシンボル・型・依存・Inspection・実行構成を確認する。利用できない場合は代替手段で続行し報告する。
 
 ## 実行と検証
@@ -22,6 +22,8 @@
 .\scripts\use-java.ps1
 ./gradlew.bat build
 ./gradlew.bat runGameTestServer
+# optional MOD 環境の検証（同じ run ディレクトリでは直列実行）
+./gradlew.bat runGameTestServerBetterCombat runGameTestServerIrons runGameTestServerCompat
 # データ生成を変更したとき
 ./gradlew.bat runData
 # 人間によるクライアント確認用
@@ -33,7 +35,7 @@
 - Java スクリプトは `JDK21_HOME` またはユーザーの `.jdks` / `.gradle/jdks` を使う。CI は workflow で Java 21 を設定する。
 - 通常確認に `clean` は付けない。コード・依存・リソース・ビルド設定変更では `build`、サーバー登録・データ読込・GameTest 変更では `runGameTestServer` も実行する。文書だけならビルド省略理由を報告してよい。
 - `build` は `checkTextEncodingHygiene` を含む。同タスクは単独実行も可能。
-- GameTest は専用 world `run/constellation_gametest_clean` を初期化する。手動用 `run/world` は削除しない。同じ run ディレクトリの GameTest は直列実行し、先行プロセスの終了を待つ。
+- GameTest は専用 world `run/constellation_gametest_clean`（追加構成は末尾に `bettercombat` / `irons` / `compat`）を初期化する。手動用 `run/world` は削除しない。同じ run ディレクトリの GameTest は直列実行し、先行プロセスの終了を待つ。
 - 実行ツールの GameTest 強制終了 timeout は初回から最低 120 秒。yield は終了ではなく wait で追跡する。ツール timeout なら記録を保持し、前回の 2 倍以上で追加実行する。GameTest 自身の test timeout とは区別する。
 - 一度でも GameTest が失敗した場合は `report-gametest-failure` Skill で初回失敗と追加実行を最終報告する。
 - Codex の通常自動検証は build、必要な GameTest / datagen / Inspection まで。`runClient` や同等の GUI 起動・操作は通常行わない。ユーザーが明示した場合はその範囲で実施できる。起動依頼は自動操作の許可とみなさない。
