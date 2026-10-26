@@ -1,13 +1,5 @@
 {
-  "itemGroup.constellationandspells": "Example Mod Tab",
-  "block.constellationandspells.example_block": "Example Block",
-  "item.constellationandspells.example_item": "Example Item",
+  "itemGroup.constellationandspells": "Constellation 'n Spells",
 
-  "constellationandspells.configuration.title": "Constellation 'n Spells Configs",
-  "constellationandspells.configuration.section.constellationandspells.common.toml": "Constellation 'n Spells Configs",
-  "constellationandspells.configuration.section.constellationandspells.common.toml.title": "Constellation 'n Spells Configs",
-  "constellationandspells.configuration.items": "Item List",
-  "constellationandspells.configuration.logDirtBlock": "Log Dirt Block",
-  "constellationandspells.configuration.magicNumberIntroduction": "Magic Number Text",
-  "constellationandspells.configuration.magicNumber": "Magic Number"
+  "item.constellationandspells.stardust_shard": "Stardust Shard"
 }
