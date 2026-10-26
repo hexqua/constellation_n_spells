@@ -20,6 +20,35 @@ sourceSets.main.resources {
 }
 
 repositories {
+    maven {
+        url = uri('https://code.redspace.io/releases')
+        content { includeGroup 'io.redspace' }
+    }
+    maven {
+        url = uri('https://maven.theillusivec4.top/')
+        content { includeGroup 'top.theillusivec4.curios' }
+    }
+    maven {
+        url = uri('https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/')
+        content { includeGroup 'software.bernie.geckolib' }
+    }
+    maven {
+        url = uri('https://api.modrinth.com/maven')
+        content { includeGroup 'maven.modrinth' }
+    }
+    maven {
+        url = uri('https://cursemaven.com')
+        content { includeGroup 'curse.maven' }
+    }
+    maven {
+        url = uri('https://maven.florens.be/releases')
+        content { includeGroup 'be.florens' }
+    }
+    maven {
+        // Artifice の Maven metadata が参照する同梱 Companion API の解決先。
+        url = uri('https://maven.ryanhcode.dev/releases')
+        content { includeGroup 'dev.ryanhcode.sable-companion' }
+    }
 }
 
 base {
@@ -29,6 +58,31 @@ base {
 java.toolchain.languageVersion = JavaLanguageVersion.of(21)
 
 def gameTestWorldName = 'constellation_gametest_clean'
+def gameTestNamespace = project.mod_id.toString()
+def requiredOptionalModsProperty = 'constellationandspells.requiredOptionalMods'
+Map<String, List<String>> runtimeModules = [
+        target_dummy : ['moonlight', 'dummmmmmy'],
+        better_combat: ['cloth_config', 'bettercombat'],
+        irons        : ['atlas_api', 'irons_artifice', 'irons_jewelry'],
+        compat       : ['apprenticecodex', 'spell_atlas', 'asterismarcanum', 'aces_spell_utils', 'azurelib', 'expandability'],
+        graphic      : ['sodium', 'sodiumdynamiclights', 'chloride', 'reeses_sodium_options'],
+]
+Map<String, List<String>> runtimeProfiles = [
+        ''          : ['target_dummy'],
+        BetterCombat: ['target_dummy', 'better_combat'],
+        Irons       : ['target_dummy', 'irons'],
+        Compat      : ['target_dummy', 'better_combat', 'irons', 'compat'],
+]
+
+configurations {
+    runtimeClasspath.extendsFrom localRuntime
+    runtimeModules.keySet().each { module ->
+        create("${module}RuntimeOnly") {
+            canBeConsumed = false
+            canBeResolved = true
+        }
+    }
+}
 
 neoForge {
     version = project.neo_version
@@ -39,21 +93,29 @@ neoForge {
     }
 
     runs {
-        client {
+        runtimeProfiles.each { suffix, modules ->
+            String expectedMods = modules.collectMany { String module -> runtimeModules[module] }.join(',')
+            create("client${suffix}") {
+                client()
+                systemProperty 'neoforge.enabledGameTestNamespaces', gameTestNamespace
+            }
+            create("gameTestServer${suffix}") {
+                type = 'gameTestServer'
+                systemProperty 'neoforge.enabledGameTestNamespaces', gameTestNamespace
+                systemProperty requiredOptionalModsProperty, expectedMods
+                programArguments.addAll '--world', "${gameTestWorldName}${suffix.toLowerCase(Locale.ROOT)}".toString()
+            }
+        }
+
+        clientGraphic {
             client()
-            systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
+            systemProperty 'neoforge.enabledGameTestNamespaces', gameTestNamespace
         }
 
         server {
             server()
             programArgument '--nogui'
-            systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
-        }
-
-        gameTestServer {
-            type = "gameTestServer"
-            systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
-            programArguments.addAll '--world', gameTestWorldName
+            systemProperty 'neoforge.enabledGameTestNamespaces', gameTestNamespace
         }
 
         data {
@@ -75,12 +137,43 @@ neoForge {
     }
 }
 
-// 手動確認用 run/world は保持し、テスト専用 world だけを初期化する。
-tasks.register('cleanGameTestServerWorld', Delete) {
-    delete layout.projectDirectory.dir("run/${gameTestWorldName}")
+def runtimeSourceSets = [:]
+def addRunModules = { String runName, Collection<String> modules ->
+    def profileName = runName.replaceFirst('^(client|gameTestServer)', '') ?: 'Base'
+    def sourceSetName = "dev${profileName}"
+    def runtimeSourceSet = runtimeSourceSets[profileName]
+    if (runtimeSourceSet == null) {
+        // NeoForge 1.21.1 は MOD を Java classpath から発見するため、IDE も構成別 module を使う。
+        runtimeSourceSet = sourceSets.create(sourceSetName) {
+            java.setSrcDirs([])
+            resources.setSrcDirs([])
+            runtimeClasspath += sourceSets.main.output
+        }
+        runtimeSourceSets[profileName] = runtimeSourceSet
+        def moduleConfigurations = modules.collect { configurations.named("${it}RuntimeOnly").get() }
+        configurations.named(runtimeSourceSet.runtimeClasspathConfigurationName).configure {
+            extendsFrom(configurations.runtimeClasspath)
+            extendsFrom(moduleConfigurations as Configuration[])
+        }
+    }
+    neoForge.runs.named(runName).configure {
+        sourceSet = runtimeSourceSet
+    }
 }
-tasks.named('runGameTestServer').configure {
-    dependsOn tasks.named('cleanGameTestServerWorld')
+runtimeProfiles.each { suffix, modules ->
+    addRunModules("client${suffix}", modules)
+    addRunModules("gameTestServer${suffix}", modules)
+    // 手動確認用 run/world は保持し、構成ごとのテスト専用 world だけを初期化する。
+    def cleanWorld = tasks.register("cleanGameTestServer${suffix}World", Delete) {
+        delete layout.projectDirectory.dir("run/${gameTestWorldName}${suffix.toLowerCase(Locale.ROOT)}")
+    }
+    tasks.named("runGameTestServer${suffix}").configure { dependsOn cleanWorld }
+}
+addRunModules('clientGraphic', ['target_dummy', 'graphic'])
+// 同じ run ディレクトリのログ・設定を使うため、複数指定時も GameTest は直列にする。
+def gameTestTaskNames = runtimeProfiles.keySet().collect { "runGameTestServer${it}".toString() }
+gameTestTaskNames.eachWithIndex { name, index ->
+    tasks.named(name).configure { mustRunAfter gameTestTaskNames.take(index) }
 }
 
 apply from: 'scripts/text-encoding.gradle'
@@ -90,11 +183,40 @@ tasks.named('jar', Jar).configure {
     exclude('data/constellationandspells/structure/gametest/**')
 }
 
-configurations {
-    runtimeClasspath.extendsFrom localRuntime
-}
-
 dependencies {
+    implementation "io.redspace:irons_spellbooks:${irons_spells_version}"
+    implementation "top.theillusivec4.curios:curios-neoforge:${curios_version}"
+    implementation "software.bernie.geckolib:geckolib-neoforge-${minecraft_version}:${geckolib_version}"
+    runtimeOnly "io.redspace:irons_lib:${irons_lib_version}"
+    runtimeOnly "maven.modrinth:playeranimator:${playeranimator_modrinth_version_id}"
+
+    compileOnly "maven.modrinth:better-combat:${better_combat_modrinth_version_id}"
+    compileOnly "io.redspace:irons_artifice:${irons_artifice_version}"
+    compileOnly "io.redspace:irons_jewelry:${irons_jewelry_version}"
+    compileOnly "io.redspace:atlas_api:${atlas_api_version}"
+
+    target_dummyRuntimeOnly "maven.modrinth:moonlight:${moonlight_modrinth_version_id}"
+    target_dummyRuntimeOnly "maven.modrinth:Adega8YN:${target_dummy_modrinth_version_id}"
+    better_combatRuntimeOnly "maven.modrinth:cloth-config:${cloth_config_modrinth_version_id}"
+    better_combatRuntimeOnly "maven.modrinth:better-combat:${better_combat_modrinth_version_id}"
+    ironsRuntimeOnly "io.redspace:atlas_api:${atlas_api_version}"
+    ironsRuntimeOnly "io.redspace:irons_artifice:${irons_artifice_version}"
+    ironsRuntimeOnly "io.redspace:irons_jewelry:${irons_jewelry_version}"
+
+    // 配布版を取得し、参考リポジトリやそのビルド成果物へは接続しない。
+    compatRuntimeOnly "maven.modrinth:apprentices-codex:${apprentice_codex_modrinth_version_id}"
+    compatRuntimeOnly "curse.maven:spells-atlas-1710649:${spell_atlas_curseforge_file_id}"
+    // 公開依存情報が別 Minecraft 版を指すため、1.21.1 用の前提を明示する。
+    compatRuntimeOnly "maven.modrinth:asterism-arcanum-addon-for-irons-spells-and-spellbooks:${asterism_arcanum_modrinth_version_id}"
+    compatRuntimeOnly "maven.modrinth:aces-spell-utils:${aces_spell_utils_modrinth_version_id}"
+    compatRuntimeOnly "maven.modrinth:azurelib:${azurelib_modrinth_version_id}"
+    compatRuntimeOnly "be.florens:expandability-neoforge:${expandability_version}"
+
+    graphicRuntimeOnly "maven.modrinth:sodium:${sodium_modrinth_version_id}"
+    graphicRuntimeOnly "maven.modrinth:sodium-dynamic-lights:${sodium_dynamic_lights_modrinth_version_id}"
+    graphicRuntimeOnly "maven.modrinth:chloride:${chloride_modrinth_version_id}"
+    graphicRuntimeOnly "maven.modrinth:reeses-sodium-options:${reeses_sodium_options_modrinth_version_id}"
+    // Sodium 0.8 と Reese's 2.2 は旧 Sodium Options API と非互換なので追加しない。
 }
 
 var generateModMetadata = tasks.register("generateModMetadata", ProcessResources) {
@@ -107,6 +229,14 @@ var generateModMetadata = tasks.register("generateModMetadata", ProcessResources
             mod_name               : mod_name,
             mod_license            : mod_license,
             mod_version            : mod_version,
+            irons_spells_version   : irons_spells_version,
+            irons_lib_version      : irons_lib_version,
+            curios_version         : curios_version,
+            geckolib_version       : geckolib_version,
+            playeranimator_version : playeranimator_version,
+            better_combat_version  : better_combat_version,
+            irons_artifice_version : irons_artifice_version,
+            irons_jewelry_version  : irons_jewelry_version,
     ]
     inputs.properties replaceProperties
     expand replaceProperties

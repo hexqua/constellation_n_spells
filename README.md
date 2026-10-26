@@ -34,6 +34,41 @@ jar は `build/libs` に出力されます。GameTest は初期登録を検査�
 
 データ生成は `./gradlew.bat runData`、人間による client 確認は `./gradlew.bat runClient`、IDE 実行構成の同期は `./gradlew.bat neoForgeIdeSync` を使います。client の表示・操作は GameTest では検証できません。
 
+### MOD を追加した実行構成
+
+全構成の共通依存は Iron's Spells 'n Spellbooks、Curios、GeckoLib、Iron's Lib、playerAnimator です。前の3つは `implementation`
+、Better Combat / Arms 'n Artifice / Gems 'n Jewelry と Atlas API は `compileOnly` でコード参照できます。
+
+| Client タスク           | GameTest タスク                 | 標準から追加される MOD                                                                                                    |
+|-------------------------|---------------------------------|---------------------------------------------------------------------------------------------------------------------------|
+| `runClient`             | `runGameTestServer`             | 標準：共通依存＋MmmMmmMmmMmm＋Moonlight Lib                                                                               |
+| `runClientGraphic`      | —                               | Sodium、Sodium Dynamic Lights、Chloride、Reese's Sodium Options                                                           |
+| `runClientBetterCombat` | `runGameTestServerBetterCombat` | Better Combat、Cloth Config                                                                                               |
+| `runClientIrons`        | `runGameTestServerIrons`        | Iron's Arms 'n Artifice、Iron's Gems 'n Jewelry、Atlas API                                                                |
+| `runClientCompat`       | `runGameTestServerCompat`       | BetterCombat＋Irons 構成、Apprentice's Codex、Spell's Atlas、Asterism Arcanum、Ace's Spell Utils、AzureLib、ExpandAbility |
+
+ダミーと Moonlight は Client / GameTest の全構成に含みます。Optional MOD と描画 MOD は指定構成にだけ追加し、配布 jar
+に同梱しません。Apprentice's Codex も公開配布版を取得し、ローカルリポジトリを参照しません。`runServer` / `runData`
+は共通依存だけで実行します。
+
+IDE と Gradle で同じ実行時依存を使うため、空の `devBase` / `devGraphic` / `devBetterCombat` / `devIrons` / `devCompat`
+source set を使用します。製品コードと GameTest は引き続き `src/main` に置きます。IntelliJ IDEA では Gradle
+プロジェクトを再読み込みして追加の Client / GameTestServer 構成と module を反映してください。
+
+Graphic は Sodium 0.8.13、Dynamic Lights 1.0.10、Chloride 1.8.1、Reese's 2.2.4 を使用します。旧 Sodium Options API は Sodium
+0.8 / Reese's 2.2 と非互換のため追加しません。この組合せの起動・ビデオ設定画面・動的光源は人間による client 確認対象です。
+
+Asterism の公開依存情報には別 Minecraft 版への指定があるため、前提ライブラリを1.21.1用に固定しています。バージョンと配布ファイル
+ID は `gradle.properties` に集約しています。
+
+```powershell
+./gradlew.bat runGameTestServerBetterCombat runGameTestServerIrons runGameTestServerCompat
+```
+
+各 GameTest は構成ごとの専用 world を毎回初期化し、指定 MOD の読込と初期登録を確認します。追加構成の world 名は
+`constellation_gametest_cleanbettercombat` / `constellation_gametest_cleanirons` / `constellation_gametest_cleancompat`
+です。同じ run ディレクトリで別 Gradle プロセスの GameTest を同時実行しないでください。
+
 ## PR 運用
 
 - 開発規約: [AGENTS.md](AGENTS.md)、[レビュー方針](docs/review-policy.md)
