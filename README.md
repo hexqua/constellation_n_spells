@@ -61,6 +61,10 @@ source set を使用します。製品コードと GameTest は引き続き `src
 Graphic は Sodium 0.8.13、Dynamic Lights 1.0.10、Chloride 1.8.1、Reese's 2.2.4 を使用します。旧 Sodium Options API は Sodium
 0.8 / Reese's 2.2 と非互換のため追加しません。この組合せの起動・ビデオ設定画面・動的光源は人間による client 確認対象です。
 
+Sodium の配布 jar は開発環境の JarJar 探索で本体を見失うため、Graphic 構成では公式 Maven の `sodium-neoforge-mod`
+を直接読み込みます。外側 jar の補助クラスは `prepareSodiumGraphicShell` が `build/dev-libs` に再構成し、同梱されていた
+Forgified Fabric API の4モジュールは個別に追加します。Gradle の実行準備と IDE 同期で補助 jar も生成します。
+
 Asterism の公開依存情報には別 Minecraft 版への指定があるため、前提ライブラリを1.21.1用に固定しています。バージョンと配布ファイル
 ID は `gradle.properties` に集約しています。
 
