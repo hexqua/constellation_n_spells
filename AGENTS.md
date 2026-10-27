@@ -48,6 +48,7 @@
 - `UnnecessaryFullyQualifiedName` は共有 IDEA Inspection で ERROR。Gradle による強制はない。
 - 登録は既存の DeferredRegister / EventBus と整合させる。client 専用参照は共通コードから隔離する。外部仕様依存・回避策・順序依存は理由をコメントする。
 - データ生成先は `src/generated/resources`。生成 JSON は provider を編集して再生成する。手置きとの重複と旧出力の削除を確認する。Git 管理外 `.cache` にない旧 JSON は `runData` で削除されない場合がある。
+- 標準 Provider で表現できる定型リソースは原則 datagen とし、制作物・翻訳等の手管理との判断基準は [リソース管理方針](docs/resource-generation-policy.md) に従う。生成処理は `datagen` パッケージに種類別の Provider として配置する。
 - 依存バージョンは `gradle.properties` に集約。必須依存追加時は `src/main/templates/META-INF/neoforge.mods.toml` も更新し、`THIRD_PARTY_NOTICES.md` の追記要否を確認する。
 - レビュー重大度、保存済み資産・管理設定の保護、意図したリソース変更の扱いは [レビュー方針](docs/review-policy.md) に従う。
 

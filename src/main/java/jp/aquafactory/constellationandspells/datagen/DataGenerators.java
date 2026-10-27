@@ -16,6 +16,7 @@ public final class DataGenerators {
         var output = generator.getPackOutput();
         var lookup = event.getLookupProvider();
         generator.addProvider(event.includeClient(), new BlockModelProvider(output, event.getExistingFileHelper()));
+        generator.addProvider(event.includeClient(), new ItemModelProvider(output, event.getExistingFileHelper()));
         generator.addProvider(event.includeServer(), new BlockMiningTagProvider(output, lookup, event.getExistingFileHelper()));
         generator.addProvider(event.includeServer(), new LootTableProvider(output, Set.of(),
                 List.of(new LootTableProvider.SubProviderEntry(BlockLootProvider::new, LootContextParamSets.BLOCK)), lookup));
