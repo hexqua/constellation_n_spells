@@ -62,16 +62,17 @@ def gameTestNamespace = project.mod_id.toString()
 def requiredOptionalModsProperty = 'constellationandspells.requiredOptionalMods'
 Map<String, List<String>> runtimeModules = [
         target_dummy : ['moonlight', 'dummmmmmy'],
+        utility      : ['mezz_config', 'jei', 'jade'],
         better_combat: ['cloth_config', 'bettercombat'],
         irons        : ['atlas_api', 'irons_artifice', 'irons_jewelry'],
         compat       : ['apprenticecodex', 'spell_atlas', 'asterismarcanum', 'aces_spell_utils', 'azurelib', 'expandability'],
         graphic      : ['sodium', 'sodiumdynamiclights', 'chloride', 'reeses_sodium_options'],
 ]
 Map<String, List<String>> runtimeProfiles = [
-        ''          : ['target_dummy'],
-        BetterCombat: ['target_dummy', 'better_combat'],
-        Irons       : ['target_dummy', 'irons'],
-        Compat      : ['target_dummy', 'better_combat', 'irons', 'compat'],
+        ''          : ['target_dummy', 'utility'],
+        BetterCombat: ['target_dummy', 'utility', 'better_combat'],
+        Irons       : ['target_dummy', 'utility', 'irons'],
+        Compat      : ['target_dummy', 'utility', 'better_combat', 'irons', 'compat'],
 ]
 
 configurations {
@@ -169,7 +170,7 @@ runtimeProfiles.each { suffix, modules ->
     }
     tasks.named("runGameTestServer${suffix}").configure { dependsOn cleanWorld }
 }
-addRunModules('clientGraphic', ['target_dummy', 'graphic'])
+addRunModules('clientGraphic', ['target_dummy', 'utility', 'graphic'])
 // 同じ run ディレクトリのログ・設定を使うため、複数指定時も GameTest は直列にする。
 def gameTestTaskNames = runtimeProfiles.keySet().collect { "runGameTestServer${it}".toString() }
 gameTestTaskNames.eachWithIndex { name, index ->
@@ -194,9 +195,14 @@ dependencies {
     compileOnly "io.redspace:irons_artifice:${irons_artifice_version}"
     compileOnly "io.redspace:irons_jewelry:${irons_jewelry_version}"
     compileOnly "io.redspace:atlas_api:${atlas_api_version}"
+    compileOnly "maven.modrinth:jei:${jei_modrinth_version_id}"
+    compileOnly "maven.modrinth:jade:${jade_modrinth_version_id}"
 
     target_dummyRuntimeOnly "maven.modrinth:moonlight:${moonlight_modrinth_version_id}"
     target_dummyRuntimeOnly "maven.modrinth:Adega8YN:${target_dummy_modrinth_version_id}"
+    utilityRuntimeOnly "maven.modrinth:mezzconfig:${mezzconfig_modrinth_version_id}"
+    utilityRuntimeOnly "maven.modrinth:jei:${jei_modrinth_version_id}"
+    utilityRuntimeOnly "maven.modrinth:jade:${jade_modrinth_version_id}"
     better_combatRuntimeOnly "maven.modrinth:cloth-config:${cloth_config_modrinth_version_id}"
     better_combatRuntimeOnly "maven.modrinth:better-combat:${better_combat_modrinth_version_id}"
     ironsRuntimeOnly "io.redspace:atlas_api:${atlas_api_version}"
