@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "constellationandspells:block/deepslate_stellar_drop_ore"
+  }
+}

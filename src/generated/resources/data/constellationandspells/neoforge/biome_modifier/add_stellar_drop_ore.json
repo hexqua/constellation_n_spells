@@ -1,0 +1,9 @@
+{
+  "type": "neoforge:add_features",
+  "biomes": "#minecraft:is_overworld",
+  "features": [
+    "constellationandspells:stellar_drop_ore_triangle",
+    "constellationandspells:stellar_drop_ore_uniform"
+  ],
+  "step": "underground_ores"
+}
