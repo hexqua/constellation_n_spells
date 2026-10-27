@@ -37,19 +37,22 @@ jar は `build/libs` に出力されます。GameTest は初期登録を検査�
 ### MOD を追加した実行構成
 
 全構成の共通依存は Iron's Spells 'n Spellbooks、Curios、GeckoLib、Iron's Lib、playerAnimator です。前の3つは `implementation`
-、Better Combat / Arms 'n Artifice / Gems 'n Jewelry と Atlas API は `compileOnly` でコード参照できます。
+、Better Combat / Arms 'n Artifice / Gems 'n Jewelry / Atlas API / JEI / Jade は `compileOnly` でコード参照できます。
 
 | Client タスク           | GameTest タスク                 | 標準から追加される MOD                                                                                                    |
 |-------------------------|---------------------------------|---------------------------------------------------------------------------------------------------------------------------|
-| `runClient`             | `runGameTestServer`             | 標準：共通依存＋MmmMmmMmmMmm＋Moonlight Lib                                                                               |
+| `runClient`             | `runGameTestServer`             | 標準：共通依存＋MmmMmmMmmMmm＋Moonlight Lib＋JEI＋MezzConfig＋Jade                                                         |
 | `runClientGraphic`      | —                               | Sodium、Sodium Dynamic Lights、Chloride、Reese's Sodium Options                                                           |
 | `runClientBetterCombat` | `runGameTestServerBetterCombat` | Better Combat、Cloth Config                                                                                               |
 | `runClientIrons`        | `runGameTestServerIrons`        | Iron's Arms 'n Artifice、Iron's Gems 'n Jewelry、Atlas API                                                                |
 | `runClientCompat`       | `runGameTestServerCompat`       | BetterCombat＋Irons 構成、Apprentice's Codex、Spell's Atlas、Asterism Arcanum、Ace's Spell Utils、AzureLib、ExpandAbility |
 
-ダミーと Moonlight は Client / GameTest の全構成に含みます。Optional MOD と描画 MOD は指定構成にだけ追加し、配布 jar
+ダミー、Moonlight、JEI、MezzConfig、Jade は Client / GameTest の全構成に含みます。それ以外の Optional MOD と描画 MOD は指定構成にだけ追加し、配布 jar
 に同梱しません。Apprentice's Codex も公開配布版を取得し、ローカルリポジトリを参照しません。`runServer` / `runData`
 は共通依存だけで実行します。
+
+JEI は 19.70.0.460（beta）、必須依存の MezzConfig は 0.6.9、Jade は 15.10.6 を使用します（2026-10-27 時点の Minecraft 1.21.1 / NeoForge 対応最新版）。
+配布用メタデータでは JEI / Jade をバージョン制限なしの optional 依存としています。Jade に追加の必須依存 MOD はありません。
 
 IDE と Gradle で同じ実行時依存を使うため、空の `devBase` / `devGraphic` / `devBetterCombat` / `devIrons` / `devCompat`
 source set を使用します。製品コードと GameTest は引き続き `src/main` に置きます。IntelliJ IDEA では Gradle
@@ -57,6 +60,10 @@ source set を使用します。製品コードと GameTest は引き続き `src
 
 Graphic は Sodium 0.8.13、Dynamic Lights 1.0.10、Chloride 1.8.1、Reese's 2.2.4 を使用します。旧 Sodium Options API は Sodium
 0.8 / Reese's 2.2 と非互換のため追加しません。この組合せの起動・ビデオ設定画面・動的光源は人間による client 確認対象です。
+
+Sodium の配布 jar は開発環境の JarJar 探索で本体を見失うため、Graphic 構成では公式 Maven の `sodium-neoforge-mod`
+を直接読み込みます。外側 jar の補助クラスは `prepareSodiumGraphicShell` が `build/dev-libs` に再構成し、同梱されていた
+Forgified Fabric API の4モジュールは個別に追加します。Gradle の実行準備と IDE 同期で補助 jar も生成します。
 
 Asterism の公開依存情報には別 Minecraft 版への指定があるため、前提ライブラリを1.21.1用に固定しています。バージョンと配布ファイル
 ID は `gradle.properties` に集約しています。

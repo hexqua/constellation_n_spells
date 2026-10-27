@@ -21,6 +21,14 @@ sourceSets.main.resources {
 
 repositories {
     maven {
+        url = uri('https://maven.caffeinemc.net/releases')
+        content { includeGroup 'net.caffeinemc' }
+    }
+    maven {
+        url = uri('https://maven.sinytra.org/')
+        content { includeGroup 'org.sinytra.forgified-fabric-api' }
+    }
+    maven {
         url = uri('https://code.redspace.io/releases')
         content { includeGroup 'io.redspace' }
     }
@@ -62,20 +70,26 @@ def gameTestNamespace = project.mod_id.toString()
 def requiredOptionalModsProperty = 'constellationandspells.requiredOptionalMods'
 Map<String, List<String>> runtimeModules = [
         target_dummy : ['moonlight', 'dummmmmmy'],
+        utility      : ['mezz_config', 'jei', 'jade'],
         better_combat: ['cloth_config', 'bettercombat'],
         irons        : ['atlas_api', 'irons_artifice', 'irons_jewelry'],
         compat       : ['apprenticecodex', 'spell_atlas', 'asterismarcanum', 'aces_spell_utils', 'azurelib', 'expandability'],
         graphic      : ['sodium', 'sodiumdynamiclights', 'chloride', 'reeses_sodium_options'],
 ]
 Map<String, List<String>> runtimeProfiles = [
-        ''          : ['target_dummy'],
-        BetterCombat: ['target_dummy', 'better_combat'],
-        Irons       : ['target_dummy', 'irons'],
-        Compat      : ['target_dummy', 'better_combat', 'irons', 'compat'],
+        ''          : ['target_dummy', 'utility'],
+        BetterCombat: ['target_dummy', 'utility', 'better_combat'],
+        Irons       : ['target_dummy', 'utility', 'irons'],
+        Compat      : ['target_dummy', 'utility', 'better_combat', 'irons', 'compat'],
 ]
 
 configurations {
     runtimeClasspath.extendsFrom localRuntime
+    sodiumShell {
+        canBeConsumed = false
+        canBeResolved = true
+        transitive = false
+    }
     runtimeModules.keySet().each { module ->
         create("${module}RuntimeOnly") {
             canBeConsumed = false
@@ -169,7 +183,7 @@ runtimeProfiles.each { suffix, modules ->
     }
     tasks.named("runGameTestServer${suffix}").configure { dependsOn cleanWorld }
 }
-addRunModules('clientGraphic', ['target_dummy', 'graphic'])
+addRunModules('clientGraphic', ['target_dummy', 'utility', 'graphic'])
 // 同じ run ディレクトリのログ・設定を使うため、複数指定時も GameTest は直列にする。
 def gameTestTaskNames = runtimeProfiles.keySet().collect { "runGameTestServer${it}".toString() }
 gameTestTaskNames.eachWithIndex { name, index ->
@@ -183,6 +197,27 @@ tasks.named('jar', Jar).configure {
     exclude('data/constellationandspells/structure/gametest/**')
 }
 
+// 外側 jar が sodium の MOD ID を持つと、開発環境の JarJar が LIBRARY を本体として選んでしまう。
+// 本体は別 artifact から読み込み、外側の補助クラスだけを重複探索なしで保持する。
+def sodiumShellFiles = configurations.sodiumShell
+def prepareSodiumGraphicShell = tasks.register('prepareSodiumGraphicShell', Jar) {
+    archiveBaseName = 'sodium-graphic-shell-lib'
+    archiveVersion = project.sodium_version
+    destinationDirectory = layout.buildDirectory.dir('dev-libs')
+    from { sodiumShellFiles.collect { zipTree(it) } }
+    exclude 'META-INF/MANIFEST.MF'
+    exclude 'META-INF/neoforge.mods.toml'
+    exclude 'META-INF/jarjar/**'
+    exclude 'META-INF/services/net.neoforged.neoforgespi.locating.IModFileCandidateLocator'
+    manifest {
+        attributes 'FMLModType': 'LIBRARY', 'Automatic-Module-Name': 'sodium_service'
+    }
+}
+// IDE の直接起動でも補助 jar が存在するよう、実行準備・IDE 同期の段階で生成する。
+tasks.named('prepareClientGraphicRun').configure {
+    dependsOn prepareSodiumGraphicShell
+}
+
 dependencies {
     implementation "io.redspace:irons_spellbooks:${irons_spells_version}"
     implementation "top.theillusivec4.curios:curios-neoforge:${curios_version}"
@@ -194,9 +229,14 @@ dependencies {
     compileOnly "io.redspace:irons_artifice:${irons_artifice_version}"
     compileOnly "io.redspace:irons_jewelry:${irons_jewelry_version}"
     compileOnly "io.redspace:atlas_api:${atlas_api_version}"
+    compileOnly "maven.modrinth:jei:${jei_modrinth_version_id}"
+    compileOnly "maven.modrinth:jade:${jade_modrinth_version_id}"
 
     target_dummyRuntimeOnly "maven.modrinth:moonlight:${moonlight_modrinth_version_id}"
     target_dummyRuntimeOnly "maven.modrinth:Adega8YN:${target_dummy_modrinth_version_id}"
+    utilityRuntimeOnly "maven.modrinth:mezzconfig:${mezzconfig_modrinth_version_id}"
+    utilityRuntimeOnly "maven.modrinth:jei:${jei_modrinth_version_id}"
+    utilityRuntimeOnly "maven.modrinth:jade:${jade_modrinth_version_id}"
     better_combatRuntimeOnly "maven.modrinth:cloth-config:${cloth_config_modrinth_version_id}"
     better_combatRuntimeOnly "maven.modrinth:better-combat:${better_combat_modrinth_version_id}"
     ironsRuntimeOnly "io.redspace:atlas_api:${atlas_api_version}"
@@ -212,7 +252,14 @@ dependencies {
     compatRuntimeOnly "maven.modrinth:azurelib:${azurelib_modrinth_version_id}"
     compatRuntimeOnly "be.florens:expandability-neoforge:${expandability_version}"
 
-    graphicRuntimeOnly "maven.modrinth:sodium:${sodium_modrinth_version_id}"
+    sodiumShell "net.caffeinemc:sodium-neoforge:${sodium_version}"
+    graphicRuntimeOnly "net.caffeinemc:sodium-neoforge-mod:${sodium_version}"
+    graphicRuntimeOnly files(prepareSodiumGraphicShell)
+    // 外側 jar の同梱依存は補助 jar から除いているため、同じ版を個別に読み込む。
+    graphicRuntimeOnly "org.sinytra.forgified-fabric-api:fabric-api-base:${ffapi_base_version}"
+    graphicRuntimeOnly "org.sinytra.forgified-fabric-api:fabric-renderer-api-v1:${ffapi_renderer_version}"
+    graphicRuntimeOnly "org.sinytra.forgified-fabric-api:fabric-rendering-data-attachment-v1:${ffapi_rendering_data_version}"
+    graphicRuntimeOnly "org.sinytra.forgified-fabric-api:fabric-block-view-api-v2:${ffapi_block_view_version}"
     graphicRuntimeOnly "maven.modrinth:sodium-dynamic-lights:${sodium_dynamic_lights_modrinth_version_id}"
     graphicRuntimeOnly "maven.modrinth:chloride:${chloride_modrinth_version_id}"
     graphicRuntimeOnly "maven.modrinth:reeses-sodium-options:${reeses_sodium_options_modrinth_version_id}"
