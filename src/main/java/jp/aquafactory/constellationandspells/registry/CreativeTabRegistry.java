@@ -15,13 +15,23 @@ public final class CreativeTabRegistry {
             CREATIVE_MODE_TABS.register(ConstellationnSpells.MODID, () -> CreativeModeTab.builder()
                     .title(Component.translatable("itemGroup.constellationandspells"))
                     .icon(() -> ItemRegistry.STARDUST_SHARD.get().getDefaultInstance())
-                    .displayItems((parameters, output) -> {
-                        output.accept(ItemRegistry.STARDUST_SHARD.get());
-                        output.accept(ItemRegistry.STELLAR_DROP_ORE.get());
-                        output.accept(ItemRegistry.DEEPSLATE_STELLAR_DROP_ORE.get());
-                    })
+                    .displayItems(CreativeTabRegistry::displayItems)
                     .build());
 
     private CreativeTabRegistry() {
+    }
+
+    private static void displayItems(CreativeModeTab.ItemDisplayParameters parameters, CreativeModeTab.Output output) {
+        addBlocks(output);
+        addMaterials(output);
+    }
+
+    private static void addMaterials(CreativeModeTab.Output output) {
+        output.accept(ItemRegistry.STARDUST_SHARD.get());
+    }
+
+    private static void addBlocks(CreativeModeTab.Output output) {
+        output.accept(ItemRegistry.STELLAR_DROP_ORE.get());
+        output.accept(ItemRegistry.DEEPSLATE_STELLAR_DROP_ORE.get());
     }
 }
