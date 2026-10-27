@@ -7,6 +7,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
@@ -88,11 +89,40 @@ public class OreMiningGameTests {
                     "Mining must drop exactly one expected item");
         }
         var orbs = level.getEntitiesOfClass(ExperienceOrb.class, area);
-        int xp = orbs.stream().mapToInt(ExperienceOrb::getValue).sum();
+        int xp = totalExperience(orbs);
         helper.assertTrue(experience ? xp >= 4 && xp <= 8 : xp == 0,
-                "Mining experience must be 4-8 only for suitable tools without Silk Touch, got " + xp);
+                "Mining experience must be 4-8 only for suitable tools without Silk Touch, got " + xp
+                        + "; ore=" + ore + "; tool=" + tool + "; orbs(value x count)="
+                        + orbs.stream().map(orb -> orb.getValue() + " x " + orbCount(orb)).toList());
         drops.forEach(ItemEntity::discard);
         orbs.forEach(ExperienceOrb::discard);
+    }
+
+    private static int totalExperience(List<ExperienceOrb> orbs) {
+        return orbs.stream().mapToInt(orb -> orb.getValue() * orbCount(orb)).sum();
+    }
+
+    private static int orbCount(ExperienceOrb orb) {
+        // 生成時に同額オーブが統合されると value は変わらず count が増える。公開 getter がないため保存値を使う。
+        var data = new CompoundTag();
+        orb.addAdditionalSaveData(data);
+        return data.getInt("Count");
+    }
+
+    @GameTest(template = "gametest/basic_floor")
+    public static void experienceAccountingIncludesMergedOrbs(GameTestHelper helper) {
+        var mergedOrb = new ExperienceOrb(helper.getLevel(), 0, 0, 0, 3);
+        var data = new CompoundTag();
+        mergedOrb.addAdditionalSaveData(data);
+        // 実際の統合は乱数依存なので、6 XP が 3 XP × 2 個に統合された状態を直接再現する。
+        data.putInt("Count", 2);
+        mergedOrb.readAdditionalSaveData(data);
+        helper.assertTrue(totalExperience(List.of(mergedOrb)) == 6,
+                "A merged orb with value 3 and count 2 must represent 6 XP");
+        var singleOrb = new ExperienceOrb(helper.getLevel(), 0, 0, 0, 1);
+        helper.assertTrue(totalExperience(List.of(mergedOrb, singleOrb)) == 7,
+                "Merged and unmerged orbs must both contribute their full XP");
+        helper.succeed();
     }
 
     @GameTest(template = "gametest/basic_floor")
