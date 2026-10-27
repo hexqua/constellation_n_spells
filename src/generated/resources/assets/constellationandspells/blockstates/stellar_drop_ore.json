@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "constellationandspells:block/stellar_drop_ore"
+    }
+  }
+}
