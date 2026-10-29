@@ -52,8 +52,8 @@ public final class StardustGameTests {
     @GameTest(template = "gametest/basic_floor")
     public static void spellConfigurationAndCone(GameTestHelper helper) {
         var spell = SpellRegistry.STARDUST.get();
-        helper.assertTrue(spell.getCastType() == CastType.LONG && spell.getCastTime(1) == 20, "Stardust must be a 20-tick LONG cast");
-        helper.assertTrue(spell.getMaxLevel() == 10 && spell.getSpellCooldown() == 10, "Stardust must have ten levels and a ten-tick cooldown");
+        helper.assertTrue(spell.getCastType() == CastType.INSTANT && spell.getCastTime(1) == 0, "Stardust must be an instant cast with no cast time");
+        helper.assertTrue(spell.getMaxLevel() == 10 && spell.getSpellCooldown() == 20, "Stardust must have ten levels and a twenty-tick cooldown");
         helper.assertTrue(spell.getManaCost(1) == 10 && spell.getManaCost(10) == 28, "Mana must scale from 10 to 28");
         helper.assertTrue(spell.getSpellPower(1, null) == 80 && spell.getSpellPower(10, null) == 170, "Power must scale from 80 to 170");
         var random = RandomSource.create(917234);
@@ -70,7 +70,7 @@ public final class StardustGameTests {
     @GameTest(template = "gametest/basic_floor", timeoutTicks = 40)
     public static void burstsKeepOriginAimAndPower(GameTestHelper helper) {
         var caster = caster(helper);
-        var origin = caster.getEyePosition().add(0, -0.075, 0);
+        var origin = caster.getEyePosition().add(0, -0.25, 0);
         var shots = new ArrayList<Shot>();
         var observer = observe(caster, shots);
         NeoForge.EVENT_BUS.addListener(observer);
@@ -88,7 +88,7 @@ public final class StardustGameTests {
             helper.assertTrue(shots.size() == 5, "A burst must fire exactly five shots");
             for (int i = 0; i < shots.size(); i++) {
                 var shot = shots.get(i);
-                helper.assertTrue(shot.tick == started + i * 3L, "Shots must spawn at ticks 0, 3, 6, 9 and 12");
+                helper.assertTrue(shot.tick == started + i * 2L, "Shots must spawn at ticks 0, 2, 4, 6 and 8");
                 helper.assertTrue(shot.position.distanceToSqr(origin) < 0.000001, "All shots must retain the original position");
                 helper.assertTrue(shot.velocity.normalize().y >= Math.cos(StardustBursts.HALF_ANGLE), "All shots must retain the original aim");
                 helper.assertTrue(shot.damage == 1.6f, "All shots must retain snapshotted damage");

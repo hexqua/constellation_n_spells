@@ -21,14 +21,14 @@ import java.util.Map;
 @EventBusSubscriber(modid = ConstellationnSpells.MODID)
 public final class StardustBursts {
     public static final int SHOT_COUNT = 5;
-    public static final int SHOT_INTERVAL = 3;
+    public static final int SHOT_INTERVAL = 2;
     public static final double HALF_ANGLE = Math.toRadians(10);
     private static final Map<ServerLevel, List<Burst>> BURSTS = new IdentityHashMap<>();
 
     private StardustBursts() {}
 
     public static void start(ServerLevel level, LivingEntity caster, float damage) {
-        var position = caster.getEyePosition().add(0, -0.075, 0);
+        var position = caster.getEyePosition().add(0, -0.25, 0);
         var burst = new Burst(caster, position, caster.getLookAngle().normalize(), damage, level.getGameTime());
         if (burst.valid(level)) {
             burst.fire(level);

@@ -3,7 +3,6 @@ package jp.aquafactory.constellationandspells.spell.stardust;
 import io.redspace.ironsspellbooks.api.config.DefaultConfig;
 import io.redspace.ironsspellbooks.api.magic.MagicData;
 import io.redspace.ironsspellbooks.api.spells.*;
-import io.redspace.ironsspellbooks.api.util.AnimationHolder;
 import io.redspace.ironsspellbooks.api.util.Utils;
 import io.redspace.ironsspellbooks.damage.SpellDamageSource;
 import jp.aquafactory.constellationandspells.ConstellationnSpells;
@@ -24,14 +23,14 @@ public final class StardustSpell extends AbstractSpell {
     private static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath(ConstellationnSpells.MODID, "stardust");
     private final DefaultConfig config = new DefaultConfig().setMinRarity(SpellRarity.COMMON)
             .setSchoolResource(ResourceLocation.fromNamespaceAndPath(ConstellationnSpells.MODID, "zodiac"))
-            .setMaxLevel(10).setCooldownSeconds(0.5).build();
+            .setMaxLevel(10).setCooldownSeconds(1).build();
 
     public StardustSpell() {
         baseSpellPower = 80;
         spellPowerPerLevel = 10;
         baseManaCost = 10;
         manaCostPerLevel = 2;
-        castTime = 20;
+        castTime = 0;
     }
 
     @Override
@@ -47,23 +46,10 @@ public final class StardustSpell extends AbstractSpell {
     public DefaultConfig getDefaultConfig() { return config; }
 
     @Override
-    public CastType getCastType() { return CastType.LONG; }
-
-    @Override
-    public Optional<SoundEvent> getCastStartSound() { return Optional.of(SoundRegistry.ZODIAC_CAST.get()); }
+    public CastType getCastType() { return CastType.INSTANT; }
 
     @Override
     public Optional<SoundEvent> getCastFinishSound() { return Optional.of(SoundRegistry.STELLAR_LAUNCH.get()); }
-
-    @Override
-    public AnimationHolder getCastStartAnimation() {
-        return SpellAnimations.ANIMATION_CONTINUOUS_CAST;
-    }
-
-    @Override
-    public AnimationHolder getCastFinishAnimation() {
-        return AnimationHolder.none();
-    }
 
     @Override
     public void onCast(Level level, int spellLevel, LivingEntity caster, CastSource source, MagicData magicData) {
