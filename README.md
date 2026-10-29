@@ -16,6 +16,8 @@ Iron's Spells 'n Spellbooks用の小さなアドオンMODです.
 - `mods`配下に`jar`を入れればOKです。
 - 現時点でIron's Spells 'n Spellbooks及びそれの前提MOD以外の前提MODはありません.
 
+School Power 連携のサーバー設定と同期・拡張方法は [School Power 連携](docs/school-power-sharing.md) を参照してください。
+
 ## 開発環境
 
 - Minecraft 1.21.1 / NeoForge 21.1.265 / Java 21
