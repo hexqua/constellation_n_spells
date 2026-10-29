@@ -1,9 +1,11 @@
 package jp.aquafactory.constellationandspells.registry;
 
+import io.redspace.ironsspellbooks.api.spells.ISpellContainer;
 import jp.aquafactory.constellationandspells.ConstellationnSpells;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
@@ -24,6 +26,7 @@ public final class CreativeTabRegistry {
     private static void displayItems(CreativeModeTab.ItemDisplayParameters parameters, CreativeModeTab.Output output) {
         addBlocks(output);
         addMaterials(output);
+        addSpellScrolls(output);
     }
 
     private static void addMaterials(CreativeModeTab.Output output) {
@@ -35,5 +38,18 @@ public final class CreativeTabRegistry {
     private static void addBlocks(CreativeModeTab.Output output) {
         output.accept(ItemRegistry.STELLAR_DROP_ORE.get());
         output.accept(ItemRegistry.DEEPSLATE_STELLAR_DROP_ORE.get());
+    }
+
+    private static void addSpellScrolls(CreativeModeTab.Output output) {
+        var spells = io.redspace.ironsspellbooks.api.registry.SpellRegistry.getEnabledSpells().stream()
+                .filter(spell -> ConstellationnSpells.MODID.equals(spell.getSpellResource().getNamespace()))
+                .toList();
+        for (var spell : spells) {
+            for (var level = spell.getMinLevel(); level <= spell.getMaxLevel(); ++level) {
+                var scrollStack = new ItemStack(io.redspace.ironsspellbooks.registries.ItemRegistry.SCROLL.get());
+                ISpellContainer.createScrollContainer(spell, level, scrollStack);
+                output.accept(scrollStack);
+            }
+        }
     }
 }
