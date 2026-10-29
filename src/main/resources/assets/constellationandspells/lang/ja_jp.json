@@ -18,6 +18,13 @@
   "spell.constellationandspells.stardust": "スターダスト",
 
   "spell.constellationandspells.stardust.guide": "複数の小さな星屑を放つ。星座術におけるマジックミサイルのような基礎の魔法。飛ばす星屑は散らばるため遠距離攻撃には向かないが、対象の無敵時間を無視することができる。",
+  "ui.constellationandspells.projectile_count": "弾数：%s",
 
-  "death.attack.zodiac_spell": "%1$sの存在は星屑と化した"
+  "death.attack.zodiac_spell": "%1$sの存在は星屑と化した",
+  "death.attack.zodiac_spell.player": "%1$sは%2$sによって星屑と化した",
+  "death.attack.constellationandspells.stardust": "%1$sの存在は星屑と化した",
+
+  "subtitle.constellationandspells.sound.zodiac_cast": "星が瞬く",
+  "subtitle.constellationandspells.sound.stellar_launch": "星が飛翔する",
+  "subtitle.constellationandspells.sound.stellar_impact": "星が砕ける"
 }

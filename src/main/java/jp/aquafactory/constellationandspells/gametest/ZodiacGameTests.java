@@ -44,13 +44,11 @@ import static io.redspace.ironsspellbooks.util.ModTags.SCHOOL_FOCUS;
 @SuppressWarnings("unused")
 public class ZodiacGameTests {
     @GameTest(template = "gametest/basic_floor")
-    public static void schoolWorksWithoutRegisteredSpells(GameTestHelper helper) {
+    public static void schoolResolvesStardustAndFocus(GameTestHelper helper) {
         var school = ZodiacSchoolRegistry.ZODIAC.get();
         helper.assertTrue(SchoolRegistry.getSchool(id("zodiac")) == school, "Zodiac school must resolve");
-        helper.assertTrue(SpellRegistry.getSpellsForSchool(school).isEmpty(), "Zodiac must have no spells");
-        helper.assertTrue(SpellRegistry.REGISTRY.keySet().stream()
-                        .noneMatch(key -> key.getNamespace().equals(ConstellationnSpells.MODID)),
-                "The mod must not register placeholder spells");
+        helper.assertTrue(SpellRegistry.getSpellsForSchool(school).contains(SpellRegistry.REGISTRY.get(id("stardust"))),
+                "Zodiac must contain Stardust");
         var focus = new ItemStack(ItemRegistry.STARDUST_SHARD.get());
         helper.assertTrue(focus.is(SchoolTags.ZODIAC_FOCUS) && focus.is(SCHOOL_FOCUS),
                 "Stardust shard must be accepted by school and scroll forge focus tags");

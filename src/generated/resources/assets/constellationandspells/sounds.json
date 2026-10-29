@@ -1,0 +1,20 @@
+{
+  "stellar_impact": {
+    "sounds": [
+      "constellationandspells:stellar_impact"
+    ],
+    "subtitle": "subtitle.constellationandspells.sound.stellar_impact"
+  },
+  "stellar_launch": {
+    "sounds": [
+      "constellationandspells:stellar_launch"
+    ],
+    "subtitle": "subtitle.constellationandspells.sound.stellar_launch"
+  },
+  "zodiac_cast": {
+    "sounds": [
+      "constellationandspells:zodiac_cast"
+    ],
+    "subtitle": "subtitle.constellationandspells.sound.zodiac_cast"
+  }
+}

@@ -17,7 +17,14 @@
 
   "spell.constellationandspells.stardust": "Stardust",
 
-  "spell.constellationandspells.stardust.guide": "(TODO:翻訳)",
+  "spell.constellationandspells.stardust.guide": "Launches five small stars in a spread. A fundamental Zodiac spell, akin to Magic Missile. Its spread makes it less effective at long range, but each star bypasses the target's damage immunity period.",
+  "ui.constellationandspells.projectile_count": "%s projectiles",
 
-  "death.attack.zodiac_spell": "(TODO:翻訳)%1$s"
+  "death.attack.zodiac_spell": "%1$s was reduced to stardust",
+  "death.attack.zodiac_spell.player": "%1$s was reduced to stardust by %2$s",
+  "death.attack.constellationandspells.stardust": "%1$s was reduced to stardust",
+
+  "subtitle.constellationandspells.sound.zodiac_cast": "Stars twinkle",
+  "subtitle.constellationandspells.sound.stellar_launch": "Stardust launches",
+  "subtitle.constellationandspells.sound.stellar_impact": "Stardust shatters"
 }
