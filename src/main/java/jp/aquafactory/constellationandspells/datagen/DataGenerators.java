@@ -15,6 +15,11 @@ public final class DataGenerators {
         var generator = event.getGenerator();
         var output = generator.getPackOutput();
         var lookup = event.getLookupProvider();
+        var magicData = new MagicDataProvider(output, lookup);
+        generator.addProvider(event.includeServer(), magicData);
+        generator.addProvider(event.includeServer(), new ItemTagProvider(output, lookup, event.getExistingFileHelper()));
+        generator.addProvider(event.includeServer(), new DamageTypeTagProvider(
+                output, magicData.getRegistryProvider(), event.getExistingFileHelper()));
         generator.addProvider(event.includeClient(), new BlockModelProvider(output, event.getExistingFileHelper()));
         generator.addProvider(event.includeClient(), new ItemModelProvider(output, event.getExistingFileHelper()));
         generator.addProvider(event.includeServer(), new BlockMiningTagProvider(output, lookup, event.getExistingFileHelper()));

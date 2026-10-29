@@ -28,6 +28,8 @@ public final class CreativeTabRegistry {
 
     private static void addMaterials(CreativeModeTab.Output output) {
         output.accept(ItemRegistry.STARDUST_SHARD.get());
+        output.accept(ItemRegistry.ZODIAC_RUNE.get());
+        output.accept(ItemRegistry.ZODIAC_UPGRADE_ORB.get());
     }
 
     private static void addBlocks(CreativeModeTab.Output output) {

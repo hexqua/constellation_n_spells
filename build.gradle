@@ -135,6 +135,8 @@ neoForge {
         data {
             data()
             programArguments.addAll '--mod', project.mod_id, '--all', '--output', file('src/generated/resources/').getAbsolutePath(), '--existing', file('src/main/resources/').getAbsolutePath()
+            // 強化オーブの共通テクスチャを本体から参照するため、生成時の存在確認にも読み込む。
+            programArguments.addAll '--existing-mod', 'irons_spellbooks'
         }
 
         configureEach {
