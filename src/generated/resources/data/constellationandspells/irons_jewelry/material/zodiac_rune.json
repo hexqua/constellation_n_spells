@@ -1,0 +1,15 @@
+{
+  "bonusParameters": {
+    "irons_jewelry:attribute": {
+      "amount": 0.025,
+      "attribute": "constellationandspells:zodiac_spell_power",
+      "operation": "add_multiplied_total"
+    }
+  },
+  "descriptionId": "material.constellationandspells.zodiac_rune",
+  "ingredient": {
+    "item": "constellationandspells:zodiac_rune"
+  },
+  "paletteLocation": "constellationandspells:palettes/zodiac_rune",
+  "quality": 1.5
+}

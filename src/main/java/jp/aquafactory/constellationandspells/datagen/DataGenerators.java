@@ -17,6 +17,7 @@ public final class DataGenerators {
         var lookup = event.getLookupProvider();
         var magicData = new MagicDataProvider(output, lookup);
         generator.addProvider(event.includeServer(), magicData);
+        generator.addProvider(event.includeServer(), new GemsMaterialDataProvider(output, lookup));
         generator.addProvider(event.includeServer(), new ItemTagProvider(output, lookup, event.getExistingFileHelper()));
         generator.addProvider(event.includeServer(), new DamageTypeTagProvider(
                 output, magicData.getRegistryProvider(), event.getExistingFileHelper()));

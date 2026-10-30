@@ -50,13 +50,13 @@ jar は `build/libs` に出力されます。GameTest は初期登録を検査�
 | `runClientCompat`       | `runGameTestServerCompat`       | BetterCombat＋Irons 構成、Apprentice's Codex、Spell's Atlas、Asterism Arcanum、Ace's Spell Utils、AzureLib、ExpandAbility |
 
 ダミー、Moonlight、JEI、MezzConfig、Jade は Client / GameTest の全構成に含みます。それ以外の Optional MOD と描画 MOD は指定構成にだけ追加し、配布 jar
-に同梱しません。Apprentice's Codex も公開配布版を取得し、ローカルリポジトリを参照しません。`runServer` / `runData`
-は共通依存だけで実行します。
+に同梱しません。Apprentice's Codex も公開配布版を取得し、ローカルリポジトリを参照しません。`runServer`
+は共通依存だけで実行します。`runData` は素材定義の Codec を使うため、Iron's Gems 'n Jewelry と Atlas API も読み込みます。
 
 JEI は 19.70.0.460（beta）、必須依存の MezzConfig は 0.6.9、Jade は 15.10.6 を使用します（2026-10-27 時点の Minecraft 1.21.1 / NeoForge 対応最新版）。
 配布用メタデータでは JEI / Jade をバージョン制限なしの optional 依存としています。Jade に追加の必須依存 MOD はありません。
 
-IDE と Gradle で同じ実行時依存を使うため、空の `devBase` / `devGraphic` / `devBetterCombat` / `devIrons` / `devCompat`
+IDE と Gradle で同じ実行時依存を使うため、空の `devBase` / `devGraphic` / `devBetterCombat` / `devIrons` / `devCompat` / `devData`
 source set を使用します。製品コードと GameTest は引き続き `src/main` に置きます。IntelliJ IDEA では Gradle
 プロジェクトを再読み込みして追加の Client / GameTestServer 構成と module を反映してください。
 

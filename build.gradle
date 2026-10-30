@@ -85,6 +85,10 @@ Map<String, List<String>> runtimeProfiles = [
 
 configurations {
     runtimeClasspath.extendsFrom localRuntime
+    dataRuntimeOnly {
+        canBeConsumed = false
+        canBeResolved = true
+    }
     sodiumShell {
         canBeConsumed = false
         canBeResolved = true
@@ -155,7 +159,7 @@ neoForge {
 
 def runtimeSourceSets = [:]
 def addRunModules = { String runName, Collection<String> modules ->
-    def profileName = runName.replaceFirst('^(client|gameTestServer)', '') ?: 'Base'
+    def profileName = runName == 'data' ? 'Data' : (runName.replaceFirst('^(client|gameTestServer)', '') ?: 'Base')
     def sourceSetName = "dev${profileName}"
     def runtimeSourceSet = runtimeSourceSets[profileName]
     if (runtimeSourceSet == null) {
@@ -186,6 +190,8 @@ runtimeProfiles.each { suffix, modules ->
     tasks.named("runGameTestServer${suffix}").configure { dependsOn cleanWorld }
 }
 addRunModules('clientGraphic', ['target_dummy', 'utility', 'graphic'])
+// 素材定義の生成には Jewelry の型と Codec、および登録済みパラメーターが必要。
+addRunModules('data', ['data'])
 // 同じ run ディレクトリのログ・設定を使うため、複数指定時も GameTest は直列にする。
 def gameTestTaskNames = runtimeProfiles.keySet().collect { "runGameTestServer${it}".toString() }
 gameTestTaskNames.eachWithIndex { name, index ->
@@ -244,6 +250,9 @@ dependencies {
     ironsRuntimeOnly "io.redspace:atlas_api:${atlas_api_version}"
     ironsRuntimeOnly "io.redspace:irons_artifice:${irons_artifice_version}"
     ironsRuntimeOnly "io.redspace:irons_jewelry:${irons_jewelry_version}"
+
+    dataRuntimeOnly "io.redspace:atlas_api:${atlas_api_version}"
+    dataRuntimeOnly "io.redspace:irons_jewelry:${irons_jewelry_version}"
 
     // 配布版を取得し、参考リポジトリやそのビルド成果物へは接続しない。
     compatRuntimeOnly "maven.modrinth:apprentices-codex:${apprentice_codex_modrinth_version_id}"
