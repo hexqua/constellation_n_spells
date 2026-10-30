@@ -1,8 +1,30 @@
 {
   "itemGroup.constellationandspells": "Constellation 'n Spells",
 
+  "school.constellationandspells.zodiac": "Zodiac",
+
+  "attribute.constellationandspells.zodiac_spell_power": "Zodiac Spell Power",
+  "attribute.constellationandspells.zodiac_magic_resist": "Zodiac Magic Resistance",
+
+  "material.constellationandspells.zodiac_rune": "Zodiac Rune",
+
   "block.constellationandspells.stellar_drop_ore": "Stellar Drop Ore",
   "block.constellationandspells.deepslate_stellar_drop_ore": "Deepslate Stellar Drop Ore",
 
-  "item.constellationandspells.stardust_shard": "Stardust Shard"
+  "item.constellationandspells.stardust_shard": "Stardust Shard",
+  "item.constellationandspells.zodiac_rune": "Zodiac Rune",
+  "item.constellationandspells.zodiac_upgrade_orb": "Zodiac Upgrade Orb",
+
+  "spell.constellationandspells.stardust": "Stardust",
+
+  "spell.constellationandspells.stardust.guide": "Launches five small stars in a spread. A fundamental Zodiac spell, akin to Magic Missile. Its spread makes it less effective at long range, but each star bypasses the target's damage immunity period.",
+  "ui.constellationandspells.projectile_count": "%s projectiles",
+
+  "death.attack.zodiac_spell": "%1$s was reduced to stardust",
+  "death.attack.zodiac_spell.player": "%1$s was reduced to stardust by %2$s",
+  "death.attack.constellationandspells.stardust": "%1$s was reduced to stardust",
+
+  "subtitle.constellationandspells.sound.zodiac_cast": "Stars twinkle",
+  "subtitle.constellationandspells.sound.stellar_launch": "Stardust launches",
+  "subtitle.constellationandspells.sound.stellar_impact": "Stardust shatters"
 }
