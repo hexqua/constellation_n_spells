@@ -26,7 +26,15 @@ public final class CreativeTabRegistry {
     private static void displayItems(CreativeModeTab.ItemDisplayParameters parameters, CreativeModeTab.Output output) {
         addBlocks(output);
         addMaterials(output);
+        addArmor(output);
         addSpellScrolls(output);
+    }
+
+    private static void addArmor(CreativeModeTab.Output output) {
+        output.accept(ItemRegistry.STAR_GATHERERS_HOOD.get());
+        output.accept(ItemRegistry.STAR_GATHERERS_TUNIC.get());
+        output.accept(ItemRegistry.STAR_GATHERERS_TROUSERS.get());
+        output.accept(ItemRegistry.STAR_GATHERERS_BOOTS.get());
     }
 
     private static void addMaterials(CreativeModeTab.Output output) {

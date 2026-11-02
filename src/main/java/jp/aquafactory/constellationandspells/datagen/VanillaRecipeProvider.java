@@ -11,6 +11,7 @@ import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.recipes.SimpleCookingRecipeBuilder;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.crafting.Ingredient;
 import org.jetbrains.annotations.NotNull;
 
@@ -41,6 +42,44 @@ public final class VanillaRecipeProvider extends RecipeProvider {
                 .define('R', ItemRegistry.ZODIAC_RUNE.get())
                 .define('O', io.redspace.ironsspellbooks.registries.ItemRegistry.UPGRADE_ORB.get())
                 .unlockedBy("has_upgrade_orb", has(io.redspace.ironsspellbooks.registries.ItemRegistry.UPGRADE_ORB.get()))
+                .save(output);
+
+        ShapedRecipeBuilder
+                .shaped(RecipeCategory.COMBAT, ItemRegistry.STAR_GATHERERS_HOOD.get())
+                .pattern("WWW")
+                .pattern("WSW")
+                .define('S', ItemRegistry.STARDUST_SHARD.get())
+                .define('W', ItemTags.WOOL)
+                .unlockedBy("has_wools", has(ItemTags.WOOL))
+                .save(output);
+
+        ShapedRecipeBuilder
+                .shaped(RecipeCategory.COMBAT, ItemRegistry.STAR_GATHERERS_TUNIC.get())
+                .pattern("WSW")
+                .pattern("WWW")
+                .pattern("WWW")
+                .define('S', ItemRegistry.STARDUST_SHARD.get())
+                .define('W', ItemTags.WOOL)
+                .unlockedBy("has_wools", has(ItemTags.WOOL))
+                .save(output);
+
+        ShapedRecipeBuilder
+                .shaped(RecipeCategory.COMBAT, ItemRegistry.STAR_GATHERERS_TROUSERS.get())
+                .pattern("WWW")
+                .pattern("WSW")
+                .pattern("W W")
+                .define('S', ItemRegistry.STARDUST_SHARD.get())
+                .define('W', ItemTags.WOOL)
+                .unlockedBy("has_wools", has(ItemTags.WOOL))
+                .save(output);
+
+        ShapedRecipeBuilder
+                .shaped(RecipeCategory.COMBAT, ItemRegistry.STAR_GATHERERS_BOOTS.get())
+                .pattern("W W")
+                .pattern("WSW")
+                .define('S', ItemRegistry.STARDUST_SHARD.get())
+                .define('W', ItemTags.WOOL)
+                .unlockedBy("has_wools", has(ItemTags.WOOL))
                 .save(output);
 
         for (var holder : BlockRegistry.BLOCKS.getEntries()) {

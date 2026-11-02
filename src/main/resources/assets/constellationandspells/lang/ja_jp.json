@@ -14,6 +14,10 @@
   "item.constellationandspells.stardust_shard": "星屑の欠片",
   "item.constellationandspells.zodiac_rune": "星座術のルーン",
   "item.constellationandspells.zodiac_upgrade_orb": "星座術のアップグレードオーブ",
+  "item.constellationandspells.star_gatherers_hood": "星拾いのフード",
+  "item.constellationandspells.star_gatherers_tunic": "星拾いのチュニック",
+  "item.constellationandspells.star_gatherers_trousers": "星拾いのズボン",
+  "item.constellationandspells.star_gatherers_boots": "星拾いの靴",
 
   "spell.constellationandspells.stardust": "スターダスト",
 
@@ -26,5 +30,6 @@
 
   "subtitle.constellationandspells.sound.zodiac_cast": "星が瞬く",
   "subtitle.constellationandspells.sound.stellar_launch": "星が飛翔する",
-  "subtitle.constellationandspells.sound.stellar_impact": "星が砕ける"
+  "subtitle.constellationandspells.sound.stellar_impact": "星が砕ける",
+  "subtitle.constellationandspells.sound.armor_equip_cloth": "布の防具を装備する"
 }

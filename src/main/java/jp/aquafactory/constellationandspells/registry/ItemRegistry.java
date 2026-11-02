@@ -3,6 +3,8 @@ package jp.aquafactory.constellationandspells.registry;
 import io.redspace.ironsspellbooks.item.UpgradeOrbItem;
 import io.redspace.ironsspellbooks.registries.ComponentRegistry;
 import jp.aquafactory.constellationandspells.ConstellationnSpells;
+import jp.aquafactory.constellationandspells.item.armor.StarGatherersArmorItem;
+import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
@@ -19,6 +21,14 @@ public final class ItemRegistry {
                     .component(ComponentRegistry.UPGRADE_ORB_TYPE, MagicRegistry.ZODIAC_POWER)));
     public static final DeferredItem<BlockItem> STELLAR_DROP_ORE = ITEMS.registerSimpleBlockItem(BlockRegistry.STELLAR_DROP_ORE);
     public static final DeferredItem<BlockItem> DEEPSLATE_STELLAR_DROP_ORE = ITEMS.registerSimpleBlockItem(BlockRegistry.DEEPSLATE_STELLAR_DROP_ORE);
+    public static final DeferredItem<StarGatherersArmorItem> STAR_GATHERERS_HOOD = ITEMS.registerItem(
+            "star_gatherers_hood", properties -> new StarGatherersArmorItem(ArmorItem.Type.HELMET, properties));
+    public static final DeferredItem<StarGatherersArmorItem> STAR_GATHERERS_TUNIC = ITEMS.registerItem(
+            "star_gatherers_tunic", properties -> new StarGatherersArmorItem(ArmorItem.Type.CHESTPLATE, properties));
+    public static final DeferredItem<StarGatherersArmorItem> STAR_GATHERERS_TROUSERS = ITEMS.registerItem(
+            "star_gatherers_trousers", properties -> new StarGatherersArmorItem(ArmorItem.Type.LEGGINGS, properties));
+    public static final DeferredItem<StarGatherersArmorItem> STAR_GATHERERS_BOOTS = ITEMS.registerItem(
+            "star_gatherers_boots", properties -> new StarGatherersArmorItem(ArmorItem.Type.BOOTS, properties));
 
     private ItemRegistry() {
     }

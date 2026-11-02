@@ -4,6 +4,7 @@ import jp.aquafactory.constellationandspells.datagen.DataGenerators;
 import jp.aquafactory.constellationandspells.config.ServerConfig;
 import jp.aquafactory.constellationandspells.network.SchoolPowerSharingSync;
 import jp.aquafactory.constellationandspells.registry.BlockRegistry;
+import jp.aquafactory.constellationandspells.registry.ArmorMaterialRegistry;
 import jp.aquafactory.constellationandspells.registry.CreativeTabRegistry;
 import jp.aquafactory.constellationandspells.registry.ItemRegistry;
 import jp.aquafactory.constellationandspells.registry.AttributeRegistry;
@@ -27,6 +28,7 @@ public class ConstellationnSpells {
         SchoolPowerSharingSync.register(modEventBus);
         BlockRegistry.BLOCKS.register(modEventBus);
         ItemRegistry.ITEMS.register(modEventBus);
+        ArmorMaterialRegistry.ARMOR_MATERIALS.register(modEventBus);
         AttributeRegistry.ATTRIBUTES.register(modEventBus);
         ZodiacSchoolRegistry.SCHOOLS.register(modEventBus);
         SoundRegistry.SOUNDS.register(modEventBus);

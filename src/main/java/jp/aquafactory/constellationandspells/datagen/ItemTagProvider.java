@@ -7,6 +7,7 @@ import jp.aquafactory.constellationandspells.registry.ItemRegistry;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
+import net.minecraft.tags.ItemTags;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import org.jetbrains.annotations.NotNull;
 
@@ -24,5 +25,10 @@ public final class ItemTagProvider extends ItemTagsProvider {
         tag(SchoolTags.ZODIAC_FOCUS).add(ItemRegistry.STARDUST_SHARD.get());
         tag(ModTags.SCHOOL_FOCUS).addTag(SchoolTags.ZODIAC_FOCUS);
         tag(ModTags.INSCRIBED_RUNES).add(ItemRegistry.ZODIAC_RUNE.get());
+        // バニラの enchantable タグが部位別防具タグを参照するため、付与範囲は標準の定義に任せる。
+        tag(ItemTags.HEAD_ARMOR).add(ItemRegistry.STAR_GATHERERS_HOOD.get());
+        tag(ItemTags.CHEST_ARMOR).add(ItemRegistry.STAR_GATHERERS_TUNIC.get());
+        tag(ItemTags.LEG_ARMOR).add(ItemRegistry.STAR_GATHERERS_TROUSERS.get());
+        tag(ItemTags.FOOT_ARMOR).add(ItemRegistry.STAR_GATHERERS_BOOTS.get());
     }
 }
