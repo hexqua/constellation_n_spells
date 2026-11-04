@@ -2,7 +2,6 @@ package jp.aquafactory.constellationandspells.gametest;
 
 import io.redspace.ironsspellbooks.api.events.SpellDamageEvent;
 import io.redspace.ironsspellbooks.api.config.SpellConfigManager;
-import io.redspace.ironsspellbooks.api.spells.CastType;
 import io.redspace.ironsspellbooks.damage.DamageSources;
 import io.redspace.ironsspellbooks.damage.SpellDamageSource;
 import jp.aquafactory.constellationandspells.ConstellationnSpells;
@@ -50,12 +49,7 @@ public final class StardustGameTests {
     }
 
     @GameTest(template = "gametest/basic_floor")
-    public static void spellConfigurationAndCone(GameTestHelper helper) {
-        var spell = SpellRegistry.STARDUST.get();
-        helper.assertTrue(spell.getCastType() == CastType.INSTANT && spell.getCastTime(1) == 0, "Stardust must be an instant cast with no cast time");
-        helper.assertTrue(spell.getMaxLevel() == 10 && spell.getSpellCooldown() == 20, "Stardust must have ten levels and a twenty-tick cooldown");
-        helper.assertTrue(spell.getManaCost(1) == 10 && spell.getManaCost(10) == 28, "Mana must scale from 10 to 28");
-        helper.assertTrue(spell.getSpellPower(1, null) == 80 && spell.getSpellPower(10, null) == 170, "Power must scale from 80 to 170");
+    public static void shotDirectionsStayWithinCone(GameTestHelper helper) {
         var random = RandomSource.create(917234);
         for (var forward : List.of(new Vec3(0, 1, 0), new Vec3(0, -1, 0), new Vec3(1, 2, 3).normalize())) {
             for (int i = 0; i < 256; i++) {

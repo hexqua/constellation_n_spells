@@ -35,6 +35,7 @@
 - Java スクリプトは `JDK21_HOME` またはユーザーの `.jdks` / `.gradle/jdks` を使う。CI は workflow で Java 21 を設定する。
 - 通常確認に `clean` は付けない。コード・依存・リソース・ビルド設定変更では `build`、サーバー登録・データ読込・GameTest 変更では `runGameTestServer` も実行する。文書だけならビルド省略理由を報告してよい。
 - `build` は `checkTextEncodingHygiene` を含む。同タスクは単独実行も可能。
+- テストの追加・整理では [テスト設計方針](docs/testing-policy.md) に従う。設定値の転記より、実際の処理結果・状態遷移・依存との接続を優先して検証する。
 - GameTest は専用 world `run/constellation_gametest_clean`（追加構成は末尾に `bettercombat` / `irons` / `compat`）を初期化する。手動用 `run/world` は削除しない。同じ run ディレクトリの GameTest は直列実行し、先行プロセスの終了を待つ。
 - 実行ツールの GameTest 強制終了 timeout は初回から最低 120 秒。yield は終了ではなく wait で追跡する。ツール timeout なら記録を保持し、前回の 2 倍以上で追加実行する。GameTest 自身の test timeout とは区別する。
 - 一度でも GameTest が失敗した場合は `report-gametest-failure` Skill で初回失敗と追加実行を最終報告する。

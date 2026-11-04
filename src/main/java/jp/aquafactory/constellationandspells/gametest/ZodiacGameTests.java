@@ -18,13 +18,13 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.level.GameType;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.util.FakePlayerFactory;
 import net.neoforged.neoforge.gametest.GameTestHolder;
@@ -42,7 +42,7 @@ import static io.redspace.ironsspellbooks.util.ModTags.SCHOOL_FOCUS;
 @PrefixGameTestTemplate(false)
 // GameTest がアノテーションから探索して呼び出す。
 @SuppressWarnings("unused")
-public class ZodiacGameTests {
+public final class ZodiacGameTests {
     @GameTest(template = "gametest/basic_floor")
     public static void schoolResolvesStardustAndFocus(GameTestHelper helper) {
         var school = ZodiacSchoolRegistry.ZODIAC.get();
@@ -64,8 +64,6 @@ public class ZodiacGameTests {
                 "School must reference Zodiac damage");
         helper.assertTrue(damage.is(SchoolTags.ZODIAC_MAGIC) && damage.is(Tags.DamageTypes.IS_MAGIC),
                 "Zodiac damage must belong to its school and common magic tags");
-        helper.assertTrue(damage.value().msgId().equals("zodiac_spell"),
-                "Damage message id must match the existing translation");
 
         var player = FakePlayerFactory.get(helper.getLevel(),
                 new GameProfile(UUID.fromString("a1020584-0c30-4439-9246-11da20769df1"), "ZodiacAttributes"));
@@ -96,8 +94,9 @@ public class ZodiacGameTests {
 
     @GameTest(template = "gametest/basic_floor")
     public static void orbUpgradesArmorThroughArcaneAnvil(GameTestHelper helper) {
-        var player = FakePlayerFactory.get(helper.getLevel(),
-                new GameProfile(UUID.fromString("61861c18-01b0-4718-98f8-49f311da3cc3"), "ZodiacUpgrades"));
+        // FakePlayer の空 tick を避け、装備更新で実際に適用された属性を確認する。
+        var player = helper.makeMockPlayer(GameType.SURVIVAL);
+        double initialPower = player.getAttributeValue(AttributeRegistry.ZODIAC_SPELL_POWER);
         var menu = new ArcaneAnvilMenu(0, player.getInventory(), ContainerLevelAccess.NULL);
         var armor = new ItemStack(Items.IRON_CHESTPLATE);
         for (int count = 1; count <= 2; count++) {
@@ -110,16 +109,16 @@ public class ZodiacGameTests {
             var type = helper.getLevel().registryAccess().holderOrThrow(MagicRegistry.ZODIAC_POWER);
             helper.assertTrue(upgrade.upgrades().getOrDefault(type, 0) == count,
                     "Arcane anvil must accumulate Zodiac upgrades");
-            double[] amount = {0};
-            armor.forEachModifier(EquipmentSlot.CHEST, (attribute, modifier) -> {
-                if (attribute.equals(AttributeRegistry.ZODIAC_SPELL_POWER)) {
-                    helper.assertTrue(modifier.operation() == AttributeModifier.Operation.ADD_MULTIPLIED_BASE,
-                            "Zodiac upgrades must multiply base power");
-                    amount[0] += modifier.amount();
-                }
-            });
-            helper.assertTrue(Math.abs(amount[0] - 0.05 * count) < 0.000001,
-                    "Each Zodiac upgrade must add five percent base spell power");
+            player.setItemSlot(EquipmentSlot.CHEST, armor);
+            player.tick();
+            helper.assertTrue(Math.abs(player.getAttributeValue(AttributeRegistry.ZODIAC_SPELL_POWER)
+                            - initialPower * (1 + 0.05 * count)) < 0.000001,
+                    "Equipped orb upgrades must add five percent base Zodiac power per upgrade");
+            player.setItemSlot(EquipmentSlot.CHEST, ItemStack.EMPTY);
+            player.tick();
+            helper.assertTrue(Math.abs(player.getAttributeValue(AttributeRegistry.ZODIAC_SPELL_POWER)
+                            - initialPower) < 0.000001,
+                    "Removing upgraded armor must restore Zodiac power");
             helper.assertTrue(type.value().containerItem().orElseThrow().is(ItemRegistry.ZODIAC_UPGRADE_ORB.get()),
                     "Removing upgrades must return the Zodiac orb");
         }

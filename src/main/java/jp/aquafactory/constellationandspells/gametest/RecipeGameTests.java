@@ -20,7 +20,7 @@ import java.util.List;
 @PrefixGameTestTemplate(false)
 // GameTest がアノテーションから探索して呼び出す。
 @SuppressWarnings("unused")
-public class RecipeGameTests {
+public final class RecipeGameTests {
     private static List<Block> ores() {
         return List.of(BlockRegistry.STELLAR_DROP_ORE.get(), BlockRegistry.DEEPSLATE_STELLAR_DROP_ORE.get());
     }
@@ -43,9 +43,6 @@ public class RecipeGameTests {
                 var result = cooking.getResultItem(level.registryAccess());
                 helper.assertTrue(result.is(ItemRegistry.STARDUST_SHARD.get()) && result.getCount() == 1,
                         "Cooking must produce one stardust shard");
-                helper.assertTrue(cooking.getExperience() == 1.5F, "Cooking experience must be 1.5");
-                helper.assertTrue(cooking.getCookingTime() == (method.equals("smelting") ? 200 : 100),
-                        "Ore cooking time must match vanilla ore recipes");
             }
         }
         helper.succeed();

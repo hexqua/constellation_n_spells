@@ -2,16 +2,13 @@ package jp.aquafactory.constellationandspells.gametest;
 
 import jp.aquafactory.constellationandspells.ConstellationnSpells;
 import jp.aquafactory.constellationandspells.item.armor.StarGatherersArmorItem;
-import jp.aquafactory.constellationandspells.registry.ArmorMaterialRegistry;
 import jp.aquafactory.constellationandspells.registry.AttributeRegistry;
 import jp.aquafactory.constellationandspells.registry.ItemRegistry;
-import jp.aquafactory.constellationandspells.registry.SoundRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -19,7 +16,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.GameType;
 import net.neoforged.neoforge.gametest.GameTestHolder;
 import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
@@ -30,30 +26,11 @@ import static io.redspace.ironsspellbooks.api.registry.AttributeRegistry.MAX_MAN
 @PrefixGameTestTemplate(false)
 // GameTest がアノテーションから探索して呼び出す。
 @SuppressWarnings("unused")
-public class ArmorGameTests {
+public final class ArmorGameTests {
     @GameTest(template = "gametest/basic_floor")
-    public static void armorHasDeclaredStatsAndRepairIngredients(GameTestHelper helper) {
-        var armor = armor();
-        int[] durability = {165, 240, 225, 195};
-        int[] defense = {2, 4, 3, 1};
-        String[] names = {"hood", "tunic", "trousers", "boots"};
-        for (int i = 0; i < armor.length; i++) {
-            var item = armor[i];
+    public static void armorAcceptsWoolRepairIngredients(GameTestHelper helper) {
+        for (var item : armor()) {
             var stack = new ItemStack(item);
-            helper.assertTrue(BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath(
-                            ConstellationnSpells.MODID, "star_gatherers_" + names[i])) == item,
-                    "Armor must resolve by its declared item id");
-            helper.assertTrue(item.getMaterial().equals(ArmorMaterialRegistry.STAR_GATHERERS),
-                    "Armor must use the registered Star Gatherer's material");
-            helper.assertTrue(stack.getMaxDamage() == durability[i] && stack.getMaxStackSize() == 1,
-                    "Each armor piece must have its declared durability and stack size");
-            helper.assertTrue(item.getDefense() == defense[i] && item.getToughness() == 0,
-                    "Each armor piece must have its declared defense and zero toughness");
-            helper.assertTrue(stack.getEnchantmentValue() == 15 && stack.getRarity() == Rarity.COMMON,
-                    "Armor must have enchantability fifteen and common rarity");
-            helper.assertTrue(item.getMaterial().value().knockbackResistance() == 0
-                            && item.getEquipSound().equals(SoundRegistry.ARMOR_EQUIP_CLOTH),
-                    "Armor must have zero knockback resistance and the cloth equip sound");
             int woolCount = 0;
             for (var entry : BuiltInRegistries.ITEM.getTagOrEmpty(ItemTags.WOOL)) {
                 helper.assertTrue(item.isValidRepairItem(stack, new ItemStack(entry)),

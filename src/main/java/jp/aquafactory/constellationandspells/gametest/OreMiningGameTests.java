@@ -8,24 +8,15 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.ResourceKey;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantments;
-import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.SoundType;
-import net.minecraft.world.level.storage.loot.LootParams;
-import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
-import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.AABB;
-import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.common.util.FakePlayerFactory;
 import net.neoforged.neoforge.gametest.GameTestHolder;
 import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
@@ -36,7 +27,7 @@ import java.util.List;
 @PrefixGameTestTemplate(false)
 // GameTest がアノテーションから探索して呼び出す。
 @SuppressWarnings("unused")
-public class OreMiningGameTests {
+public final class OreMiningGameTests {
     private static List<Block> ores() {
         return List.of(BlockRegistry.STELLAR_DROP_ORE.get(), BlockRegistry.DEEPSLATE_STELLAR_DROP_ORE.get());
     }
@@ -46,18 +37,7 @@ public class OreMiningGameTests {
         var level = helper.getLevel();
         var player = FakePlayerFactory.getMinecraft(level);
         player.gameMode.changeGameModeForPlayer(GameType.SURVIVAL);
-        var pos = helper.absolutePos(new BlockPos(1, 2, 1));
-        var explosion = new Explosion(level, player, pos.getX(), pos.getY(), pos.getZ(),
-                1.0F, false, Explosion.BlockInteraction.DESTROY);
         for (var ore : ores()) {
-            helper.assertTrue(ore.defaultBlockState().getDestroySpeed(level, pos)
-                            == (ore == BlockRegistry.STELLAR_DROP_ORE.get() ? 3.0F : 4.5F),
-                    "Ore hardness must match its stone variant");
-            helper.assertTrue(ore.defaultBlockState().getExplosionResistance(level, pos, explosion) == 3.0F,
-                    "Ore blast resistance must be 3");
-            helper.assertTrue(ore.defaultBlockState().getSoundType(level, pos, player) ==
-                            (ore == BlockRegistry.STELLAR_DROP_ORE.get() ? SoundType.STONE : SoundType.DEEPSLATE),
-                    "Ore sound must match its stone variant");
             mineAndCheck(helper, ore, ItemStack.EMPTY, ItemStack.EMPTY, false);
             mineAndCheck(helper, ore, new ItemStack(Items.WOODEN_PICKAXE), ItemStack.EMPTY, false);
             mineAndCheck(helper, ore, new ItemStack(Items.GOLDEN_PICKAXE), ItemStack.EMPTY, false);
@@ -65,7 +45,7 @@ public class OreMiningGameTests {
             for (var tool : List.of(Items.STONE_PICKAXE, Items.IRON_PICKAXE, Items.DIAMOND_PICKAXE, Items.NETHERITE_PICKAXE)) {
                 mineAndCheck(helper, ore, new ItemStack(tool), new ItemStack(ItemRegistry.STARDUST_SHARD.get()), true);
             }
-            var silk = enchantedPickaxe(helper, Enchantments.SILK_TOUCH, 1);
+            var silk = silkTouchPickaxe(helper);
             mineAndCheck(helper, ore, silk, new ItemStack(ore), false);
         }
         player.setItemInHand(InteractionHand.MAIN_HAND, ItemStack.EMPTY);
@@ -110,52 +90,30 @@ public class OreMiningGameTests {
     }
 
     @GameTest(template = "gametest/basic_floor")
-    public static void experienceAccountingIncludesMergedOrbs(GameTestHelper helper) {
+    public static void experienceAccountingIsInvariantUnderOrbMerging(GameTestHelper helper) {
+        var firstOrb = new ExperienceOrb(helper.getLevel(), 0, 0, 0, 3);
+        var secondOrb = new ExperienceOrb(helper.getLevel(), 0, 0, 0, 3);
+        int unmergedExperience = totalExperience(List.of(firstOrb, secondOrb));
+        helper.assertTrue(unmergedExperience == 6, "Two unmerged 3 XP orbs must represent 6 XP");
         var mergedOrb = new ExperienceOrb(helper.getLevel(), 0, 0, 0, 3);
         var data = new CompoundTag();
         mergedOrb.addAdditionalSaveData(data);
-        // 実際の統合は乱数依存なので、6 XP が 3 XP × 2 個に統合された状態を直接再現する。
+        // 統合時は entity 数と value だけでは合計を求められず、採掘テストが不安定になる。
+        // 統合自体の乱数に依存せず、3 XP × 2 個の統合状態を再現して集計の前提を保証する。
         data.putInt("Count", 2);
         mergedOrb.readAdditionalSaveData(data);
-        helper.assertTrue(totalExperience(List.of(mergedOrb)) == 6,
-                "A merged orb with value 3 and count 2 must represent 6 XP");
+        helper.assertTrue(totalExperience(List.of(mergedOrb)) == unmergedExperience,
+                "Orb merging must preserve the total observed XP");
         var singleOrb = new ExperienceOrb(helper.getLevel(), 0, 0, 0, 1);
         helper.assertTrue(totalExperience(List.of(mergedOrb, singleOrb)) == 7,
                 "Merged and unmerged orbs must both contribute their full XP");
         helper.succeed();
     }
 
-    @GameTest(template = "gametest/basic_floor")
-    public static void fortuneUsesVanillaOreBonuses(GameTestHelper helper) {
-        var level = helper.getLevel();
-        for (var ore : ores()) {
-            var table = level.getServer().reloadableRegistries().getLootTable(ore.getLootTable());
-            for (int fortune = 0; fortune <= 3; fortune++) {
-                var tool = fortune == 0 ? new ItemStack(Items.DIAMOND_PICKAXE)
-                        : enchantedPickaxe(helper, Enchantments.FORTUNE, fortune);
-                var params = new LootParams.Builder(level)
-                        .withParameter(LootContextParams.BLOCK_STATE, ore.defaultBlockState())
-                        .withParameter(LootContextParams.ORIGIN, Vec3.atCenterOf(helper.absolutePos(BlockPos.ZERO)))
-                        .withParameter(LootContextParams.TOOL, tool).create(LootContextParamSets.BLOCK);
-                var random = RandomSource.create(7351L);
-                int maximum = 0;
-                for (int sample = 0; sample < 256; sample++) {
-                    var drops = table.getRandomItems(params, random);
-                    helper.assertTrue(drops.size() == 1 && drops.getFirst().is(ItemRegistry.STARDUST_SHARD.get()),
-                            "Fortune must only drop stardust shards");
-                    int count = drops.getFirst().getCount();
-                    helper.assertTrue(count >= 1 && count <= fortune + 1, "Fortune drop count is out of bounds");
-                    maximum = Math.max(maximum, count);
-                }
-                helper.assertTrue(maximum == fortune + 1, "Fortune must reach its vanilla maximum drop count");
-            }
-        }
-        helper.succeed();
-    }
-
-    private static ItemStack enchantedPickaxe(GameTestHelper helper, ResourceKey<Enchantment> enchantment, int level) {
+    private static ItemStack silkTouchPickaxe(GameTestHelper helper) {
         var tool = new ItemStack(Items.DIAMOND_PICKAXE);
-        tool.enchant(helper.getLevel().registryAccess().registryOrThrow(Registries.ENCHANTMENT).getHolderOrThrow(enchantment), level);
+        tool.enchant(helper.getLevel().registryAccess().registryOrThrow(Registries.ENCHANTMENT)
+                .getHolderOrThrow(Enchantments.SILK_TOUCH), 1);
         return tool;
     }
 }

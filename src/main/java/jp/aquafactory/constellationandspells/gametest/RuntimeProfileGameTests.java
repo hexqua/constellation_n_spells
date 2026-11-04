@@ -11,13 +11,10 @@ import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 @PrefixGameTestTemplate(false)
 // GameTest がアノテーションから探索して呼び出す。
 @SuppressWarnings("unused")
-public class RuntimeProfileGameTests {
+public final class RuntimeProfileGameTests {
     @GameTest(template = "gametest/basic_floor")
-    public static void runtimeProfileModsAreLoaded(GameTestHelper helper) {
+    public static void optionalProfileModsAreLoaded(GameTestHelper helper) {
         var modList = ModList.get();
-        for (var modId : new String[]{"irons_spellbooks", "curios", "geckolib", "irons_lib", "playeranimator"}) {
-            helper.assertTrue(modList.isLoaded(modId), "Required runtime mod is missing: " + modId);
-        }
         // 起動構成の指定漏れを検出し、optional MOD 不在での成功を防ぐ。
         var profileMods = System.getProperty("constellationandspells.requiredOptionalMods", "");
         helper.assertTrue(!profileMods.isBlank(), "GameTest runtime profile must declare its expected mods");

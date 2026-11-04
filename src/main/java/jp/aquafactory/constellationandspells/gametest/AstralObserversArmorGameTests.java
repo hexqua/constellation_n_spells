@@ -11,7 +11,6 @@ import jp.aquafactory.constellationandspells.recipe.ResetImbueSmithingRecipe;
 import jp.aquafactory.constellationandspells.registry.AttributeRegistry;
 import jp.aquafactory.constellationandspells.registry.ItemRegistry;
 import jp.aquafactory.constellationandspells.registry.RecipeSerializerRegistry;
-import jp.aquafactory.constellationandspells.registry.SoundRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -29,7 +28,6 @@ import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.crafting.SmithingRecipeInput;
@@ -57,29 +55,21 @@ import static io.redspace.ironsspellbooks.registries.ItemRegistry.WIZARD_LEGGING
 @PrefixGameTestTemplate(false)
 // GameTest がアノテーションから探索して呼び出す。
 @SuppressWarnings("unused")
-public class AstralObserversArmorGameTests {
+public final class AstralObserversArmorGameTests {
     private static final ResourceLocation STARDUST_ID =
             ResourceLocation.fromNamespaceAndPath(ConstellationnSpells.MODID, "stardust");
 
     @GameTest(template = "gametest/basic_floor")
-    public static void armorHasSchoolStatsAndVanillaEnchantments(GameTestHelper helper) {
-        int[] defense = {3, 8, 6, 3};
-        int[] durability = {407, 592, 555, 481};
+    public static void armorSupportsRepairEnchantmentsAndCoatImbue(GameTestHelper helper) {
         Item[] reference = {Items.IRON_HELMET, Items.IRON_CHESTPLATE, Items.IRON_LEGGINGS, Items.IRON_BOOTS};
         var enchantments = helper.getLevel().registryAccess().registryOrThrow(Registries.ENCHANTMENT);
         var armor = armor();
         for (int i = 0; i < armor.length; i++) {
             var item = armor[i];
             var stack = new ItemStack(item);
-            helper.assertTrue(item.getDefense() == defense[i] && stack.getMaxDamage() == durability[i],
-                    "Armor must have the declared defense and durability");
-            helper.assertTrue(stack.getEnchantmentValue() == 20 && stack.getMaxStackSize() == 1
-                            && stack.getRarity() == Rarity.COMMON && !stack.is(ItemTags.TRIMMABLE_ARMOR)
-                            && !stack.is(ItemTags.DYEABLE) && !stack.has(DataComponents.FIRE_RESISTANT),
-                    "Armor must be common, enchantable, unstackable, untrimmable, undyeable and not fire resistant");
-            helper.assertTrue(item.getEquipSound().equals(SoundRegistry.ARMOR_EQUIP_CLOTH)
-                            && item.getToughness() == 0 && item.getMaterial().value().knockbackResistance() == 0,
-                    "Armor must use the cloth sound without toughness or knockback resistance");
+            helper.assertTrue(!stack.is(ItemTags.TRIMMABLE_ARMOR) && !stack.is(ItemTags.DYEABLE)
+                            && !stack.has(DataComponents.FIRE_RESISTANT),
+                    "Armor must not support trims, dyeing or fire resistance");
             helper.assertTrue(item.isValidRepairItem(stack, new ItemStack(MAGIC_CLOTH.get()))
                             && !item.isValidRepairItem(stack, new ItemStack(Items.WHITE_WOOL))
                             && !item.isValidRepairItem(stack, new ItemStack(ARCANE_ESSENCE.get()))
