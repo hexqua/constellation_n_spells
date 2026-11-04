@@ -1,0 +1,16 @@
+{
+  "type": "constellationandspells:reset_imbue_smithing",
+  "addition": {
+    "item": "irons_spellbooks:arcane_essence"
+  },
+  "base": {
+    "tag": "irons_spellbooks:wizard_base_boots"
+  },
+  "result": {
+    "count": 1,
+    "id": "constellationandspells:astral_observers_boots"
+  },
+  "template": {
+    "item": "constellationandspells:zodiac_rune"
+  }
+}

@@ -26,7 +26,7 @@ public class RegistrationGameTests {
                 "Stardust shard must resolve to the registered item");
         var itemCount = BuiltInRegistries.ITEM.keySet().stream()
                 .filter(id -> id.getNamespace().equals(ConstellationnSpells.MODID)).count();
-        helper.assertTrue(itemCount == 9, "The mod must register three materials, two ore items and four armor items");
+        helper.assertTrue(itemCount == 13, "The mod must register three materials, two ore items and eight armor items");
         helper.assertTrue(BuiltInRegistries.BLOCK.keySet().stream()
                         .filter(id -> id.getNamespace().equals(ConstellationnSpells.MODID)).count() == 2,
                 "The mod must register exactly two ore blocks");

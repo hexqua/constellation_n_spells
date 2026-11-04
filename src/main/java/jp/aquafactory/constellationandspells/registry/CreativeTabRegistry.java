@@ -35,6 +35,10 @@ public final class CreativeTabRegistry {
         output.accept(ItemRegistry.STAR_GATHERERS_TUNIC.get());
         output.accept(ItemRegistry.STAR_GATHERERS_TROUSERS.get());
         output.accept(ItemRegistry.STAR_GATHERERS_BOOTS.get());
+        output.accept(ItemRegistry.ASTRAL_OBSERVERS_HOOD.get());
+        output.accept(ItemRegistry.ASTRAL_OBSERVERS_COAT.get());
+        output.accept(ItemRegistry.ASTRAL_OBSERVERS_LEGGINGS.get());
+        output.accept(ItemRegistry.ASTRAL_OBSERVERS_BOOTS.get());
     }
 
     private static void addMaterials(CreativeModeTab.Output output) {

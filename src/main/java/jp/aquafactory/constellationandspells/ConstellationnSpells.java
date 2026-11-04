@@ -11,6 +11,7 @@ import jp.aquafactory.constellationandspells.registry.AttributeRegistry;
 import jp.aquafactory.constellationandspells.registry.ZodiacSchoolRegistry;
 import jp.aquafactory.constellationandspells.registry.EntityRegistry;
 import jp.aquafactory.constellationandspells.registry.ParticleRegistry;
+import jp.aquafactory.constellationandspells.registry.RecipeSerializerRegistry;
 import jp.aquafactory.constellationandspells.registry.SoundRegistry;
 import jp.aquafactory.constellationandspells.registry.SpellRegistry;
 import jp.aquafactory.constellationandspells.spell.stardust.StardustImpactPayload;
@@ -35,6 +36,7 @@ public class ConstellationnSpells {
         SpellRegistry.SPELLS.register(modEventBus);
         EntityRegistry.ENTITIES.register(modEventBus);
         ParticleRegistry.PARTICLES.register(modEventBus);
+        RecipeSerializerRegistry.RECIPE_SERIALIZERS.register(modEventBus);
         modEventBus.addListener(StardustImpactPayload::register);
         modEventBus.addListener(AttributeRegistry::modifyEntityAttributes);
         CreativeTabRegistry.CREATIVE_MODE_TABS.register(modEventBus);

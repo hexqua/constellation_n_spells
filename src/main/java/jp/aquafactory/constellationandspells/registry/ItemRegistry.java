@@ -3,6 +3,7 @@ package jp.aquafactory.constellationandspells.registry;
 import io.redspace.ironsspellbooks.item.UpgradeOrbItem;
 import io.redspace.ironsspellbooks.registries.ComponentRegistry;
 import jp.aquafactory.constellationandspells.ConstellationnSpells;
+import jp.aquafactory.constellationandspells.item.armor.AstralObserversArmorItem;
 import jp.aquafactory.constellationandspells.item.armor.StarGatherersArmorItem;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.BlockItem;
@@ -29,6 +30,15 @@ public final class ItemRegistry {
             "star_gatherers_trousers", properties -> new StarGatherersArmorItem(ArmorItem.Type.LEGGINGS, properties));
     public static final DeferredItem<StarGatherersArmorItem> STAR_GATHERERS_BOOTS = ITEMS.registerItem(
             "star_gatherers_boots", properties -> new StarGatherersArmorItem(ArmorItem.Type.BOOTS, properties));
+
+    public static final DeferredItem<AstralObserversArmorItem> ASTRAL_OBSERVERS_HOOD = ITEMS.registerItem(
+            "astral_observers_hood", properties -> new AstralObserversArmorItem(ArmorItem.Type.HELMET, properties));
+    public static final DeferredItem<AstralObserversArmorItem> ASTRAL_OBSERVERS_COAT = ITEMS.registerItem(
+            "astral_observers_coat", properties -> new AstralObserversArmorItem(ArmorItem.Type.CHESTPLATE, properties));
+    public static final DeferredItem<AstralObserversArmorItem> ASTRAL_OBSERVERS_LEGGINGS = ITEMS.registerItem(
+            "astral_observers_leggings", properties -> new AstralObserversArmorItem(ArmorItem.Type.LEGGINGS, properties));
+    public static final DeferredItem<AstralObserversArmorItem> ASTRAL_OBSERVERS_BOOTS = ITEMS.registerItem(
+            "astral_observers_boots", properties -> new AstralObserversArmorItem(ArmorItem.Type.BOOTS, properties));
 
     private ItemRegistry() {
     }
