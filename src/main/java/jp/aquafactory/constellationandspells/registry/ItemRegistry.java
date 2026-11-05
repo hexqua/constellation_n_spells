@@ -3,6 +3,7 @@ package jp.aquafactory.constellationandspells.registry;
 import io.redspace.ironsspellbooks.item.UpgradeOrbItem;
 import io.redspace.ironsspellbooks.registries.ComponentRegistry;
 import jp.aquafactory.constellationandspells.ConstellationnSpells;
+import jp.aquafactory.constellationandspells.item.ConstellationTabletItem;
 import jp.aquafactory.constellationandspells.item.armor.AstralObserversArmorItem;
 import jp.aquafactory.constellationandspells.item.armor.StarGatherersArmorItem;
 import net.minecraft.world.item.ArmorItem;
@@ -17,6 +18,8 @@ public final class ItemRegistry {
 
     public static final DeferredItem<Item> STARDUST_SHARD = ITEMS.registerSimpleItem("stardust_shard");
     public static final DeferredItem<Item> ZODIAC_RUNE = ITEMS.registerSimpleItem("zodiac_rune");
+    public static final DeferredItem<ConstellationTabletItem> CONSTELLATION_TABLET = ITEMS.registerItem(
+            "constellation_tablet", ConstellationTabletItem::new);
     public static final DeferredItem<UpgradeOrbItem> ZODIAC_UPGRADE_ORB = ITEMS.registerItem("zodiac_upgrade_orb",
             properties -> new UpgradeOrbItem(properties.rarity(Rarity.UNCOMMON).fireResistant()
                     .component(ComponentRegistry.UPGRADE_ORB_TYPE, MagicRegistry.ZODIAC_POWER)));

@@ -26,8 +26,13 @@ public final class CreativeTabRegistry {
     private static void displayItems(CreativeModeTab.ItemDisplayParameters parameters, CreativeModeTab.Output output) {
         addBlocks(output);
         addMaterials(output);
+        addCurios(output);
         addArmor(output);
         addSpellScrolls(output);
+    }
+
+    private static void addCurios(CreativeModeTab.Output output) {
+        output.accept(ItemRegistry.CONSTELLATION_TABLET.get());
     }
 
     private static void addArmor(CreativeModeTab.Output output) {

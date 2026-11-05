@@ -18,6 +18,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import org.jetbrains.annotations.NotNull;
 
@@ -50,6 +51,19 @@ public final class VanillaRecipeProvider extends RecipeProvider {
                 .define('R', ItemRegistry.ZODIAC_RUNE.get())
                 .define('O', io.redspace.ironsspellbooks.registries.ItemRegistry.UPGRADE_ORB.get())
                 .unlockedBy("has_upgrade_orb", has(io.redspace.ironsspellbooks.registries.ItemRegistry.UPGRADE_ORB.get()))
+                .save(output);
+
+        ShapedRecipeBuilder
+                .shaped(RecipeCategory.COMBAT, ItemRegistry.CONSTELLATION_TABLET.get())
+                .pattern("GWG")
+                .pattern("SRS")
+                .pattern("GMG")
+                .define('R', ItemRegistry.ZODIAC_RUNE.get())
+                .define('S', ItemRegistry.STARDUST_SHARD.get())
+                .define('M', io.redspace.ironsspellbooks.registries.ItemRegistry.MITHRIL_SCRAP.get())
+                .define('W', Items.MAP)
+                .define('G', Items.GOLD_INGOT)
+                .unlockedBy("has_zodiac_rune", has(ItemRegistry.ZODIAC_RUNE.get()))
                 .save(output);
 
         ShapedRecipeBuilder

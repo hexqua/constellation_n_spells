@@ -1,0 +1,38 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "G": {
+      "item": "minecraft:gold_ingot"
+    },
+    "M": {
+      "item": "irons_spellbooks:mithril_scrap"
+    },
+    "R": {
+      "item": "constellationandspells:zodiac_rune"
+    },
+    "S": {
+      "item": "constellationandspells:stardust_shard"
+    },
+    "W": {
+      "item": "minecraft:map"
+    }
+  },
+  "pattern": [
+    "GWG",
+    "SRS",
+    "GMG"
+  ],
+  "result": {
+    "components": {
+      "irons_spellbooks:spell_container": {
+        "data": [],
+        "maxSpells": 12,
+        "mustEquip": true,
+        "spellWheel": true
+      }
+    },
+    "count": 1,
+    "id": "constellationandspells:constellation_tablet"
+  }
+}
