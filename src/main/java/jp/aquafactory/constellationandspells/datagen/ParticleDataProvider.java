@@ -13,6 +13,7 @@ public final class ParticleDataProvider extends ParticleDescriptionProvider {
     @Override
     protected void addDescriptions() {
         sprite(ParticleRegistry.ADDITIVE_SPARK.get(), texture("glow_square"));
+        spriteSet(ParticleRegistry.ADDITIVE_GLOWING_SPARK.get(), texture("glow_square_blur"), texture("glow_circle"));
         sprite(ParticleRegistry.ADDITIVE_RHOMBUS.get(), texture("glow_rhombus"));
         sprite(ParticleRegistry.FALLING_SPARK.get(), texture("glow_square"));
     }

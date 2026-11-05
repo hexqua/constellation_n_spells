@@ -14,6 +14,7 @@ import org.jetbrains.annotations.NotNull;
 public final class ParticleRegistry {
     public static final DeferredRegister<ParticleType<?>> PARTICLES = DeferredRegister.create(Registries.PARTICLE_TYPE, ConstellationnSpells.MODID);
     public static final DeferredHolder<ParticleType<?>, ParticleType<AdditiveGlowParticleOptions>> ADDITIVE_SPARK = register("additive_spark");
+    public static final DeferredHolder<ParticleType<?>, ParticleType<AdditiveGlowParticleOptions>> ADDITIVE_GLOWING_SPARK = register("additive_glowing_spark");
     public static final DeferredHolder<ParticleType<?>, ParticleType<AdditiveGlowParticleOptions>> ADDITIVE_RHOMBUS = register("additive_rhombus");
     public static final DeferredHolder<ParticleType<?>, ParticleType<AdditiveGlowParticleOptions>> FALLING_SPARK = register("falling_spark");
 
