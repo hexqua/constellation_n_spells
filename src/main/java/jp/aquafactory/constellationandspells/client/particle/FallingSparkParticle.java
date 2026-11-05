@@ -7,7 +7,6 @@ import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleProvider;
 import net.minecraft.client.particle.ParticleRenderType;
 import net.minecraft.client.particle.SpriteSet;
-import net.minecraft.client.particle.TextureSheetParticle;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
@@ -16,7 +15,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public final class FallingSparkParticle extends TextureSheetParticle {
+public final class FallingSparkParticle extends LayeredAdditiveParticle {
     private final float startSize;
     private final int initialLifetime;
     private boolean bounced;
@@ -34,7 +33,9 @@ public final class FallingSparkParticle extends TextureSheetParticle {
         setSize(startSize * 2, startSize * 2);
         setParticleSpeed(xd, yd, zd);
         setColor(options.red(), options.green(), options.blue());
-        pickSprite(sprites);
+        setLayerSprites(sprites);
+        roll = random.nextFloat() * Mth.TWO_PI;
+        oRoll = roll;
         alpha = 0.8f;
     }
 

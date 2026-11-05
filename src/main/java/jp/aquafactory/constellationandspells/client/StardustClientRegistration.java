@@ -4,6 +4,7 @@ import jp.aquafactory.constellationandspells.ConstellationnSpells;
 import jp.aquafactory.constellationandspells.client.particle.AdditiveGlowParticle;
 import jp.aquafactory.constellationandspells.client.particle.AdditiveRhombusParticle;
 import jp.aquafactory.constellationandspells.client.particle.FallingSparkParticle;
+import jp.aquafactory.constellationandspells.client.particle.LayeredAdditiveGlowParticle;
 import jp.aquafactory.constellationandspells.registry.EntityRegistry;
 import jp.aquafactory.constellationandspells.registry.ParticleRegistry;
 import jp.aquafactory.constellationandspells.spell.stardust.StardustImpactPayload;
@@ -29,6 +30,7 @@ public final class StardustClientRegistration {
     @SubscribeEvent
     public static void particles(RegisterParticleProvidersEvent event) {
         event.registerSpriteSet(ParticleRegistry.ADDITIVE_SPARK.get(), sprites -> new AdditiveGlowParticle.Provider(sprites, AdditiveGlowParticle.Preset.SPARK));
+        event.registerSpriteSet(ParticleRegistry.ADDITIVE_GLOWING_SPARK.get(), sprites -> new LayeredAdditiveGlowParticle.Provider(sprites, AdditiveGlowParticle.Preset.SPARK));
         event.registerSpriteSet(ParticleRegistry.ADDITIVE_RHOMBUS.get(), sprites -> new AdditiveRhombusParticle.Provider(sprites, AdditiveRhombusParticle.Preset.RHOMBUS));
         event.registerSpriteSet(ParticleRegistry.FALLING_SPARK.get(), FallingSparkParticle.Provider::new);
     }

@@ -42,7 +42,7 @@ public final class StardustEffects {
             boolean gold = random.nextFloat() < 0.35f;
             // 必須の発光粒だけは最低設定でも生成し、装飾には設定による間引きを適用する。
             boolean force = i == 0 || i == count - 1;
-            var options = glow(ParticleRegistry.ADDITIVE_SPARK.get(), gold, 0.10f);
+            var options = glow(ParticleRegistry.ADDITIVE_GLOWING_SPARK.get(), gold, 0.10f);
             level.addParticle(options, force, position.x, position.y, position.z, velocity.x, velocity.y, velocity.z);
             level.addParticle(NIGHT, position.x, position.y, position.z, 0, 0.004, 0);
         }
