@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "constellationandspells:constellation_tablet"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_zodiac_rune": {
+      "conditions": {
+        "items": [
+          {
+            "items": "constellationandspells:zodiac_rune"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_zodiac_rune"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "constellationandspells:constellation_tablet"
+    ]
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "type": "constellationandspells:reset_imbue_smithing",
+  "addition": {
+    "item": "irons_spellbooks:arcane_essence"
+  },
+  "base": {
+    "tag": "irons_spellbooks:wizard_base_chestplate"
+  },
+  "result": {
+    "components": {
+      "irons_spellbooks:spell_container": {
+        "data": [],
+        "maxSpells": 1,
+        "mustEquip": true,
+        "spellWheel": true
+      }
+    },
+    "count": 1,
+    "id": "constellationandspells:astral_observers_coat"
+  },
+  "template": {
+    "item": "constellationandspells:zodiac_rune"
+  }
+}

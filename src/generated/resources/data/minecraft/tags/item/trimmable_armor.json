@@ -1,0 +1,9 @@
+{
+  "remove": [
+    "constellationandspells:astral_observers_hood",
+    "constellationandspells:astral_observers_coat",
+    "constellationandspells:astral_observers_leggings",
+    "constellationandspells:astral_observers_boots"
+  ],
+  "values": []
+}
