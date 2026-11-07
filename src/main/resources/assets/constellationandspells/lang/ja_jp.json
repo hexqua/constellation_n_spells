@@ -24,6 +24,9 @@
   "item.constellationandspells.astral_observers_leggings": "星辰の観測者のレギンス",
   "item.constellationandspells.astral_observers_boots": "星辰の観測者の靴",
 
+  "entity.constellationandspells.stardust": "星の塊",
+  "entity.constellationandspells.stargazing_field": "魔法の星図",
+
   "spell.constellationandspells.stardust": "スターダスト",
   "spell.constellationandspells.horoscope": "星占い",
   "spell.constellationandspells.stargazing": "天体観測",
