@@ -24,17 +24,31 @@
   "item.constellationandspells.astral_observers_leggings": "Astral Observer's Leggings",
   "item.constellationandspells.astral_observers_boots": "Astral Observer's Boots",
 
+  "entity.constellationandspells.stardust": "Star Cluster",
+  "entity.constellationandspells.stargazing_field": "Magical Star Chart",
+
   "spell.constellationandspells.stardust": "Stardust",
+  "spell.constellationandspells.horoscope": "Horoscope",
+  "spell.constellationandspells.stargazing": "Stargazing",
 
   "spell.constellationandspells.stardust.guide": "Launches five small stars in a spread. A fundamental Zodiac spell, akin to Magic Missile. Its spread makes it less effective at long range, but each star bypasses the target's damage immunity period.",
+  "spell.constellationandspells.horoscope.guide": "Channels the magic of the stars and converts it into mana. Requires concentration while casting, and restores mana only when the spell is complete.",
+  "spell.constellationandspells.stargazing.guide": "Creates a star chart drawn with magic. The chart remains in place for a time, continuously damaging mobs within it. This damage causes no knockback.",
+
+  "ui.constellationandspells.revover_mana": "%s mana recovery",
   "ui.constellationandspells.projectile_count": "%s projectiles",
+  "ui.constellationandspells.side_length": "Side length: %s",
+  "ui.constellationandspells.no_ground": "No ground available for the star chart!",
 
   "death.attack.zodiac_spell": "%1$s was reduced to stardust",
   "death.attack.zodiac_spell.player": "%1$s was reduced to stardust by %2$s",
   "death.attack.constellationandspells.stardust": "%1$s was reduced to stardust",
+  "death.attack.constellationandspells.stargazing": "%1$s was reduced to constellation",
 
   "subtitle.constellationandspells.sound.zodiac_cast": "Stars twinkle",
   "subtitle.constellationandspells.sound.stellar_launch": "Stardust launches",
   "subtitle.constellationandspells.sound.stellar_impact": "Stardust shatters",
-  "subtitle.constellationandspells.sound.armor_equip_cloth": "Cloth armor rustles"
+  "subtitle.constellationandspells.sound.armor_equip_cloth": "Cloth armor rustles",
+  "subtitle.constellationandspells.sound.star_mana": "Stellar magic gathers",
+  "subtitle.constellationandspells.sound.map_deploy": "Star chart is drawn"
 }
