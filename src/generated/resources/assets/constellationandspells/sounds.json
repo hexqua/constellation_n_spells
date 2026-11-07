@@ -10,6 +10,18 @@
     ],
     "subtitle": "subtitle.constellationandspells.sound.armor_equip_cloth"
   },
+  "map_deploy": {
+    "sounds": [
+      "constellationandspells:map_deploy"
+    ],
+    "subtitle": "subtitle.constellationandspells.sound.map_deploy"
+  },
+  "star_mana": {
+    "sounds": [
+      "constellationandspells:star_mana"
+    ],
+    "subtitle": "subtitle.constellationandspells.sound.star_mana"
+  },
   "stellar_impact": {
     "sounds": [
       "constellationandspells:stellar_impact"

@@ -25,16 +25,25 @@
   "item.constellationandspells.astral_observers_boots": "星辰の観測者の靴",
 
   "spell.constellationandspells.stardust": "スターダスト",
+  "spell.constellationandspells.horoscope": "星占い",
+  "spell.constellationandspells.stargazing": "天体観測",
 
   "spell.constellationandspells.stardust.guide": "複数の小さな星屑を放つ。星座術におけるマジックミサイルのような基礎の魔法。飛ばす星屑は散らばるため遠距離攻撃には向かないが、対象の無敵時間を無視することができる。",
+  "spell.constellationandspells.horoscope.guide": "星の魔力を練り、自身のマナとして還元する。詠唱中の練っている間は集中を必要とし、練り終わるまでは自身のマナとして還元されることはない。",
+  "spell.constellationandspells.stargazing.guide": "魔力で描いた星図を展開する。描いた星図は暫くその場に残り、星図の中にいるモブに対してダメージを与え続ける。星図によるダメージはノックバックを発生させない。",
+
+  "ui.constellationandspells.revover_mana": "%sマナ回復",
   "ui.constellationandspells.projectile_count": "弾数：%s",
 
   "death.attack.zodiac_spell": "%1$sの存在は星屑と化した",
   "death.attack.zodiac_spell.player": "%1$sは%2$sによって星屑と化した",
   "death.attack.constellationandspells.stardust": "%1$sの存在は星屑と化した",
+  "death.attack.constellationandspells.stargazing": "%1$sを構成していたものは星座と化した",
 
   "subtitle.constellationandspells.sound.zodiac_cast": "星が瞬く",
   "subtitle.constellationandspells.sound.stellar_launch": "星が飛翔する",
   "subtitle.constellationandspells.sound.stellar_impact": "星が砕ける",
-  "subtitle.constellationandspells.sound.armor_equip_cloth": "布の防具を装備する"
+  "subtitle.constellationandspells.sound.armor_equip_cloth": "布の防具を装備する",
+  "subtitle.constellationandspells.sound.star_mana": "星の魔力を練る",
+  "subtitle.constellationandspells.sound.map_deploy": "星図を描く"
 }
