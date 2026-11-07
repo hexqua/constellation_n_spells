@@ -34,6 +34,8 @@
 
   "ui.constellationandspells.revover_mana": "%s mana recovery",
   "ui.constellationandspells.projectile_count": "%s projectiles",
+  "ui.constellationandspells.side_length": "Side length: %s",
+  "ui.constellationandspells.no_ground": "No ground available for the star chart!",
 
   "death.attack.zodiac_spell": "%1$s was reduced to stardust",
   "death.attack.zodiac_spell.player": "%1$s was reduced to stardust by %2$s",

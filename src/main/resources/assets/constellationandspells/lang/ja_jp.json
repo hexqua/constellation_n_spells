@@ -34,6 +34,8 @@
 
   "ui.constellationandspells.revover_mana": "%sマナ回復",
   "ui.constellationandspells.projectile_count": "弾数：%s",
+  "ui.constellationandspells.side_length": "一辺の長さ：%s",
+  "ui.constellationandspells.no_ground": "星図を展開できる地面がない！",
 
   "death.attack.zodiac_spell": "%1$sの存在は星屑と化した",
   "death.attack.zodiac_spell.player": "%1$sは%2$sによって星屑と化した",
