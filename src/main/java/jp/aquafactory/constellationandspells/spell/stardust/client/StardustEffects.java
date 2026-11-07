@@ -1,14 +1,13 @@
 package jp.aquafactory.constellationandspells.spell.stardust.client;
 
 import jp.aquafactory.constellationandspells.ConstellationnSpells;
-import jp.aquafactory.constellationandspells.particle.AdditiveGlowParticleOptions;
+import jp.aquafactory.constellationandspells.particle.ZodiacParticleOptions;
 import jp.aquafactory.constellationandspells.registry.ParticleRegistry;
 import jp.aquafactory.constellationandspells.spell.stardust.StardustImpactPayload;
 import jp.aquafactory.constellationandspells.spell.stardust.StardustProjectile;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.particles.DustParticleOptions;
-import net.minecraft.core.particles.ParticleType;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.phys.Vec3;
@@ -42,7 +41,7 @@ public final class StardustEffects {
             boolean gold = random.nextFloat() < 0.35f;
             // 必須の発光粒だけは最低設定でも生成し、装飾には設定による間引きを適用する。
             boolean force = i == 0 || i == count - 1;
-            var options = glow(ParticleRegistry.ADDITIVE_GLOWING_SPARK.get(), gold, 0.10f);
+            var options = ZodiacParticleOptions.glow(ParticleRegistry.ADDITIVE_GLOWING_SPARK.get(), gold, 0.10f);
             level.addParticle(options, force, position.x, position.y, position.z, velocity.x, velocity.y, velocity.z);
             level.addParticle(NIGHT, position.x, position.y, position.z, 0, 0.004, 0);
         }
@@ -61,14 +60,9 @@ public final class StardustEffects {
             var velocity = incoming.scale(-0.06).add((random.nextDouble() - 0.5) * 0.4,
                     falling ? 0.1 + random.nextDouble() * 0.3 : (random.nextDouble() - 0.5) * 0.3,
                     (random.nextDouble() - 0.5) * 0.4);
-            var options = glow(type, random.nextFloat() < 0.7f, falling ? 0.065f : 0.13f);
+            var options = ZodiacParticleOptions.glow(type, random.nextFloat() < 0.7f, falling ? 0.065f : 0.13f);
             level.addParticle(options, i < 2, position.x, position.y, position.z, velocity.x, velocity.y, velocity.z);
         }
-    }
-
-    private static AdditiveGlowParticleOptions glow(ParticleType<AdditiveGlowParticleOptions> type, boolean gold, float size) {
-        return new AdditiveGlowParticleOptions(type, size, gold ? 1 : 0.27f, gold ? 0xDB / 255f : 0.42f,
-                gold ? 0x57 / 255f : 0.82f, 2, 12, 4, 0.85f, 1.25f, 0.7f, 0.95f, 0.05f, 0.7f, 0.65f, true);
     }
 
     private static boolean outsideRenderDistance(Vec3 position) {

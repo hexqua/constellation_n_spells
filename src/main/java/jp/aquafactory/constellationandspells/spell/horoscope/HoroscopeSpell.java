@@ -5,15 +5,19 @@ import io.redspace.ironsspellbooks.api.magic.MagicData;
 import io.redspace.ironsspellbooks.api.spells.*;
 import io.redspace.ironsspellbooks.api.util.AnimationHolder;
 import io.redspace.ironsspellbooks.api.util.Utils;
+import io.redspace.ironsspellbooks.network.SyncManaPacket;
 import jp.aquafactory.constellationandspells.ConstellationnSpells;
 import jp.aquafactory.constellationandspells.magic.ZodiacSchool;
 import jp.aquafactory.constellationandspells.registry.SoundRegistry;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
+import net.neoforged.neoforge.network.PacketDistributor;
 
 import java.util.List;
 import java.util.Optional;
@@ -43,7 +47,7 @@ public final class HoroscopeSpell extends AbstractSpell {
         );
     }
 
-    private float getManaRecovery(int level, LivingEntity caster){
+    private float getManaRecovery(int level, LivingEntity caster) {
         return 30 + getSpellPower(level, caster);
     }
 
@@ -83,8 +87,23 @@ public final class HoroscopeSpell extends AbstractSpell {
     }
 
     @Override
+    public void onServerCastTick(Level level, int spellLevel, LivingEntity caster, MagicData magicData) {
+        if (level instanceof ServerLevel serverLevel) {
+            HoroscopeEffects.casting(serverLevel, caster);
+        }
+        super.onServerCastTick(level, spellLevel, caster, magicData);
+    }
+
+    @Override
     public void onCast(Level level, int spellLevel, LivingEntity caster, CastSource source, MagicData magicData) {
-        // todo:実装
+        if (level instanceof ServerLevel serverLevel) {
+            magicData.addMana(getManaRecovery(spellLevel, caster));
+            // 消費マナの同期は onCast より前なので、回復後の値を改めて送る。
+            if (caster instanceof ServerPlayer player) {
+                PacketDistributor.sendToPlayer(player, new SyncManaPacket(magicData));
+            }
+            HoroscopeEffects.complete(serverLevel, caster);
+        }
         super.onCast(level, spellLevel, caster, source, magicData);
     }
 }
