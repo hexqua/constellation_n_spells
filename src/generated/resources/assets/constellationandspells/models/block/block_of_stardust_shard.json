@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "constellationandspells:block/block_of_stardust_shard"
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "constellationandspells:block/midnight_starcondense_block"
+  }
+}

@@ -22,6 +22,12 @@
     ],
     "subtitle": "subtitle.constellationandspells.sound.star_mana"
   },
+  "starcondense_break": {
+    "sounds": [
+      "constellationandspells:starcondense_break"
+    ],
+    "subtitle": "subtitle.constellationandspells.sound.starcondense_break"
+  },
   "stellar_impact": {
     "sounds": [
       "constellationandspells:stellar_impact"

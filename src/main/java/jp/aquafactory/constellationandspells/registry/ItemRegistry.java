@@ -28,6 +28,25 @@ public final class ItemRegistry {
                     .component(ComponentRegistry.UPGRADE_ORB_TYPE, MagicRegistry.ZODIAC_POWER)));
     public static final DeferredItem<BlockItem> STELLAR_DROP_ORE = ITEMS.registerSimpleBlockItem(BlockRegistry.STELLAR_DROP_ORE);
     public static final DeferredItem<BlockItem> DEEPSLATE_STELLAR_DROP_ORE = ITEMS.registerSimpleBlockItem(BlockRegistry.DEEPSLATE_STELLAR_DROP_ORE);
+    public static final DeferredItem<BlockItem> BLOCK_OF_STARDUST_SHARD = ITEMS.registerSimpleBlockItem(BlockRegistry.BLOCK_OF_STARDUST_SHARD);
+    public static final DeferredItem<BlockItem> STARCONDENSE_SLAB = ITEMS.registerSimpleBlockItem(BlockRegistry.STARCONDENSE_SLAB);
+    public static final DeferredItem<BlockItem> STARCONDENSE_STAIRS = ITEMS.registerSimpleBlockItem(BlockRegistry.STARCONDENSE_STAIRS);
+    public static final DeferredItem<BlockItem> SMOOTH_STARCONDENSE_BLOCK = ITEMS.registerSimpleBlockItem(BlockRegistry.SMOOTH_STARCONDENSE_BLOCK);
+    public static final DeferredItem<BlockItem> SMOOTH_STARCONDENSE_SLAB = ITEMS.registerSimpleBlockItem(BlockRegistry.SMOOTH_STARCONDENSE_SLAB);
+    public static final DeferredItem<BlockItem> SMOOTH_STARCONDENSE_STAIRS = ITEMS.registerSimpleBlockItem(BlockRegistry.SMOOTH_STARCONDENSE_STAIRS);
+    public static final DeferredItem<BlockItem> SHIMMER_STARCONDENSE_BLOCK = ITEMS.registerSimpleBlockItem(BlockRegistry.SHIMMER_STARCONDENSE_BLOCK);
+    public static final DeferredItem<BlockItem> SMOOTH_SHIMMER_STARCONDENSE_BLOCK = ITEMS.registerSimpleBlockItem(BlockRegistry.SMOOTH_SHIMMER_STARCONDENSE_BLOCK);
+    public static final DeferredItem<BlockItem> STARCONDENSE_GLASS = ITEMS.registerSimpleBlockItem(BlockRegistry.STARCONDENSE_GLASS);
+    public static final DeferredItem<BlockItem> STARCONDENSE_GLASS_PANE = ITEMS.registerSimpleBlockItem(BlockRegistry.STARCONDENSE_GLASS_PANE);
+    public static final DeferredItem<BlockItem> SHIMMER_STARCONDENSE_GLASS = ITEMS.registerSimpleBlockItem(BlockRegistry.SHIMMER_STARCONDENSE_GLASS);
+    public static final DeferredItem<BlockItem> SHIMMER_STARCONDENSE_GLASS_PANE = ITEMS.registerSimpleBlockItem(BlockRegistry.SHIMMER_STARCONDENSE_GLASS_PANE);
+    public static final DeferredItem<BlockItem> MIDNIGHT_STARCONDENSE_BLOCK = ITEMS.registerSimpleBlockItem(BlockRegistry.MIDNIGHT_STARCONDENSE_BLOCK);
+    public static final DeferredItem<BlockItem> MIDNIGHT_STARCONDENSE_SLAB = ITEMS.registerSimpleBlockItem(BlockRegistry.MIDNIGHT_STARCONDENSE_SLAB);
+    public static final DeferredItem<BlockItem> MIDNIGHT_STARCONDENSE_STAIRS = ITEMS.registerSimpleBlockItem(BlockRegistry.MIDNIGHT_STARCONDENSE_STAIRS);
+    public static final DeferredItem<BlockItem> SMOOTH_MIDNIGHT_STARCONDENSE_BLOCK = ITEMS.registerSimpleBlockItem(BlockRegistry.SMOOTH_MIDNIGHT_STARCONDENSE_BLOCK);
+    public static final DeferredItem<BlockItem> SMOOTH_MIDNIGHT_STARCONDENSE_SLAB = ITEMS.registerSimpleBlockItem(BlockRegistry.SMOOTH_MIDNIGHT_STARCONDENSE_SLAB);
+    public static final DeferredItem<BlockItem> SMOOTH_MIDNIGHT_STARCONDENSE_STAIRS = ITEMS.registerSimpleBlockItem(BlockRegistry.SMOOTH_MIDNIGHT_STARCONDENSE_STAIRS);
+    public static final DeferredItem<BlockItem> MIDNIGHT_STARCONDENSE_GLASS = ITEMS.registerSimpleBlockItem(BlockRegistry.MIDNIGHT_STARCONDENSE_GLASS);
     public static final DeferredItem<StarGatherersArmorItem> STAR_GATHERERS_HOOD = ITEMS.registerItem(
             "star_gatherers_hood", properties -> new StarGatherersArmorItem(ArmorItem.Type.HELMET, properties));
     public static final DeferredItem<StarGatherersArmorItem> STAR_GATHERERS_TUNIC = ITEMS.registerItem(

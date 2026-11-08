@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "constellationandspells:smooth_starcondense_block"
+  },
+  "result": {
+    "count": 1,
+    "id": "constellationandspells:smooth_starcondense_stairs"
+  }
+}

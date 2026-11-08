@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_stardust_shard": {
+      "conditions": {
+        "items": [
+          {
+            "items": "constellationandspells:stardust_shard"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "constellationandspells:block_of_stardust_shard"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_stardust_shard"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "constellationandspells:block_of_stardust_shard"
+    ]
+  }
+}

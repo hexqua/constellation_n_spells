@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "constellationandspells:block/smooth_shimmer_starcondense_block"
+  }
+}

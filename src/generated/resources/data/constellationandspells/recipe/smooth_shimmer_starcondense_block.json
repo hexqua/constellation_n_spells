@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "B": {
+      "item": "constellationandspells:smooth_starcondense_block"
+    },
+    "S": {
+      "item": "constellationandspells:stardust_shard"
+    }
+  },
+  "pattern": [
+    "BBB",
+    "BSB",
+    "BBB"
+  ],
+  "result": {
+    "count": 8,
+    "id": "constellationandspells:smooth_shimmer_starcondense_block"
+  }
+}

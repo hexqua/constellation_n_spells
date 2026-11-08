@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/stairs",
+  "textures": {
+    "bottom": "constellationandspells:block/midnight_starcondense_block",
+    "side": "constellationandspells:block/midnight_starcondense_block",
+    "top": "constellationandspells:block/midnight_starcondense_block"
+  }
+}
