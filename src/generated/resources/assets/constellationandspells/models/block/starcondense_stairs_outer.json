@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/outer_stairs",
+  "textures": {
+    "bottom": "constellationandspells:block/block_of_stardust_shard",
+    "side": "constellationandspells:block/block_of_stardust_shard",
+    "top": "constellationandspells:block/block_of_stardust_shard"
+  }
+}

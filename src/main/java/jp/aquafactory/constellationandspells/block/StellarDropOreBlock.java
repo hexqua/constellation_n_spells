@@ -1,7 +1,5 @@
 package jp.aquafactory.constellationandspells.block;
 
-import jp.aquafactory.constellationandspells.particle.AdditiveGlowParticleOptions;
-import jp.aquafactory.constellationandspells.registry.ParticleRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
@@ -9,6 +7,7 @@ import net.minecraft.util.valueproviders.IntProvider;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.DropExperienceBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 
 public final class StellarDropOreBlock extends DropExperienceBlock {
@@ -51,12 +50,6 @@ public final class StellarDropOreBlock extends DropExperienceBlock {
                 ? 0.5 + face.getStepY() * (0.5 + SURFACE_OFFSET) : random.nextDouble());
         double z = pos.getZ() + (axis == Direction.Axis.Z
                 ? 0.5 + face.getStepZ() * (0.5 + SURFACE_OFFSET) : random.nextDouble());
-        boolean gold = random.nextFloat() < 0.35F;
-        var options = new AdditiveGlowParticleOptions(ParticleRegistry.ADDITIVE_GLOWING_SPARK.get(),
-                0.10F, gold ? 1.0F : 0.27F, gold ? 0xDB / 255F : 0.42F,
-                gold ? 0x57 / 255F : 0.82F, 2, 12, 4,
-                0.85F, 1.25F, 0.7F, 0.95F, 0.05F, 0.7F, 0.65F, true);
-        // 装飾なので強制表示せず、通常の距離制限とパーティクル設定に従わせる。
-        level.addParticle(options, x, y, z, 0, 0, 0);
+        ShimmerParticles.spawn(level, random, new Vec3(x, y, z));
     }
 }

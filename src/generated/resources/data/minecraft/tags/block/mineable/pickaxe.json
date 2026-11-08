@@ -1,6 +1,16 @@
 {
   "values": [
     "constellationandspells:stellar_drop_ore",
-    "constellationandspells:deepslate_stellar_drop_ore"
+    "constellationandspells:deepslate_stellar_drop_ore",
+    "constellationandspells:stellar_drop_ore",
+    "constellationandspells:deepslate_stellar_drop_ore",
+    "constellationandspells:block_of_stardust_shard",
+    "constellationandspells:starcondense_slab",
+    "constellationandspells:starcondense_stairs",
+    "constellationandspells:smooth_starcondense_block",
+    "constellationandspells:smooth_starcondense_slab",
+    "constellationandspells:smooth_starcondense_stairs",
+    "constellationandspells:shimmer_starcondense_block",
+    "constellationandspells:smooth_shimmer_starcondense_block"
   ]
 }

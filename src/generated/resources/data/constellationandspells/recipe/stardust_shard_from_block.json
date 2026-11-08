@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "constellationandspells:block_of_stardust_shard"
+    }
+  ],
+  "result": {
+    "count": 4,
+    "id": "constellationandspells:stardust_shard"
+  }
+}

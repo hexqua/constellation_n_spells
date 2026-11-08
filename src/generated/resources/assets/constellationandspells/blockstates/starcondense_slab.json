@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "constellationandspells:block/starcondense_slab"
+    },
+    "type=double": {
+      "model": "constellationandspells:block/block_of_stardust_shard"
+    },
+    "type=top": {
+      "model": "constellationandspells:block/starcondense_slab_top"
+    }
+  }
+}

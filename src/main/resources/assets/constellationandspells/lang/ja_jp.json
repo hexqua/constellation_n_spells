@@ -10,6 +10,19 @@
 
   "block.constellationandspells.stellar_drop_ore": "星の落とし物の鉱石",
   "block.constellationandspells.deepslate_stellar_drop_ore": "深層の星の落とし物の鉱石",
+  "block.constellationandspells.block_of_stardust_shard": "星屑の欠片ブロック",
+  "block.constellationandspells.smooth_starcondense_block": "滑らかな凝縮星ブロック",
+  "block.constellationandspells.shimmer_starcondense_block": "輝きの凝縮星ブロック",
+  "block.constellationandspells.smooth_shimmer_starcondense_block": "滑らかな輝く凝縮星ブロック",
+  "block.constellationandspells.starcondense_glass": "凝縮星ガラス",
+  "block.constellationandspells.shimmer_starcondense_glass": "輝きの凝縮星ガラス",
+
+  "block.constellationandspells.starcondense_slab": "凝縮星のハーフブロック",
+  "block.constellationandspells.starcondense_stairs": "凝縮星の階段",
+  "block.constellationandspells.smooth_starcondense_slab": "滑らかな凝縮星のハーフブロック",
+  "block.constellationandspells.smooth_starcondense_stairs": "滑らかな凝縮星の階段",
+  "block.constellationandspells.starcondense_glass_pane": "凝縮星ガラス板",
+  "block.constellationandspells.shimmer_starcondense_glass_pane": "輝きの凝縮星ガラス板",
 
   "item.constellationandspells.stardust_shard": "星屑の欠片",
   "item.constellationandspells.zodiac_rune": "星座術のルーン",

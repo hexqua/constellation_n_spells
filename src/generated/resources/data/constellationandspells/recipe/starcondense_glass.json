@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "B": {
+      "item": "minecraft:glass"
+    },
+    "S": {
+      "item": "constellationandspells:stardust_shard"
+    }
+  },
+  "pattern": [
+    "BBB",
+    "BSB",
+    "BBB"
+  ],
+  "result": {
+    "count": 8,
+    "id": "constellationandspells:starcondense_glass"
+  }
+}

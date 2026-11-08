@@ -4,6 +4,8 @@ import io.redspace.ironsspellbooks.util.ModTags;
 import jp.aquafactory.constellationandspells.registry.SchoolTags;
 import jp.aquafactory.constellationandspells.ConstellationnSpells;
 import jp.aquafactory.constellationandspells.registry.ItemRegistry;
+import jp.aquafactory.constellationandspells.registry.BlockRegistry;
+import net.neoforged.neoforge.common.Tags;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
@@ -25,6 +27,12 @@ public final class ItemTagProvider extends ItemTagsProvider {
 
     @Override
     protected void addTags(@NotNull HolderLookup.Provider lookup) {
+        tag(Tags.Items.GLASS_BLOCKS).add(BlockRegistry.STARCONDENSE_GLASS.get().asItem(),
+                BlockRegistry.SHIMMER_STARCONDENSE_GLASS.get().asItem());
+        tag(Tags.Items.GLASS_PANES).add(BlockRegistry.STARCONDENSE_GLASS_PANE.get().asItem(),
+                BlockRegistry.SHIMMER_STARCONDENSE_GLASS_PANE.get().asItem());
+        tag(ItemTags.SLABS).add(BlockRegistry.STARCONDENSE_SLAB.get().asItem(), BlockRegistry.SMOOTH_STARCONDENSE_SLAB.get().asItem());
+        tag(ItemTags.STAIRS).add(BlockRegistry.STARCONDENSE_STAIRS.get().asItem(), BlockRegistry.SMOOTH_STARCONDENSE_STAIRS.get().asItem());
         tag(ItemTags.create(ResourceLocation.fromNamespaceAndPath("irons_spellbooks", "staff")))
                 .add(ItemRegistry.CELESTIAL_SURVEY_STAFF.get());
         tag(SchoolTags.ZODIAC_FOCUS).add(ItemRegistry.STARDUST_SHARD.get());
