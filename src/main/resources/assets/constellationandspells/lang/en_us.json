@@ -64,5 +64,6 @@
   "subtitle.constellationandspells.sound.stellar_impact": "Stardust shatters",
   "subtitle.constellationandspells.sound.armor_equip_cloth": "Cloth armor rustles",
   "subtitle.constellationandspells.sound.star_mana": "Stellar magic gathers",
-  "subtitle.constellationandspells.sound.map_deploy": "Star chart is drawn"
+  "subtitle.constellationandspells.sound.map_deploy": "Star chart is drawn",
+  "subtitle.constellationandspells.sound.starcondense_break": "Crystalline Star breaks"
 }

@@ -15,6 +15,7 @@ public final class SoundRegistry {
     public static final DeferredHolder<SoundEvent, SoundEvent> ARMOR_EQUIP_CLOTH = register("armor_equip_cloth");
     public static final DeferredHolder<SoundEvent, SoundEvent> STAR_MANA = register("star_mana");
     public static final DeferredHolder<SoundEvent, SoundEvent> MAP_DEPLOY = register("map_deploy");
+    public static final DeferredHolder<SoundEvent, SoundEvent> STARCONDENSE_BREAK = register("starcondense_break");
 
     private SoundRegistry() {}
 
