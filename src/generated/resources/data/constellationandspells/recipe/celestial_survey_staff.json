@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "C": {
+      "item": "minecraft:compass"
+    },
+    "G": {
+      "item": "minecraft:gold_ingot"
+    },
+    "M": {
+      "item": "minecraft:calcite"
+    },
+    "O": {
+      "item": "minecraft:obsidian"
+    },
+    "S": {
+      "item": "constellationandspells:stardust_shard"
+    }
+  },
+  "pattern": [
+    " CS",
+    " MG",
+    "MO "
+  ],
+  "result": {
+    "count": 1,
+    "id": "constellationandspells:celestial_survey_staff"
+  }
+}
