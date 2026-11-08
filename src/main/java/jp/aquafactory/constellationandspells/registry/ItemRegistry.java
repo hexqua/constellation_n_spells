@@ -5,6 +5,7 @@ import io.redspace.ironsspellbooks.registries.ComponentRegistry;
 import jp.aquafactory.constellationandspells.ConstellationnSpells;
 import jp.aquafactory.constellationandspells.item.ConstellationTabletItem;
 import jp.aquafactory.constellationandspells.item.CelestialSurveyStaffItem;
+import jp.aquafactory.constellationandspells.item.stardusthandlamp.StardustHandLampItem;
 import jp.aquafactory.constellationandspells.item.armor.AstralObserversArmorItem;
 import jp.aquafactory.constellationandspells.item.armor.StarGatherersArmorItem;
 import net.minecraft.world.item.ArmorItem;
@@ -18,6 +19,8 @@ public final class ItemRegistry {
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(ConstellationnSpells.MODID);
 
     public static final DeferredItem<Item> STARDUST_SHARD = ITEMS.registerSimpleItem("stardust_shard");
+    public static final DeferredItem<StardustHandLampItem> STARDUST_HAND_LAMP = ITEMS.registerItem(
+            "stardust_hand_lamp", StardustHandLampItem::new);
     public static final DeferredItem<Item> ZODIAC_RUNE = ITEMS.registerSimpleItem("zodiac_rune");
     public static final DeferredItem<CelestialSurveyStaffItem> CELESTIAL_SURVEY_STAFF = ITEMS.registerItem(
             "celestial_survey_staff", CelestialSurveyStaffItem::new);

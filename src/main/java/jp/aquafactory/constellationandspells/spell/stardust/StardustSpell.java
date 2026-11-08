@@ -6,15 +6,19 @@ import io.redspace.ironsspellbooks.api.spells.*;
 import io.redspace.ironsspellbooks.api.util.Utils;
 import io.redspace.ironsspellbooks.damage.SpellDamageSource;
 import jp.aquafactory.constellationandspells.ConstellationnSpells;
+import jp.aquafactory.constellationandspells.item.stardusthandlamp.StardustHandLampCasting;
 import jp.aquafactory.constellationandspells.magic.ZodiacSchool;
 import jp.aquafactory.constellationandspells.registry.SoundRegistry;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
 import java.util.List;
@@ -71,8 +75,46 @@ public final class StardustSpell extends AbstractSpell {
     }
 
     @Override
+    public boolean attemptInitiateCast(ItemStack stack, int spellLevel, Level level, Player player,
+                                       CastSource source, boolean triggerCooldown, String castingEquipmentSlot) {
+        if (level.isClientSide) {
+            return false;
+        }
+        boolean lampSelection = StardustHandLampCasting.isLampSelection(stack, player, source, castingEquipmentSlot);
+        var lamp = lampSelection ? StardustHandLampCasting.find(player) : null;
+        if (lampSelection && lamp == null) {
+            return false;
+        }
+        boolean started = super.attemptInitiateCast(stack, spellLevel, level, player, source, triggerCooldown,
+                lamp != null ? lamp.slot().getName() : castingEquipmentSlot);
+        if (started && lamp != null) {
+            MagicData.getPlayerMagicData(player).setAdditionalCastData(new StardustHandLampCasting.CastData(lamp));
+        }
+        return started;
+    }
+
+    @Override
+    public void castSpell(Level level, int spellLevel, ServerPlayer player, CastSource source, boolean triggerCooldown) {
+        var data = MagicData.getPlayerMagicData(player).getAdditionalCastData();
+        // 開始後に手放した個体や交換後の別個体では、魔法もマナ消費も成立させない。
+        if (data instanceof StardustHandLampCasting.CastData(StardustHandLampCasting.HeldLamp lamp) && !lamp.isStillHeld(player)) {
+            return;
+        }
+        super.castSpell(level, spellLevel, player, source, triggerCooldown);
+    }
+
+    @Override
     public void onCast(Level level, int spellLevel, LivingEntity caster, CastSource source, MagicData magicData) {
         if (level instanceof ServerLevel serverLevel) {
+            if (magicData.getAdditionalCastData() instanceof StardustHandLampCasting.CastData(
+                    StardustHandLampCasting.HeldLamp lamp
+            )
+                    && caster instanceof Player player) {
+                if (!lamp.isStillHeld(player)) {
+                    return;
+                }
+                lamp.stack().hurtAndBreak(1, player, lamp.slot());
+            }
             StardustBursts.start(serverLevel, caster, getDamage(spellLevel, caster));
         }
         super.onCast(level, spellLevel, caster, source, magicData);

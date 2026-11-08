@@ -1,0 +1,62 @@
+{
+	"format_version": "1.12.0",
+	"minecraft:geometry": [
+		{
+			"description": {
+				"identifier": "geometry.stardust_hand_lamp",
+				"texture_width": 32,
+				"texture_height": 32,
+				"visible_bounds_width": 2,
+				"visible_bounds_height": 2.5,
+				"visible_bounds_offset": [0, 0.75, 0]
+			},
+			"bones": [
+				{
+					"name": "root",
+					"pivot": [0, 0, 0]
+				},
+				{
+					"name": "handle",
+					"parent": "root",
+					"pivot": [0, 0, 0],
+					"cubes": [
+						{"origin": [-0.5, 0.5, -1], "size": [1, 2, 2], "pivot": [0, 1.5, 0], "rotation": [45, 0, 0], "uv": [20, 3]},
+						{"origin": [-1, 0.5, -1], "size": [2, 2, 2], "inflate": -0.4, "pivot": [0, 1.5, 0], "rotation": [45, 0, 0], "uv": [0, 20]},
+						{"origin": [-1, 2, -1], "size": [2, 2, 2], "inflate": -0.45, "uv": [0, 16]},
+						{"origin": [-1, 1, -1], "size": [2, 6, 2], "inflate": -0.55, "uv": [12, 15]},
+						{"origin": [-1, 6.25, -1], "size": [2, 1, 2], "inflate": -0.2, "pivot": [0, 6.75, 0], "rotation": [0, -45, 0], "uv": [20, 0]}
+					]
+				},
+				{
+					"name": "orb",
+					"parent": "root",
+					"pivot": [0, 6.75, 0]
+				},
+				{
+					"name": "orb_rotate",
+					"parent": "orb",
+					"pivot": [0, 9, 0],
+					"cubes": [
+						{"origin": [-2.5, 6.5, -2.5], "size": [5, 5, 5], "inflate": -1, "uv": [0, 0]}
+					]
+				},
+				{
+					"name": "core",
+					"parent": "orb",
+					"pivot": [0, 8, 0],
+					"cubes": [
+						{"origin": [-1.5, 7, -1.5], "size": [3, 2, 3], "inflate": -0.75, "uv": [12, 10]}
+					]
+				},
+				{
+					"name": "torch",
+					"parent": "orb",
+					"pivot": [0, 9.25, 0],
+					"cubes": [
+						{"origin": [-1.5, 7.75, -1.5], "size": [3, 3, 3], "inflate": -0.6, "uv": [0, 10]}
+					]
+				}
+			]
+		}
+	]
+}
