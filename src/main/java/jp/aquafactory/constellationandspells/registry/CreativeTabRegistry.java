@@ -72,6 +72,13 @@ public final class CreativeTabRegistry {
         output.accept(ItemRegistry.STARCONDENSE_GLASS_PANE.get());
         output.accept(ItemRegistry.SHIMMER_STARCONDENSE_GLASS.get());
         output.accept(ItemRegistry.SHIMMER_STARCONDENSE_GLASS_PANE.get());
+        output.accept(ItemRegistry.MIDNIGHT_STARCONDENSE_BLOCK.get());
+        output.accept(ItemRegistry.MIDNIGHT_STARCONDENSE_SLAB.get());
+        output.accept(ItemRegistry.MIDNIGHT_STARCONDENSE_STAIRS.get());
+        output.accept(ItemRegistry.SMOOTH_MIDNIGHT_STARCONDENSE_BLOCK.get());
+        output.accept(ItemRegistry.SMOOTH_MIDNIGHT_STARCONDENSE_SLAB.get());
+        output.accept(ItemRegistry.SMOOTH_MIDNIGHT_STARCONDENSE_STAIRS.get());
+        output.accept(ItemRegistry.MIDNIGHT_STARCONDENSE_GLASS.get());
     }
 
     private static void addSpellScrolls(CreativeModeTab.Output output) {

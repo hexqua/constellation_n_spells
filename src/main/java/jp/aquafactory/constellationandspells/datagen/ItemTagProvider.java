@@ -33,6 +33,9 @@ public final class ItemTagProvider extends ItemTagsProvider {
                 BlockRegistry.SHIMMER_STARCONDENSE_GLASS_PANE.get().asItem());
         tag(ItemTags.SLABS).add(BlockRegistry.STARCONDENSE_SLAB.get().asItem(), BlockRegistry.SMOOTH_STARCONDENSE_SLAB.get().asItem());
         tag(ItemTags.STAIRS).add(BlockRegistry.STARCONDENSE_STAIRS.get().asItem(), BlockRegistry.SMOOTH_STARCONDENSE_STAIRS.get().asItem());
+        tag(Tags.Items.GLASS_BLOCKS_TINTED).add(BlockRegistry.MIDNIGHT_STARCONDENSE_GLASS.get().asItem());
+        tag(ItemTags.SLABS).add(BlockRegistry.MIDNIGHT_STARCONDENSE_SLAB.get().asItem(), BlockRegistry.SMOOTH_MIDNIGHT_STARCONDENSE_SLAB.get().asItem());
+        tag(ItemTags.STAIRS).add(BlockRegistry.MIDNIGHT_STARCONDENSE_STAIRS.get().asItem(), BlockRegistry.SMOOTH_MIDNIGHT_STARCONDENSE_STAIRS.get().asItem());
         tag(ItemTags.create(ResourceLocation.fromNamespaceAndPath("irons_spellbooks", "staff")))
                 .add(ItemRegistry.CELESTIAL_SURVEY_STAFF.get());
         tag(SchoolTags.ZODIAC_FOCUS).add(ItemRegistry.STARDUST_SHARD.get());

@@ -162,6 +162,22 @@ public final class VanillaRecipeProvider extends RecipeProvider {
         surroundWithShard(output, BlockRegistry.STARCONDENSE_GLASS.get(), BlockRegistry.SHIMMER_STARCONDENSE_GLASS.get());
         pane(output, BlockRegistry.STARCONDENSE_GLASS.get(), BlockRegistry.STARCONDENSE_GLASS_PANE.get());
         pane(output, BlockRegistry.SHIMMER_STARCONDENSE_GLASS.get(), BlockRegistry.SHIMMER_STARCONDENSE_GLASS_PANE.get());
+        var midnight = BlockRegistry.MIDNIGHT_STARCONDENSE_BLOCK.get();
+        var smoothMidnight = BlockRegistry.SMOOTH_MIDNIGHT_STARCONDENSE_BLOCK.get();
+        surround(output, base, Ingredient.of(Items.COAL, Items.CHARCOAL), midnight, 8);
+        surround(output, smooth, Ingredient.of(Items.COAL, Items.CHARCOAL), smoothMidnight, 8);
+        smoothRecipe(output, midnight, smoothMidnight);
+        stoneVariants(output, midnight, BlockRegistry.MIDNIGHT_STARCONDENSE_SLAB.get(), BlockRegistry.MIDNIGHT_STARCONDENSE_STAIRS.get());
+        stoneVariants(output, smoothMidnight, BlockRegistry.SMOOTH_MIDNIGHT_STARCONDENSE_SLAB.get(), BlockRegistry.SMOOTH_MIDNIGHT_STARCONDENSE_STAIRS.get());
+        surround(output, BlockRegistry.STARCONDENSE_GLASS.get(), Ingredient.of(Items.AMETHYST_BLOCK),
+                BlockRegistry.MIDNIGHT_STARCONDENSE_GLASS.get(), 9);
+    }
+
+    private static void surround(RecipeOutput output, ItemLike surrounding, Ingredient center, ItemLike result, int count) {
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, result, count)
+                .pattern("BBB").pattern("BCB").pattern("BBB")
+                .define('B', surrounding).define('C', center)
+                .unlockedBy("has_base", has(surrounding)).save(output);
     }
 
     private static void stoneVariants(RecipeOutput output, ItemLike base,

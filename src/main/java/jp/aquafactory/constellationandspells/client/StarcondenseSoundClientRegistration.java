@@ -32,6 +32,7 @@ public final class StarcondenseSoundClientRegistration {
         }, BlockRegistry.STELLAR_DROP_ORE.get(), BlockRegistry.DEEPSLATE_STELLAR_DROP_ORE.get(),
                 BlockRegistry.SHIMMER_STARCONDENSE_BLOCK.get(), BlockRegistry.SMOOTH_SHIMMER_STARCONDENSE_BLOCK.get(),
                 BlockRegistry.STARCONDENSE_GLASS.get(), BlockRegistry.STARCONDENSE_GLASS_PANE.get(),
-                BlockRegistry.SHIMMER_STARCONDENSE_GLASS.get(), BlockRegistry.SHIMMER_STARCONDENSE_GLASS_PANE.get());
+                BlockRegistry.SHIMMER_STARCONDENSE_GLASS.get(), BlockRegistry.SHIMMER_STARCONDENSE_GLASS_PANE.get(),
+                BlockRegistry.MIDNIGHT_STARCONDENSE_GLASS.get());
     }
 }

@@ -11,6 +11,12 @@
     "constellationandspells:smooth_starcondense_slab",
     "constellationandspells:smooth_starcondense_stairs",
     "constellationandspells:shimmer_starcondense_block",
-    "constellationandspells:smooth_shimmer_starcondense_block"
+    "constellationandspells:smooth_shimmer_starcondense_block",
+    "constellationandspells:midnight_starcondense_block",
+    "constellationandspells:midnight_starcondense_slab",
+    "constellationandspells:midnight_starcondense_stairs",
+    "constellationandspells:smooth_midnight_starcondense_block",
+    "constellationandspells:smooth_midnight_starcondense_slab",
+    "constellationandspells:smooth_midnight_starcondense_stairs"
   ]
 }

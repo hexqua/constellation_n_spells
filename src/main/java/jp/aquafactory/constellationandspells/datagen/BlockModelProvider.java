@@ -23,8 +23,15 @@ public final class BlockModelProvider extends BlockStateProvider {
         cube(BlockRegistry.SMOOTH_STARCONDENSE_BLOCK.get());
         cube(BlockRegistry.SHIMMER_STARCONDENSE_BLOCK.get());
         cube(BlockRegistry.SMOOTH_SHIMMER_STARCONDENSE_BLOCK.get());
+        cube(BlockRegistry.MIDNIGHT_STARCONDENSE_BLOCK.get());
+        cube(BlockRegistry.SMOOTH_MIDNIGHT_STARCONDENSE_BLOCK.get());
         variants(BlockRegistry.BLOCK_OF_STARDUST_SHARD.get(), BlockRegistry.STARCONDENSE_SLAB.get(), BlockRegistry.STARCONDENSE_STAIRS.get());
         variants(BlockRegistry.SMOOTH_STARCONDENSE_BLOCK.get(), BlockRegistry.SMOOTH_STARCONDENSE_SLAB.get(), BlockRegistry.SMOOTH_STARCONDENSE_STAIRS.get());
+        variants(BlockRegistry.MIDNIGHT_STARCONDENSE_BLOCK.get(), BlockRegistry.MIDNIGHT_STARCONDENSE_SLAB.get(), BlockRegistry.MIDNIGHT_STARCONDENSE_STAIRS.get());
+        variants(BlockRegistry.SMOOTH_MIDNIGHT_STARCONDENSE_BLOCK.get(), BlockRegistry.SMOOTH_MIDNIGHT_STARCONDENSE_SLAB.get(), BlockRegistry.SMOOTH_MIDNIGHT_STARCONDENSE_STAIRS.get());
+        simpleBlockWithItem(BlockRegistry.MIDNIGHT_STARCONDENSE_GLASS.get(),
+                models().cubeAll("midnight_starcondense_glass", modLoc("block/midnight_starcondense_glass"))
+                        .renderType("translucent"));
         glass(BlockRegistry.STARCONDENSE_GLASS.get(), BlockRegistry.STARCONDENSE_GLASS_PANE.get(), "starcondense_glass");
         glass(BlockRegistry.SHIMMER_STARCONDENSE_GLASS.get(), BlockRegistry.SHIMMER_STARCONDENSE_GLASS_PANE.get(), "shimmer_starcondense_glass");
     }

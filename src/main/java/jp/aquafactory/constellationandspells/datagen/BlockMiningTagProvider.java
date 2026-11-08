@@ -8,6 +8,7 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.StairBlock;
+import net.minecraft.world.level.block.TransparentBlock;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.data.BlockTagsProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
@@ -32,7 +33,7 @@ public final class BlockMiningTagProvider extends BlockTagsProvider {
             } else if (block instanceof StairBlock) {
                 tag(BlockTags.STAIRS).add(block);
             }
-            if (block == BlockRegistry.STARCONDENSE_GLASS.get() || block == BlockRegistry.SHIMMER_STARCONDENSE_GLASS.get()) {
+            if (block instanceof TransparentBlock) {
                 tag(Tags.Blocks.GLASS_BLOCKS).add(block);
                 tag(BlockTags.IMPERMEABLE).add(block);
             } else if (block == BlockRegistry.STARCONDENSE_GLASS_PANE.get() || block == BlockRegistry.SHIMMER_STARCONDENSE_GLASS_PANE.get()) {
@@ -41,5 +42,6 @@ public final class BlockMiningTagProvider extends BlockTagsProvider {
                 tag(BlockTags.MINEABLE_WITH_PICKAXE).add(block);
             }
         }
+        tag(Tags.Blocks.GLASS_BLOCKS_TINTED).add(BlockRegistry.MIDNIGHT_STARCONDENSE_GLASS.get());
     }
 }

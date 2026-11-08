@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "constellationandspells:block/smooth_midnight_starcondense_slab"
+    },
+    "type=double": {
+      "model": "constellationandspells:block/smooth_midnight_starcondense_block"
+    },
+    "type=top": {
+      "model": "constellationandspells:block/smooth_midnight_starcondense_slab_top"
+    }
+  }
+}

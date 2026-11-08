@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "B": {
+      "item": "constellationandspells:starcondense_glass"
+    },
+    "C": {
+      "item": "minecraft:amethyst_block"
+    }
+  },
+  "pattern": [
+    "BBB",
+    "BCB",
+    "BBB"
+  ],
+  "result": {
+    "count": 9,
+    "id": "constellationandspells:midnight_starcondense_glass"
+  }
+}

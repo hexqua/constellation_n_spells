@@ -26,6 +26,7 @@ public final class ConnectedGlassClientRegistration {
         wrap(event, BlockRegistry.SHIMMER_STARCONDENSE_GLASS.get(), "shimmer_starcondense_glass", false);
         wrap(event, BlockRegistry.STARCONDENSE_GLASS_PANE.get(), "starcondense_glass", true);
         wrap(event, BlockRegistry.SHIMMER_STARCONDENSE_GLASS_PANE.get(), "shimmer_starcondense_glass", true);
+        wrap(event, BlockRegistry.MIDNIGHT_STARCONDENSE_GLASS.get(), "midnight_starcondense_glass", false);
     }
 
     private static void wrap(ModelEvent.ModifyBakingResult event, Block block, String texture, boolean pane) {
