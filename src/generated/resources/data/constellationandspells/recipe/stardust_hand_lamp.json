@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "B": {
+      "item": "minecraft:stick"
+    },
+    "G": {
+      "item": "constellationandspells:starcondense_glass_pane"
+    },
+    "S": {
+      "item": "constellationandspells:stardust_shard"
+    },
+    "W": {
+      "tag": "minecraft:wool_carpets"
+    }
+  },
+  "pattern": [
+    "GGG",
+    "GSG",
+    "WBW"
+  ],
+  "result": {
+    "count": 1,
+    "id": "constellationandspells:stardust_hand_lamp"
+  }
+}

@@ -37,6 +37,7 @@ public final class CreativeTabRegistry {
     }
 
     private static void addTools(CreativeModeTab.Output output) {
+        output.accept(ItemRegistry.STARDUST_HAND_LAMP.get());
         output.accept(ItemRegistry.CELESTIAL_SURVEY_STAFF.get());
     }
 

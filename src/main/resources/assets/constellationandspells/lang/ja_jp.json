@@ -33,6 +33,7 @@
   "item.constellationandspells.stardust_shard": "星屑の欠片",
   "item.constellationandspells.zodiac_rune": "星座術のルーン",
   "item.constellationandspells.zodiac_upgrade_orb": "星座術のアップグレードオーブ",
+  "item.constellationandspells.stardust_hand_lamp": "星屑の手持灯",
   "item.constellationandspells.celestial_survey_staff": "星天調査の杖",
   "item.constellationandspells.constellation_tablet": "星座の術盤",
   "item.constellationandspells.star_gatherers_hood": "星拾いのフード",
@@ -43,6 +44,9 @@
   "item.constellationandspells.astral_observers_coat": "星辰の観測者の外套",
   "item.constellationandspells.astral_observers_leggings": "星辰の観測者のレギンス",
   "item.constellationandspells.astral_observers_boots": "星辰の観測者の靴",
+
+  "item.constellationandspells.stardust_hand_lamp.tooltip.desc_1": "手に持つことで%sが一時的に詠唱できるようになる。",
+  "item.constellationandspells.stardust_hand_lamp.tooltip.desc_2": "詠唱することで耐久値を消費する。",
 
   "entity.constellationandspells.stardust": "星の塊",
   "entity.constellationandspells.stargazing_field": "魔法の星図",

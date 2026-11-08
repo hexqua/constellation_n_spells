@@ -33,6 +33,7 @@
   "item.constellationandspells.stardust_shard": "Stardust Shard",
   "item.constellationandspells.zodiac_rune": "Zodiac Rune",
   "item.constellationandspells.zodiac_upgrade_orb": "Zodiac Upgrade Orb",
+  "item.constellationandspells.stardust_hand_lamp": "Handlamp of Stardust",
   "item.constellationandspells.celestial_survey_staff": "Celestial Survey Staff",
   "item.constellationandspells.constellation_tablet": "Spell Tablet of Constellation",
   "item.constellationandspells.star_gatherers_hood": "Star Gatherer's Hood",
@@ -43,6 +44,9 @@
   "item.constellationandspells.astral_observers_coat": "Astral Observer's Coat",
   "item.constellationandspells.astral_observers_leggings": "Astral Observer's Leggings",
   "item.constellationandspells.astral_observers_boots": "Astral Observer's Boots",
+
+  "item.constellationandspells.stardust_hand_lamp.tooltip.desc_1": "Temporarily grants the ability to cast %s while held.",
+  "item.constellationandspells.stardust_hand_lamp.tooltip.desc_2": "Casting consumes durability.",
 
   "entity.constellationandspells.stardust": "Star Cluster",
   "entity.constellationandspells.stargazing_field": "Magical Star Chart",

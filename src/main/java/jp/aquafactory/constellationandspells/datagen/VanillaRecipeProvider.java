@@ -57,6 +57,18 @@ public final class VanillaRecipeProvider extends RecipeProvider {
                 .save(output);
 
         ShapedRecipeBuilder
+                .shaped(RecipeCategory.COMBAT, ItemRegistry.STARDUST_HAND_LAMP.get())
+                .pattern("GGG")
+                .pattern("GSG")
+                .pattern("WBW")
+                .define('S', ItemRegistry.STARDUST_SHARD.get())
+                .define('G', ItemRegistry.STARCONDENSE_GLASS_PANE.get())
+                .define('W', ItemTags.WOOL_CARPETS)
+                .define('B', Items.STICK)
+                .unlockedBy("has_stardust_shard", has(ItemRegistry.STARDUST_SHARD.get()))
+                .save(output);
+
+        ShapedRecipeBuilder
                 .shaped(RecipeCategory.COMBAT, ItemRegistry.CELESTIAL_SURVEY_STAFF.get())
                 .pattern(" CS")
                 .pattern(" MG")
