@@ -54,6 +54,19 @@ public final class VanillaRecipeProvider extends RecipeProvider {
                 .save(output);
 
         ShapedRecipeBuilder
+                .shaped(RecipeCategory.COMBAT, ItemRegistry.CELESTIAL_SURVEY_STAFF.get())
+                .pattern(" CS")
+                .pattern(" MG")
+                .pattern("MO ")
+                .define('S', ItemRegistry.STARDUST_SHARD.get())
+                .define('C', Items.COMPASS)
+                .define('M', Items.CALCITE)
+                .define('G', Items.GOLD_INGOT)
+                .define('O', Items.OBSIDIAN)
+                .unlockedBy("has_stardust_shard", has(ItemRegistry.STARDUST_SHARD.get()))
+                .save(output);
+
+        ShapedRecipeBuilder
                 .shaped(RecipeCategory.COMBAT, ItemRegistry.CONSTELLATION_TABLET.get())
                 .pattern("GWG")
                 .pattern("SRS")

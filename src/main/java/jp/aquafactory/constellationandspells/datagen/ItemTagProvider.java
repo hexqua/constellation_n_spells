@@ -25,6 +25,8 @@ public final class ItemTagProvider extends ItemTagsProvider {
 
     @Override
     protected void addTags(@NotNull HolderLookup.Provider lookup) {
+        tag(ItemTags.create(ResourceLocation.fromNamespaceAndPath("irons_spellbooks", "staff")))
+                .add(ItemRegistry.CELESTIAL_SURVEY_STAFF.get());
         tag(SchoolTags.ZODIAC_FOCUS).add(ItemRegistry.STARDUST_SHARD.get());
         tag(ModTags.SCHOOL_FOCUS).addTag(SchoolTags.ZODIAC_FOCUS);
         tag(ModTags.INSCRIBED_RUNES).add(ItemRegistry.ZODIAC_RUNE.get());

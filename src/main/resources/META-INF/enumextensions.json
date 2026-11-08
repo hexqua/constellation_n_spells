@@ -1,0 +1,13 @@
+{
+  "entries": [
+    {
+      "enum": "net/minecraft/client/model/HumanoidModel$ArmPose",
+      "name": "CONSTELLATIONANDSPELLS_STAFF_ARM_POSE",
+      "constructor": "(ZLnet/neoforged/neoforge/client/IArmPoseTransformer;)V",
+      "parameters": {
+        "class": "jp/aquafactory/constellationandspells/client/item/StaffArmPose",
+        "field": "STAFF_ARM_POSE"
+      }
+    }
+  ]
+}

@@ -27,12 +27,17 @@ public final class CreativeTabRegistry {
         addBlocks(output);
         addMaterials(output);
         addCurios(output);
+        addTools(output);
         addArmor(output);
         addSpellScrolls(output);
     }
 
     private static void addCurios(CreativeModeTab.Output output) {
         output.accept(ItemRegistry.CONSTELLATION_TABLET.get());
+    }
+
+    private static void addTools(CreativeModeTab.Output output) {
+        output.accept(ItemRegistry.CELESTIAL_SURVEY_STAFF.get());
     }
 
     private static void addArmor(CreativeModeTab.Output output) {
