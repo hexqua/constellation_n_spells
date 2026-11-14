@@ -42,6 +42,35 @@ public final class ItemTagProvider extends ItemTagsProvider {
         tag(ModTags.SCHOOL_FOCUS).addTag(SchoolTags.ZODIAC_FOCUS);
         tag(ModTags.INSCRIBED_RUNES).add(ItemRegistry.ZODIAC_RUNE.get());
 
+        // Wisdom は付与対象と効果を有効にする装備場所を別々のタグで許可する.
+        // Apprentice's Codex PR #1047 の対応版から有効になる.
+        // c.f. https://github.com/hexqua/apprentice_codex/pull/1047
+        var wisdomHeld = ItemTags.create(ResourceLocation.fromNamespaceAndPath("apprenticecodex", "wisdom/held"));
+        var wisdomArmor = ItemTags.create(ResourceLocation.fromNamespaceAndPath("apprenticecodex", "wisdom/armor"));
+        tag(wisdomHeld).add(ItemRegistry.CELESTIAL_SURVEY_STAFF.get());
+        tag(wisdomArmor).add(
+                ItemRegistry.STAR_GATHERERS_HOOD.get(),
+                ItemRegistry.STAR_GATHERERS_TUNIC.get(),
+                ItemRegistry.STAR_GATHERERS_TROUSERS.get(),
+                ItemRegistry.STAR_GATHERERS_BOOTS.get(),
+                ItemRegistry.ASTRAL_OBSERVERS_HOOD.get(),
+                ItemRegistry.ASTRAL_OBSERVERS_COAT.get(),
+                ItemRegistry.ASTRAL_OBSERVERS_LEGGINGS.get(),
+                ItemRegistry.ASTRAL_OBSERVERS_BOOTS.get()
+        );
+        tag(ItemTags.create(ResourceLocation.fromNamespaceAndPath("apprenticecodex", "wisdom_enchantable")))
+                .add(
+                        ItemRegistry.CELESTIAL_SURVEY_STAFF.get(),
+                        ItemRegistry.STAR_GATHERERS_HOOD.get(),
+                        ItemRegistry.STAR_GATHERERS_TUNIC.get(),
+                        ItemRegistry.STAR_GATHERERS_TROUSERS.get(),
+                        ItemRegistry.STAR_GATHERERS_BOOTS.get(),
+                        ItemRegistry.ASTRAL_OBSERVERS_HOOD.get(),
+                        ItemRegistry.ASTRAL_OBSERVERS_COAT.get(),
+                        ItemRegistry.ASTRAL_OBSERVERS_LEGGINGS.get(),
+                        ItemRegistry.ASTRAL_OBSERVERS_BOOTS.get()
+                );
+
         tag(TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath("curios", "spellbook")))
                 .add(ItemRegistry.CONSTELLATION_TABLET.get());
 
