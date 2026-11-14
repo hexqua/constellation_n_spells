@@ -42,6 +42,9 @@ public final class ItemTagProvider extends ItemTagsProvider {
         tag(ModTags.SCHOOL_FOCUS).addTag(SchoolTags.ZODIAC_FOCUS);
         tag(ModTags.INSCRIBED_RUNES).add(ItemRegistry.ZODIAC_RUNE.get());
 
+        // Java 側の付与許可だけでは、タグを参照する EMI の表示対象に含まれない。
+        tag(ItemTags.DURABILITY_ENCHANTABLE).add(ItemRegistry.STARDUST_HAND_LAMP.get());
+
         // Wisdom は付与対象と効果を有効にする装備場所を別々のタグで許可する.
         // Apprentice's Codex PR #1047 の対応版から有効になる.
         // c.f. https://github.com/hexqua/apprentice_codex/pull/1047
