@@ -45,10 +45,6 @@ repositories {
         content { includeGroup 'maven.modrinth' }
     }
     maven {
-        url = uri('https://cursemaven.com')
-        content { includeGroup 'curse.maven' }
-    }
-    maven {
         url = uri('https://maven.florens.be/releases')
         content { includeGroup 'be.florens' }
     }
@@ -73,7 +69,7 @@ Map<String, List<String>> runtimeModules = [
         utility      : ['mezz_config', 'jei', 'jade'],
         better_combat: ['cloth_config', 'bettercombat'],
         irons        : ['atlas_api', 'irons_artifice', 'irons_jewelry'],
-        compat       : ['apprenticecodex', 'spell_atlas', 'asterismarcanum', 'aces_spell_utils', 'azurelib', 'expandability'],
+        compat       : ['apprenticecodex', 'asterismarcanum', 'aces_spell_utils', 'azurelib', 'expandability'],
         graphic      : ['sodium', 'sodiumdynamiclights', 'chloride', 'reeses_sodium_options'],
 ]
 Map<String, List<String>> runtimeProfiles = [
@@ -256,7 +252,6 @@ dependencies {
 
     // 配布版を取得し、参考リポジトリやそのビルド成果物へは接続しない。
     compatRuntimeOnly "maven.modrinth:apprentices-codex:${apprentice_codex_modrinth_version_id}"
-    compatRuntimeOnly "curse.maven:spells-atlas-1710649:${spell_atlas_curseforge_file_id}"
     // 公開依存情報が別 Minecraft 版を指すため、1.21.1 用の前提を明示する。
     compatRuntimeOnly "maven.modrinth:asterism-arcanum-addon-for-irons-spells-and-spellbooks:${asterism_arcanum_modrinth_version_id}"
     compatRuntimeOnly "maven.modrinth:aces-spell-utils:${aces_spell_utils_modrinth_version_id}"

@@ -47,7 +47,7 @@ jar は `build/libs` に出力されます。GameTest は初期登録を検査�
 | `runClientGraphic`      | —                               | Sodium、Sodium Dynamic Lights、Chloride、Reese's Sodium Options                                                           |
 | `runClientBetterCombat` | `runGameTestServerBetterCombat` | Better Combat、Cloth Config                                                                                               |
 | `runClientIrons`        | `runGameTestServerIrons`        | Iron's Arms 'n Artifice、Iron's Gems 'n Jewelry、Atlas API                                                                |
-| `runClientCompat`       | `runGameTestServerCompat`       | BetterCombat＋Irons 構成、Apprentice's Codex、Spell's Atlas、Asterism Arcanum、Ace's Spell Utils、AzureLib、ExpandAbility |
+| `runClientCompat`       | `runGameTestServerCompat`       | BetterCombat＋Irons 構成、Apprentice's Codex、Asterism Arcanum、Ace's Spell Utils、AzureLib、ExpandAbility |
 
 ダミー、Moonlight、JEI、MezzConfig、Jade は Client / GameTest の全構成に含みます。それ以外の Optional MOD と描画 MOD は指定構成にだけ追加し、配布 jar
 に同梱しません。Apprentice's Codex も公開配布版を取得し、ローカルリポジトリを参照しません。`runServer`
