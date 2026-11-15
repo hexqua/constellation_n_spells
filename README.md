@@ -39,7 +39,7 @@ jar は `build/libs` に出力されます。GameTest は初期登録を検査�
 ### MOD を追加した実行構成
 
 全構成の共通依存は Iron's Spells 'n Spellbooks、Curios、GeckoLib、Iron's Lib、playerAnimator です。前の3つは `implementation`
-、Better Combat / Arms 'n Artifice / Gems 'n Jewelry / Atlas API / JEI / Jade は `compileOnly` でコード参照できます。
+、Better Combat / Arms 'n Artifice / Gems 'n Jewelry / Atlas API / JEI / Jade / Malum / Lodestone は `compileOnly` でコード参照できます。
 
 | Client タスク           | GameTest タスク                 | 標準から追加される MOD                                                                                                    |
 |-------------------------|---------------------------------|---------------------------------------------------------------------------------------------------------------------------|
@@ -47,7 +47,7 @@ jar は `build/libs` に出力されます。GameTest は初期登録を検査�
 | `runClientGraphic`      | —                               | Sodium、Sodium Dynamic Lights、Chloride、Reese's Sodium Options                                                           |
 | `runClientBetterCombat` | `runGameTestServerBetterCombat` | Better Combat、Cloth Config                                                                                               |
 | `runClientIrons`        | `runGameTestServerIrons`        | Iron's Arms 'n Artifice、Iron's Gems 'n Jewelry、Atlas API                                                                |
-| `runClientCompat`       | `runGameTestServerCompat`       | BetterCombat＋Irons 構成、Apprentice's Codex、Spell's Atlas、Asterism Arcanum、Ace's Spell Utils、AzureLib、ExpandAbility |
+| `runClientCompat`       | `runGameTestServerCompat`       | BetterCombat＋Irons 構成、Apprentice's Codex、Asterism Arcanum、Ace's Spell Utils、AzureLib、ExpandAbility、Malum、Lodestone |
 
 ダミー、Moonlight、JEI、MezzConfig、Jade は Client / GameTest の全構成に含みます。それ以外の Optional MOD と描画 MOD は指定構成にだけ追加し、配布 jar
 に同梱しません。Apprentice's Codex も公開配布版を取得し、ローカルリポジトリを参照しません。`runServer`

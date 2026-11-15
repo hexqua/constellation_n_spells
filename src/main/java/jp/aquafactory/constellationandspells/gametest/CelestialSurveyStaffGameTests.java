@@ -69,12 +69,17 @@ public final class CelestialSurveyStaffGameTests {
     }
 
     @GameTest(template = "gametest/basic_floor")
-    public static void enchantmentEligibilityMatchesLightningRod(GameTestHelper helper) {
+    public static void baseEnchantmentEligibilityMatchesLightningRod(GameTestHelper helper) {
         var staff = new ItemStack(ItemRegistry.CELESTIAL_SURVEY_STAFF.get());
         var reference = new ItemStack(LIGHTNING_ROD_STAFF.get());
         var enchantments = helper.getLevel().registryAccess().registryOrThrow(Registries.ENCHANTMENT);
         boolean foundSupported = false;
         for (var enchantment : enchantments.holders().toList()) {
+            // 他 MOD 向けの互換タグは杖ごとに異なるため、基本の付与範囲だけを比較する。
+            var namespace = enchantment.key().location().getNamespace();
+            if (!namespace.equals("minecraft") && !namespace.equals("irons_spellbooks")) {
+                continue;
+            }
             helper.assertTrue(staff.supportsEnchantment(enchantment) == reference.supportsEnchantment(enchantment),
                     "Anvil enchantment eligibility must match Rod o' Lightning: " + enchantment.key().location());
             helper.assertTrue(staff.isPrimaryItemFor(enchantment) == reference.isPrimaryItemFor(enchantment),

@@ -38,9 +38,48 @@ public final class ItemTagProvider extends ItemTagsProvider {
         tag(ItemTags.STAIRS).add(BlockRegistry.MIDNIGHT_STARCONDENSE_STAIRS.get().asItem(), BlockRegistry.SMOOTH_MIDNIGHT_STARCONDENSE_STAIRS.get().asItem());
         tag(ItemTags.create(ResourceLocation.fromNamespaceAndPath("irons_spellbooks", "staff")))
                 .add(ItemRegistry.CELESTIAL_SURVEY_STAFF.get());
+        // Iron's の杖タグは Malum に包含されないため、近接と魔法武器用エンチャントを個別に許可する。
+        tag(ItemTags.create(ResourceLocation.fromNamespaceAndPath("malum", "soul_shatter_capable_weapon")))
+                .add(ItemRegistry.CELESTIAL_SURVEY_STAFF.get());
+        tag(ItemTags.create(ResourceLocation.fromNamespaceAndPath("malum", "magic_capable_weapon")))
+                .add(ItemRegistry.CELESTIAL_SURVEY_STAFF.get());
+        tag(ItemTags.create(ResourceLocation.fromNamespaceAndPath("malum", "soulwoven_pouch_efficient")))
+                .add(ItemRegistry.STARDUST_SHARD.get());
         tag(SchoolTags.ZODIAC_FOCUS).add(ItemRegistry.STARDUST_SHARD.get());
         tag(ModTags.SCHOOL_FOCUS).addTag(SchoolTags.ZODIAC_FOCUS);
         tag(ModTags.INSCRIBED_RUNES).add(ItemRegistry.ZODIAC_RUNE.get());
+
+        // Java 側の付与許可だけでは、タグを参照する EMI の表示対象に含まれない。
+        tag(ItemTags.DURABILITY_ENCHANTABLE).add(ItemRegistry.STARDUST_HAND_LAMP.get());
+
+        // Wisdom は付与対象と効果を有効にする装備場所を別々のタグで許可する.
+        // Apprentice's Codex PR #1047 の対応版から有効になる.
+        // c.f. https://github.com/hexqua/apprentice_codex/pull/1047
+        var wisdomHeld = ItemTags.create(ResourceLocation.fromNamespaceAndPath("apprenticecodex", "wisdom/held"));
+        var wisdomArmor = ItemTags.create(ResourceLocation.fromNamespaceAndPath("apprenticecodex", "wisdom/armor"));
+        tag(wisdomHeld).add(ItemRegistry.CELESTIAL_SURVEY_STAFF.get());
+        tag(wisdomArmor).add(
+                ItemRegistry.STAR_GATHERERS_HOOD.get(),
+                ItemRegistry.STAR_GATHERERS_TUNIC.get(),
+                ItemRegistry.STAR_GATHERERS_TROUSERS.get(),
+                ItemRegistry.STAR_GATHERERS_BOOTS.get(),
+                ItemRegistry.ASTRAL_OBSERVERS_HOOD.get(),
+                ItemRegistry.ASTRAL_OBSERVERS_COAT.get(),
+                ItemRegistry.ASTRAL_OBSERVERS_LEGGINGS.get(),
+                ItemRegistry.ASTRAL_OBSERVERS_BOOTS.get()
+        );
+        tag(ItemTags.create(ResourceLocation.fromNamespaceAndPath("apprenticecodex", "wisdom_enchantable")))
+                .add(
+                        ItemRegistry.CELESTIAL_SURVEY_STAFF.get(),
+                        ItemRegistry.STAR_GATHERERS_HOOD.get(),
+                        ItemRegistry.STAR_GATHERERS_TUNIC.get(),
+                        ItemRegistry.STAR_GATHERERS_TROUSERS.get(),
+                        ItemRegistry.STAR_GATHERERS_BOOTS.get(),
+                        ItemRegistry.ASTRAL_OBSERVERS_HOOD.get(),
+                        ItemRegistry.ASTRAL_OBSERVERS_COAT.get(),
+                        ItemRegistry.ASTRAL_OBSERVERS_LEGGINGS.get(),
+                        ItemRegistry.ASTRAL_OBSERVERS_BOOTS.get()
+                );
 
         tag(TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath("curios", "spellbook")))
                 .add(ItemRegistry.CONSTELLATION_TABLET.get());
