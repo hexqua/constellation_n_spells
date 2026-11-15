@@ -38,6 +38,13 @@ public final class ItemTagProvider extends ItemTagsProvider {
         tag(ItemTags.STAIRS).add(BlockRegistry.MIDNIGHT_STARCONDENSE_STAIRS.get().asItem(), BlockRegistry.SMOOTH_MIDNIGHT_STARCONDENSE_STAIRS.get().asItem());
         tag(ItemTags.create(ResourceLocation.fromNamespaceAndPath("irons_spellbooks", "staff")))
                 .add(ItemRegistry.CELESTIAL_SURVEY_STAFF.get());
+        // Iron's の杖タグは Malum に包含されないため、近接と魔法武器用エンチャントを個別に許可する。
+        tag(ItemTags.create(ResourceLocation.fromNamespaceAndPath("malum", "soul_shatter_capable_weapon")))
+                .add(ItemRegistry.CELESTIAL_SURVEY_STAFF.get());
+        tag(ItemTags.create(ResourceLocation.fromNamespaceAndPath("malum", "magic_capable_weapon")))
+                .add(ItemRegistry.CELESTIAL_SURVEY_STAFF.get());
+        tag(ItemTags.create(ResourceLocation.fromNamespaceAndPath("malum", "soulwoven_pouch_efficient")))
+                .add(ItemRegistry.STARDUST_SHARD.get());
         tag(SchoolTags.ZODIAC_FOCUS).add(ItemRegistry.STARDUST_SHARD.get());
         tag(ModTags.SCHOOL_FOCUS).addTag(SchoolTags.ZODIAC_FOCUS);
         tag(ModTags.INSCRIBED_RUNES).add(ItemRegistry.ZODIAC_RUNE.get());
