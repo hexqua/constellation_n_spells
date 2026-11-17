@@ -1,0 +1,38 @@
+{
+  "bonusParameters": {
+    "irons_jewelry:action": {
+      "action": {
+        "type": "irons_jewelry:apply_effect",
+        "amplifier": {
+          "base": 1.0,
+          "scalar": 0.0
+        },
+        "duration": {
+          "base": 40.0,
+          "max": 120.0,
+          "min": 40.0,
+          "scalar": 40.0
+        },
+        "effect": "irons_spellbooks:hastened"
+      },
+      "targetSelf": true
+    },
+    "irons_jewelry:attribute": {
+      "amount": 0.025,
+      "attribute": "irons_spellbooks:cooldown_reduction",
+      "operation": "add_multiplied_total"
+    },
+    "irons_jewelry:negative_effect": {
+      "effect": "irons_spellbooks:slowed"
+    },
+    "irons_jewelry:positive_effect": {
+      "effect": "irons_spellbooks:hastened"
+    }
+  },
+  "descriptionId": "material.constellationandspells.stellar_drop",
+  "ingredient": {
+    "item": "constellationandspells:stardust_shard"
+  },
+  "paletteLocation": "constellationandspells:palettes/stellar_drop",
+  "quality": 0.5
+}
