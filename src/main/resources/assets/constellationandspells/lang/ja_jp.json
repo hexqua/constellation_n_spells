@@ -86,5 +86,7 @@
   "subtitle.constellationandspells.sound.armor_equip_cloth": "布の防具を装備する",
   "subtitle.constellationandspells.sound.star_mana": "星の魔力を練る",
   "subtitle.constellationandspells.sound.map_deploy": "星図を描く",
-  "subtitle.constellationandspells.sound.starcondense_break": "星の結晶が崩れる"
+  "subtitle.constellationandspells.sound.starcondense_break": "星の結晶が崩れる",
+  "subtitle.constellationandspells.sound.virgo_start": "星座が瞬く",
+  "subtitle.constellationandspells.sound.virgo_pulse": "魔力が零れる"
 }

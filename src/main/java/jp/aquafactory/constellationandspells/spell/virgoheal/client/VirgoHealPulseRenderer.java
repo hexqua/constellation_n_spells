@@ -2,11 +2,15 @@ package jp.aquafactory.constellationandspells.spell.virgoheal.client;
 
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import jp.aquafactory.constellationandspells.ConstellationnSpells;
+import jp.aquafactory.constellationandspells.particle.AdditiveGlowParticleOptions;
+import jp.aquafactory.constellationandspells.registry.ParticleRegistry;
 import jp.aquafactory.constellationandspells.spell.virgoheal.VirgoHealPulsePayload;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.core.particles.ParticleType;
 import net.minecraft.util.Mth;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -25,6 +29,9 @@ public final class VirgoHealPulseRenderer {
     private static final int LIFETIME_TICKS = 14;
     private static final int SEGMENTS = 64;
     private static final int MAX_PULSES = 128;
+    private static final int RED = 162;
+    private static final int GREEN = 201;
+    private static final int BLUE = 135;
     private static final Deque<Pulse> PULSES = new ArrayDeque<>();
     private static @Nullable ClientLevel pulseLevel;
 
@@ -45,11 +52,69 @@ public final class VirgoHealPulseRenderer {
             PULSES.removeFirst();
         }
         PULSES.addLast(new Pulse(payload.center(), payload.radius(), level.getGameTime()));
+        var center = payload.center();
+        var flash = particle(ParticleRegistry.ADDITIVE_GLOWING_SPARK.get(), 0.16f, 2);
+        level.addParticle(flash, center.x, center.y, center.z, 0, 0.015, 0);
+
+        var recovery = particle(ParticleRegistry.ADDITIVE_SPARK.get(), 0.09f, 2);
+        for (var id : payload.healedEntityIds()) {
+            var entity = level.getEntity(id);
+            if (entity != null) {
+                spawnRecoverySparks(level, entity.getBoundingBox(), recovery);
+            }
+        }
     }
 
     @SubscribeEvent
     public static void tick(ClientTickEvent.Post event) {
-        discardExpired(Minecraft.getInstance().level);
+        var minecraft = Minecraft.getInstance();
+        var level = minecraft.level;
+        discardExpired(level);
+        if (level == null || minecraft.isPaused()) {
+            return;
+        }
+        long gameTime = level.getGameTime();
+        for (var pulse : PULSES) {
+            long age = gameTime - pulse.startTick();
+            // 拡大中の縁から数回に分けてこぼし、横からでも波の広がりを見せる。
+            if (age == 2 || age == 4 || age == 6) {
+                spawnRimSparks(level, pulse, age);
+            }
+        }
+    }
+
+    private static void spawnRimSparks(ClientLevel level, Pulse pulse, float age) {
+        float rim = radiusAt(pulse, remainingAt(age));
+        float angle = level.random.nextFloat() * Mth.TWO_PI;
+        var center = pulse.center();
+        var spark = particle(ParticleRegistry.ADDITIVE_SPARK.get(), 0.07f, 0);
+        for (int i = 0; i < 2; i++) {
+            float x = Mth.cos(angle);
+            float z = Mth.sin(angle);
+            level.addParticle(spark, center.x + x * rim, center.y, center.z + z * rim,
+                    x * 0.04, -0.065, z * 0.04);
+            angle += Mth.PI;
+        }
+    }
+
+    private static void spawnRecoverySparks(ClientLevel level, AABB box, AdditiveGlowParticleOptions spark) {
+        var center = box.getCenter();
+        float angle = level.random.nextFloat() * Mth.TWO_PI;
+        for (int i = 0; i < 6; i++) {
+            float x = Mth.cos(angle);
+            float z = Mth.sin(angle);
+            double y = box.minY + box.getYsize() * (0.20 + level.random.nextDouble() * 0.35);
+            level.addParticle(spark, center.x + x * box.getXsize() * 0.55, y,
+                    center.z + z * box.getZsize() * 0.55, x * 0.025,
+                    0.045 + level.random.nextDouble() * 0.045, z * 0.025);
+            angle += Mth.TWO_PI / 6;
+        }
+    }
+
+    private static AdditiveGlowParticleOptions particle(ParticleType<AdditiveGlowParticleOptions> type,
+                                                       float size, int whitenTicks) {
+        return new AdditiveGlowParticleOptions(type, size, RED / 255f, GREEN / 255f, BLUE / 255f,
+                whitenTicks, 6, 3, 0.85f, 1.15f, 0.65f, 0.90f, 0.08f, 0.45f, 0.5f, true);
     }
 
     private static void discardExpired(@Nullable ClientLevel level) {
@@ -84,15 +149,23 @@ public final class VirgoHealPulseRenderer {
         float partialTick = event.getPartialTick().getGameTimeDeltaPartialTick(false);
         for (var pulse : PULSES) {
             float age = level.getGameTime() - pulse.startTick() + partialTick;
-            float remaining = 1.0f - Mth.clamp(age / LIFETIME_TICKS, 0.0f, 1.0f);
-            float radius = Mth.lerp(1.0f - remaining * remaining, 0.35f, pulse.radius());
+            float remaining = remainingAt(age);
+            float radius = radiusAt(pulse, remaining);
             var offset = pulse.center().subtract(camera);
             pose.pushPose();
-            pose.translate(offset.x, offset.y + 0.05, offset.z);
+            pose.translate(offset.x, offset.y, offset.z);
             drawRing(buffer, pose.last().pose(), radius, Math.round(185 * remaining));
             pose.popPose();
         }
         buffers.endBatch(renderType);
+    }
+
+    private static float remainingAt(float age) {
+        return 1.0f - Mth.clamp(age / LIFETIME_TICKS, 0.0f, 1.0f);
+    }
+
+    private static float radiusAt(Pulse pulse, float remaining) {
+        return Mth.lerp(1.0f - remaining * remaining, 0.35f, pulse.radius());
     }
 
     private static void drawRing(VertexConsumer buffer, Matrix4f matrix, float radius, int opacity) {
@@ -117,7 +190,7 @@ public final class VirgoHealPulseRenderer {
     }
 
     private static void vertex(VertexConsumer buffer, Matrix4f matrix, float x, float z, int opacity) {
-        buffer.addVertex(matrix, x, 0.0f, z).setColor(92, 250, 117, opacity);
+        buffer.addVertex(matrix, x, 0.0f, z).setColor(RED, GREEN, BLUE, opacity);
     }
 
     private record Pulse(Vec3 center, float radius, long startTick) {}

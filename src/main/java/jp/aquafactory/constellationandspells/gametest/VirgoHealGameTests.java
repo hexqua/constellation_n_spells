@@ -36,10 +36,12 @@ public final class VirgoHealGameTests {
         var behindWall = spawn(helper, EntityType.COW, 1.5, 10, 3.5);
         var edge = spawn(helper, EntityType.COW, 4.7, 10, 1.5);
         var corner = spawn(helper, EntityType.COW, 4.4, 10, 4.4);
-        var upperInside = spawn(helper, EntityType.COW, 1.5, 12.9, 2.5);
-        var upperOutside = spawn(helper, EntityType.COW, 1.5, 13.1, 2.5);
-        var lowerInside = spawn(helper, EntityType.COW, 2.5, 8, 1.5);
-        var lowerOutside = spawn(helper, EntityType.COW, 2.5, 7.4, 1.5);
+        var wolf = spawn(helper, EntityType.WOLF, 2.5, 10, 2.5);
+        wolf.setHealth(4.0f);
+        var upperInside = spawn(helper, EntityType.COW, 1.5, 12.55, 2.5);
+        var upperOutside = spawn(helper, EntityType.COW, 1.5, 12.75, 2.5);
+        var lowerInside = spawn(helper, EntityType.COW, 2.5, 8.2, 1.5);
+        var lowerOutside = spawn(helper, EntityType.COW, 2.5, 8.0, 1.5);
         helper.setBlock(new BlockPos(1, 10, 2), Blocks.STONE);
         helper.setBlock(new BlockPos(1, 11, 2), Blocks.STONE);
 
@@ -47,6 +49,7 @@ public final class VirgoHealGameTests {
         var magic = MagicData.getPlayerMagicData(caster);
         spell.onCast(helper.getLevel(), 1, caster, CastSource.MOB, magic);
         helper.assertTrue(caster.getHealth() == 8.5f, "The caster must be included in its own pulse");
+        helper.assertTrue(wolf.getHealth() == 4.5f, "A wolf on the same floor must receive healing");
         helper.assertTrue(behindWall.getHealth() == 8.5f, "A wall must not block healing");
         helper.assertTrue(edge.getHealth() == 8.5f && corner.getHealth() == 8.0f,
                 "The XZ circle must include intersecting hitboxes and reject AABB corners");

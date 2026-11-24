@@ -40,6 +40,18 @@
     ],
     "subtitle": "subtitle.constellationandspells.sound.stellar_launch"
   },
+  "virgo_pulse": {
+    "sounds": [
+      "constellationandspells:virgo_pulse"
+    ],
+    "subtitle": "subtitle.constellationandspells.sound.virgo_pulse"
+  },
+  "virgo_start": {
+    "sounds": [
+      "constellationandspells:virgo_start"
+    ],
+    "subtitle": "subtitle.constellationandspells.sound.virgo_start"
+  },
   "zodiac_cast": {
     "sounds": [
       "constellationandspells:zodiac_cast"

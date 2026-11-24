@@ -6,11 +6,11 @@ import io.redspace.ironsspellbooks.api.magic.MagicData;
 import io.redspace.ironsspellbooks.api.spells.*;
 import io.redspace.ironsspellbooks.api.util.AnimationHolder;
 import io.redspace.ironsspellbooks.api.util.Utils;
-import io.redspace.ironsspellbooks.registries.SoundRegistry;
 import jp.aquafactory.constellationandspells.ConstellationnSpells;
 import jp.aquafactory.constellationandspells.magic.SpellDamageWithoutKnockback;
 import jp.aquafactory.constellationandspells.magic.ZodiacSchool;
 import jp.aquafactory.constellationandspells.registry.EffectRegistry;
+import jp.aquafactory.constellationandspells.registry.SoundRegistry;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
@@ -26,6 +26,7 @@ import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -92,7 +93,7 @@ public final class VirgoHealSpell extends AbstractSpell {
 
     @Override
     public Optional<SoundEvent> getCastStartSound() {
-        return Optional.of(jp.aquafactory.constellationandspells.registry.SoundRegistry.ZODIAC_CAST.get());
+        return Optional.of(SoundRegistry.VIRGO_START.get());
     }
 
     @Override
@@ -126,11 +127,14 @@ public final class VirgoHealSpell extends AbstractSpell {
     @Override
     public void onCast(Level level, int spellLevel, LivingEntity caster, CastSource source, MagicData magicData) {
         if (level instanceof ServerLevel serverLevel) {
-            Vec3 center = caster.position();
+            var casterBox = caster.getBoundingBox();
+            var center = new Vec3(caster.getX(), casterBox.maxY + 0.25, caster.getZ());
             float radius = getRadius(spellLevel);
             float amount = getHealing(spellLevel, caster);
-            var bounds = new AABB(center.x - radius, center.y - 1, center.z - radius,
-                    center.x + radius, center.y + 3, center.z + radius);
+            // 頭上の輪を基準にしつつ、同じ床にいる背の低い対象にも届かせる。
+            var bounds = new AABB(center.x - radius, casterBox.minY - 0.5, center.z - radius,
+                    center.x + radius, center.y + 1, center.z + radius);
+            var healedEntityIds = new ArrayList<Integer>();
             for (var target : level.getEntitiesOfClass(LivingEntity.class, bounds,
                     entity -> entity.isAlive() && !entity.isSpectator() && entity.isPickable())) {
                 var box = target.getBoundingBox();
@@ -144,15 +148,19 @@ public final class VirgoHealSpell extends AbstractSpell {
                     SpellDamageWithoutKnockback.apply(target, amount, new VirgoHealDamageSource(caster, this));
                 } else if (Utils.shouldHealEntity((Entity) caster, target)) {
                     NeoForge.EVENT_BUS.post(new SpellHealEvent(caster, target, amount, getSchoolType()));
+                    float healthBeforeHeal = target.getHealth();
                     target.heal(amount);
+                    if (target.getHealth() > healthBeforeHeal) {
+                        healedEntityIds.add(target.getId());
+                    }
                 }
             }
 
             PacketDistributor.sendToPlayersNear(serverLevel, null, center.x, center.y, center.z, 32,
-                    new VirgoHealPulsePayload(center, radius));
-            level.playSound(null, center.x, center.y, center.z,
-                    SoundRegistry.CLEANSE_CAST.get(), caster.getSoundSource(),
-                    0.25f, 1.0f);
+                    new VirgoHealPulsePayload(center, radius, healedEntityIds));
+            float pitch = 0.96f + serverLevel.random.nextFloat() * 0.08f;
+            serverLevel.playSound(null, center.x, center.y, center.z,
+                    SoundRegistry.VIRGO_PULSE.get(), caster.getSoundSource(), 0.25f, pitch);
         }
         super.onCast(level, spellLevel, caster, source, magicData);
     }
