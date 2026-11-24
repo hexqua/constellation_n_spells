@@ -63,19 +63,22 @@
   "spell.constellationandspells.horoscope.guide": "Channels the magic of the stars and converts it into mana. Requires concentration while casting, and restores mana only when the spell is complete.",
   "spell.constellationandspells.stargazing.guide": "Creates a star chart drawn with magic. The chart remains in place for a time, continuously damaging mobs within it. This damage causes no knockback.",
   "spell.constellationandspells.capricornus_horn.guide": "Summons a horn imbued with the power of Capricornus. The horn sounds instantly, unleashing a shockwave that damages nearby mobs and hurls them into the air. The shockwave passes through obstacles at reduced strength.",
-  "spell.constellationandspells.virgo_heal.guide": "(todo:)乙女座の魔力を周囲に零し続けて癒しを齎す。癒しはヒーリングサークルのように徐々に体力を回復させる。癒しの魔力は浄化となり、不浄な存在を破壊する。詠唱による移動速度低下の影響を受けない。",
+  "spell.constellationandspells.virgo_heal.guide": "Continuously pours Virgo's magic into the surrounding area to bring healing. Like Healing Circle, it gradually restores health. Its healing magic also purifies, destroying unholy creatures. You can move at normal speed while channeling.",
 
   "ui.constellationandspells.revover_mana": "%s mana recovery",
   "ui.constellationandspells.projectile_count": "%s projectiles",
   "ui.constellationandspells.side_length": "Side length: %s",
   "ui.constellationandspells.no_ground": "No ground available for the star chart!",
 
+  "effect.constellationandspells.virgo_heal_mobility": "Virgo Mobility",
+  "effect.constellationandspells.virgo_heal_mobility.description": "Offsets the movement speed penalty from channeling Virgo Heal. Has no additional effect if your movement speed is already above normal.",
+
   "death.attack.zodiac_spell": "%1$s was reduced to stardust",
   "death.attack.zodiac_spell.player": "%1$s was reduced to stardust by %2$s",
   "death.attack.constellationandspells.stardust": "%1$s was reduced to stardust",
   "death.attack.constellationandspells.stargazing": "%1$s was reduced to constellation",
   "death.attack.constellationandspells.capricornus_horn": "%1$s was shattered by a shockwave",
-  "death.attack.constellationandspells.virgo_heal": "(todo:翻訳)%1$sは浄化の魔力で崩れ去った",
+  "death.attack.constellationandspells.virgo_heal": "%1$s crumbled under purifying magic",
 
   "subtitle.constellationandspells.sound.zodiac_cast": "Stars twinkle",
   "subtitle.constellationandspells.sound.stellar_launch": "Stardust launches",

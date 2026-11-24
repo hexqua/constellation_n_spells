@@ -70,6 +70,9 @@
   "ui.constellationandspells.side_length": "一辺の長さ：%s",
   "ui.constellationandspells.no_ground": "星図を展開できる地面がない！",
 
+  "effect.constellationandspells.virgo_heal_mobility": "乙女座の足取り",
+  "effect.constellationandspells.virgo_heal_mobility.description": "ヴィルゴヒールの詠唱による移動速度低下を打ち消す。既に移動速度が通常より高い場合は特に効果を発揮しない。",
+
   "death.attack.zodiac_spell": "%1$sの存在は星屑と化した",
   "death.attack.zodiac_spell.player": "%1$sは%2$sによって星屑と化した",
   "death.attack.constellationandspells.stardust": "%1$sの存在は星屑と化した",
