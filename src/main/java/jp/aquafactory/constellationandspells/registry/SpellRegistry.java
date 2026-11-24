@@ -6,6 +6,7 @@ import jp.aquafactory.constellationandspells.spell.capricornushorn.CapricornusHo
 import jp.aquafactory.constellationandspells.spell.horoscope.HoroscopeSpell;
 import jp.aquafactory.constellationandspells.spell.stardust.StardustSpell;
 import jp.aquafactory.constellationandspells.spell.stargazing.StargazingSpell;
+import jp.aquafactory.constellationandspells.spell.virgoheal.VirgoHealSpell;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
@@ -19,6 +20,7 @@ public final class SpellRegistry {
     public static final DeferredHolder<AbstractSpell, HoroscopeSpell> HOROSCOPE = SPELLS.register("horoscope", HoroscopeSpell::new);
     public static final DeferredHolder<AbstractSpell, StargazingSpell> STARGAZING = SPELLS.register("stargazing", StargazingSpell::new);
     public static final DeferredHolder<AbstractSpell, CapricornusHornSpell> CAPRICORNUS_HORN = SPELLS.register("capricornus_horn", CapricornusHornSpell::new);
+    public static final DeferredHolder<AbstractSpell, VirgoHealSpell> VIRGO_HEAL = SPELLS.register("virgo_heal", VirgoHealSpell::new);
 
     private SpellRegistry() {}
 }

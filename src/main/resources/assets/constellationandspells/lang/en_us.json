@@ -57,11 +57,13 @@
   "spell.constellationandspells.horoscope": "Horoscope",
   "spell.constellationandspells.stargazing": "Stargazing",
   "spell.constellationandspells.capricornus_horn": "Capricornus Horn",
+  "spell.constellationandspells.virgo_heal": "Virgo Heal",
 
   "spell.constellationandspells.stardust.guide": "Launches five small stars in a spread. A fundamental Zodiac spell, akin to Magic Missile. Its spread makes it less effective at long range, but each star bypasses the target's damage immunity period.",
   "spell.constellationandspells.horoscope.guide": "Channels the magic of the stars and converts it into mana. Requires concentration while casting, and restores mana only when the spell is complete.",
   "spell.constellationandspells.stargazing.guide": "Creates a star chart drawn with magic. The chart remains in place for a time, continuously damaging mobs within it. This damage causes no knockback.",
   "spell.constellationandspells.capricornus_horn.guide": "Summons a horn imbued with the power of Capricornus. The horn sounds instantly, unleashing a shockwave that damages nearby mobs and hurls them into the air. The shockwave passes through obstacles at reduced strength.",
+  "spell.constellationandspells.virgo_heal.guide": "(todo:)乙女座の魔力を周囲に零し続けて癒しを齎す。癒しはヒーリングサークルのように徐々に体力を回復させる。癒しの魔力は浄化となり、不浄な存在を破壊する。詠唱による移動速度低下の影響を受けない。",
 
   "ui.constellationandspells.revover_mana": "%s mana recovery",
   "ui.constellationandspells.projectile_count": "%s projectiles",
@@ -73,6 +75,7 @@
   "death.attack.constellationandspells.stardust": "%1$s was reduced to stardust",
   "death.attack.constellationandspells.stargazing": "%1$s was reduced to constellation",
   "death.attack.constellationandspells.capricornus_horn": "%1$s was shattered by a shockwave",
+  "death.attack.constellationandspells.virgo_heal": "(todo:翻訳)%1$sは浄化の魔力で崩れ去った",
 
   "subtitle.constellationandspells.sound.zodiac_cast": "Stars twinkle",
   "subtitle.constellationandspells.sound.stellar_launch": "Stardust launches",
