@@ -151,7 +151,7 @@ public final class CapricornusHornRenderer extends EntityRenderer<CapricornusHor
             return RenderType.create("capricornus_horn_wave", DefaultVertexFormat.POSITION_COLOR, VertexFormat.Mode.QUADS,
                     8192, false, true, RenderType.CompositeState.builder()
                             .setShaderState(POSITION_COLOR_SHADER)
-                            .setTransparencyState(TRANSLUCENT_TRANSPARENCY)
+                            .setTransparencyState(LIGHTNING_TRANSPARENCY)
                             .setWriteMaskState(COLOR_WRITE)
                             .setCullState(NO_CULL)
                             .createCompositeState(false));

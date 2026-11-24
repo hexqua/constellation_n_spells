@@ -1,12 +1,15 @@
 package jp.aquafactory.constellationandspells.spell.virgoheal.client;
 
+import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.mojang.blaze3d.vertex.VertexFormat;
 import jp.aquafactory.constellationandspells.ConstellationnSpells;
 import jp.aquafactory.constellationandspells.particle.AdditiveGlowParticleOptions;
 import jp.aquafactory.constellationandspells.registry.ParticleRegistry;
 import jp.aquafactory.constellationandspells.spell.virgoheal.VirgoHealPulsePayload;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.client.renderer.RenderStateShard;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.util.Mth;
@@ -32,6 +35,7 @@ public final class VirgoHealPulseRenderer {
     private static final int RED = 162;
     private static final int GREEN = 201;
     private static final int BLUE = 135;
+    private static final RenderType WAVE = WaveRenderState.create();
     private static final Deque<Pulse> PULSES = new ArrayDeque<>();
     private static @Nullable ClientLevel pulseLevel;
 
@@ -141,9 +145,7 @@ public final class VirgoHealPulseRenderer {
         }
 
         var buffers = minecraft.renderBuffers().bufferSource();
-        // 色だけを書き込み、壁や床の深度で波を隠す。
-        var renderType = RenderType.debugStructureQuads();
-        var buffer = buffers.getBuffer(renderType);
+        var buffer = buffers.getBuffer(WAVE);
         var pose = event.getPoseStack();
         var camera = event.getCamera().getPosition();
         float partialTick = event.getPartialTick().getGameTimeDeltaPartialTick(false);
@@ -157,7 +159,7 @@ public final class VirgoHealPulseRenderer {
             drawRing(buffer, pose.last().pose(), radius, Math.round(185 * remaining));
             pose.popPose();
         }
-        buffers.endBatch(renderType);
+        buffers.endBatch(WAVE);
     }
 
     private static float remainingAt(float age) {
@@ -191,6 +193,31 @@ public final class VirgoHealPulseRenderer {
 
     private static void vertex(VertexConsumer buffer, Matrix4f matrix, float x, float z, int opacity) {
         buffer.addVertex(matrix, x, 0.0f, z).setColor(RED, GREEN, BLUE, opacity);
+    }
+
+    private static final class WaveRenderState extends RenderStateShard {
+        // Fabulous の AFTER_PARTICLES でも、波の色をシーンの背景色へ直接加算する。
+        private static final OutputStateShard WAVE_TARGET = new OutputStateShard("virgo_heal_wave_target", () -> {
+            if (Minecraft.useShaderTransparency()) {
+                Minecraft.getInstance().getMainRenderTarget().bindWrite(false);
+            }
+        }, PARTICLES_TARGET::setupRenderState);
+
+        private WaveRenderState() {
+            super("virgo_heal_wave", () -> {}, () -> {});
+        }
+
+        private static RenderType create() {
+            return RenderType.create("virgo_heal_wave", DefaultVertexFormat.POSITION_COLOR, VertexFormat.Mode.QUADS,
+                    1536, false, true, RenderType.CompositeState.builder()
+                            .setShaderState(POSITION_COLOR_SHADER)
+                            .setTransparencyState(LIGHTNING_TRANSPARENCY)
+                            .setCullState(NO_CULL)
+                            .setDepthTestState(LEQUAL_DEPTH_TEST)
+                            .setWriteMaskState(COLOR_WRITE)
+                            .setOutputState(WAVE_TARGET)
+                            .createCompositeState(false));
+        }
     }
 
     private record Pulse(Vec3 center, float radius, long startTick) {}
