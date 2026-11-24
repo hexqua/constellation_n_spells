@@ -5,23 +5,19 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.blaze3d.vertex.VertexFormat;
 import com.mojang.math.Axis;
+import jp.aquafactory.constellationandspells.ConstellationnSpells;
+import jp.aquafactory.constellationandspells.client.render.ExtrudedSpriteRenderer;
 import jp.aquafactory.constellationandspells.spell.capricornushorn.CapricornusHorn;
+import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderStateShard;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.culling.Frustum;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.client.renderer.entity.ItemRenderer;
-import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FastColor.ARGB32;
 import net.minecraft.util.Mth;
-import net.minecraft.world.inventory.InventoryMenu;
-import net.minecraft.world.item.ItemDisplayContext;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Matrix4f;
 
@@ -32,12 +28,11 @@ public final class CapricornusHornRenderer extends EntityRenderer<CapricornusHor
     private static final int AFTERWAVE_TICKS = 24;
     private static final float DEGREES_PER_SEED_UNIT = 360.0f / 0x10000;
     private static final RenderType WAVE = WaveRenderState.create();
-    private final ItemStack model = new ItemStack(Items.GOAT_HORN);
-    private final ItemRenderer items;
+    private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(
+            ConstellationnSpells.MODID, "textures/spell/capricornus_horn.png");
 
     public CapricornusHornRenderer(EntityRendererProvider.Context context) {
         super(context);
-        items = context.getItemRenderer();
     }
 
     @Override
@@ -50,9 +45,7 @@ public final class CapricornusHornRenderer extends EntityRenderer<CapricornusHor
         pose.mulPose(Axis.YP.rotationDegrees(CapricornusHornVisuals.rotation(age)));
         float scale = CapricornusHornVisuals.scale(age);
         pose.scale(scale, scale, scale);
-        // todo:現在バニラの角笛をアイテム描画しているがExtrudedSpriteを移植した上でオリジナル角笛にする.
-        items.renderStatic(model, ItemDisplayContext.FIXED, light, OverlayTexture.NO_OVERLAY, pose, buffers,
-                horn.level(), horn.getId());
+        ExtrudedSpriteRenderer.render(pose, buffers, LightTexture.FULL_BRIGHT, TEXTURE);
         pose.popPose();
 
         var consumer = buffers.getBuffer(WAVE);
@@ -140,18 +133,13 @@ public final class CapricornusHornRenderer extends EntityRenderer<CapricornusHor
     }
 
     @Override
-    protected int getBlockLightLevel(@NotNull CapricornusHorn horn, @NotNull BlockPos pos) {
-        return Math.max(7, super.getBlockLightLevel(horn, pos));
-    }
-
-    @Override
     public boolean shouldRender(@NotNull CapricornusHorn horn, @NotNull Frustum frustum, double x, double y, double z) {
         return horn.shouldRender(x, y, z) && frustum.isVisible(horn.getBoundingBox().inflate(horn.radius()));
     }
 
     @Override
     public @NotNull ResourceLocation getTextureLocation(@NotNull CapricornusHorn horn) {
-        return InventoryMenu.BLOCK_ATLAS;
+        return TEXTURE;
     }
 
     private static final class WaveRenderState extends RenderStateShard {

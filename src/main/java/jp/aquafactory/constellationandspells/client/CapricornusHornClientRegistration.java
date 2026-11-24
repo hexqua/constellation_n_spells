@@ -1,11 +1,13 @@
 package jp.aquafactory.constellationandspells.client;
 
 import jp.aquafactory.constellationandspells.ConstellationnSpells;
+import jp.aquafactory.constellationandspells.client.render.ExtrudedSpriteRenderer;
 import jp.aquafactory.constellationandspells.registry.EntityRegistry;
 import jp.aquafactory.constellationandspells.spell.capricornushorn.CapricornusHornShakePayload;
 import jp.aquafactory.constellationandspells.spell.capricornushorn.client.CapricornusHornRenderer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.server.packs.resources.ResourceManagerReloadListener;
 import net.minecraft.util.Mth;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -13,6 +15,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.ClientPlayerNetworkEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
+import net.neoforged.neoforge.client.event.RegisterClientReloadListenersEvent;
 import net.neoforged.neoforge.client.event.ViewportEvent;
 import org.jetbrains.annotations.Nullable;
 
@@ -33,6 +36,12 @@ public final class CapricornusHornClientRegistration {
     @SubscribeEvent
     public static void renderers(EntityRenderersEvent.RegisterRenderers event) {
         event.registerEntityRenderer(EntityRegistry.CAPRICORNUS_HORN.get(), CapricornusHornRenderer::new);
+    }
+
+    @SubscribeEvent
+    public static void reloadListeners(RegisterClientReloadListenersEvent event) {
+        ResourceManagerReloadListener sprites = manager -> ExtrudedSpriteRenderer.clearCache();
+        event.registerReloadListener(sprites);
     }
 
     private static void startShake() {

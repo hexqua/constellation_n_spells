@@ -77,7 +77,7 @@ public final class CapricornusHornVisuals {
     private static void flash(ClientLevel level, Vec3 center, float age) {
         float yaw = rotation(age) * Mth.DEG_TO_RAD;
         float scale = scale(age);
-        var forward = new Vec3(-1, 0, 0).yRot(yaw);
+        var forward = new Vec3(1, 0, 0).yRot(yaw);
         var side = new Vec3(0, 0, 1).yRot(yaw);
 
         // 吹き口より外側から閃光を上へ逃がし、正面からも見えるよう両脇に火花を出す。
