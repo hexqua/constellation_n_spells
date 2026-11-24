@@ -1,9 +1,9 @@
 package jp.aquafactory.constellationandspells.spell.capricornushorn;
 
 import io.redspace.ironsspellbooks.particle.FallingBlockParticleOption;
+import jp.aquafactory.constellationandspells.registry.SoundRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.phys.AABB;
@@ -16,11 +16,10 @@ final class CapricornusHornEffects {
     private CapricornusHornEffects() {}
 
     static void onSummon(ServerLevel level, Vec3 origin) {
-        var horns = SoundEvents.GOAT_HORN_SOUND_VARIANTS;
-        var hornSound = horns.get(level.random.nextInt(horns.size())).value();
-        level.playSound(null, origin.x, origin.y, origin.z, hornSound, SoundSource.PLAYERS, 1.4f, 1.0f);
-        level.playSound(null, origin.x, origin.y, origin.z, SoundEvents.GOAT_SCREAMING_AMBIENT, SoundSource.PLAYERS, 0.7f, 1.05f);
-        level.playSound(null, origin.x, origin.y, origin.z, SoundEvents.WARDEN_SONIC_BOOM, SoundSource.PLAYERS, 0.9f, 0.88f);
+        level.playSound(null, origin.x, origin.y, origin.z, SoundRegistry.CAPRICORNUS_BLOWN.get(),
+                SoundSource.PLAYERS, 1.1f, 1.0f);
+        level.playSound(null, origin.x, origin.y, origin.z, SoundRegistry.CAPRICORNUS_SHOCK.get(),
+                SoundSource.PLAYERS, 0.85f, 1.0f);
 
         var center = BlockPos.containing(origin);
         var min = center.offset(-TREMOR_HALF_EXTENT, -TREMOR_HALF_EXTENT, -TREMOR_HALF_EXTENT);

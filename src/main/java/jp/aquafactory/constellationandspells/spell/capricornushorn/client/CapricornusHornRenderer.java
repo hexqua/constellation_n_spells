@@ -27,8 +27,7 @@ import org.joml.Matrix4f;
 
 public final class CapricornusHornRenderer extends EntityRenderer<CapricornusHorn> {
     private static final int SEGMENTS = 48;
-    private static final int WAVE_COLOR = 0xFFD393;
-    private static final int CORE_COLOR = 0xFFF0C2;
+    private static final int FIRST_WAVE_TICKS = 20;
     private static final int FIRST_WAVE_CORE_TICKS = 10;
     private static final int AFTERWAVE_TICKS = 24;
     private static final float DEGREES_PER_SEED_UNIT = 360.0f / 0x10000;
@@ -57,8 +56,9 @@ public final class CapricornusHornRenderer extends EntityRenderer<CapricornusHor
         pose.popPose();
 
         var consumer = buffers.getBuffer(WAVE);
-        float coreAlpha = 0.85f * (1 - Mth.clamp(age / FIRST_WAVE_CORE_TICKS, 0, 1));
-        wave(pose, consumer, age, horn.radius(), 20, 0.34f, coreAlpha);
+        float coreAlpha = 0.60f * (1 - Mth.clamp(age / FIRST_WAVE_CORE_TICKS, 0, 1));
+        wave(pose, consumer, age, horn.radius(), FIRST_WAVE_TICKS, 0.38f, coreAlpha,
+                CapricornusHornVisuals.SILVER);
         var id = horn.getUUID();
         afterwave(pose, consumer, age - 7, horn.radius() * 0.86f, 0.21f, id.getLeastSignificantBits());
         afterwave(pose, consumer, age - 16, horn.radius() * 0.68f, 0.12f, id.getMostSignificantBits() >>> 32);
@@ -74,37 +74,46 @@ public final class CapricornusHornRenderer extends EntityRenderer<CapricornusHor
         pose.pushPose();
         pose.mulPose(Axis.YP.rotationDegrees(yaw));
         pose.mulPose(Axis.XP.rotationDegrees(pitch));
-        wave(pose, consumer, age, maxRadius, AFTERWAVE_TICKS, opacity, 0);
+        wave(pose, consumer, age, maxRadius, AFTERWAVE_TICKS, opacity, 0, CapricornusHornVisuals.EARTH);
         pose.popPose();
     }
 
+    static float firstWaveRadius(float age, float maxRadius) {
+        return waveRadius(age / FIRST_WAVE_TICKS, maxRadius);
+    }
+
+    private static float waveRadius(float progress, float maxRadius) {
+        float remaining = 1 - progress;
+        return Math.max(0.2f, maxRadius * (1 - remaining * remaining));
+    }
+
     private static void wave(PoseStack pose, VertexConsumer consumer, float age, float maxRadius, int duration,
-                             float opacity, float coreAlpha) {
+                             float opacity, float coreAlpha, int crestColor) {
         if (age < 0 || age >= duration) return;
 
         float progress = age / duration;
-        float radius = Math.max(0.2f, maxRadius * (1 - (1 - progress) * (1 - progress)));
+        float radius = waveRadius(progress, maxRadius);
         float alpha = opacity * (1 - progress);
-        ring(pose.last().pose(), consumer, radius, alpha, coreAlpha);
+        ring(pose.last().pose(), consumer, radius, alpha, coreAlpha, crestColor);
 
         pose.pushPose();
         pose.mulPose(Axis.YP.rotationDegrees(38));
         pose.mulPose(Axis.XP.rotationDegrees(60));
-        ring(pose.last().pose(), consumer, radius, alpha * 0.65f, coreAlpha * 0.75f);
+        ring(pose.last().pose(), consumer, radius, alpha * 0.55f, coreAlpha * 0.55f, crestColor);
         pose.mulPose(Axis.ZP.rotationDegrees(90));
-        ring(pose.last().pose(), consumer, radius, alpha * 0.65f, coreAlpha * 0.75f);
+        ring(pose.last().pose(), consumer, radius, alpha * 0.55f, coreAlpha * 0.55f, crestColor);
         pose.popPose();
     }
 
-    private static void ring(Matrix4f matrix, VertexConsumer consumer, float radius, float alpha, float coreAlpha) {
-        float inner = radius * 0.92f;
-        float middle = (inner + radius) * 0.5f;
-        float shoulderWidth = radius * 0.018f * coreAlpha;
-        float coreHalfWidth = shoulderWidth * 0.5f;
-        // 芯を帯の一部として描くことで、同一平面で半透明の面が重ならないようにする。
-        int bandCenter = ARGB32.color((int) (alpha * 255), WAVE_COLOR);
-        int shoulders = ARGB32.color((int) (alpha * (1 - shoulderWidth / (middle - inner)) * 255), WAVE_COLOR);
-        int core = ARGB32.lerp(coreAlpha, bandCenter, ARGB32.color(255, CORE_COLOR));
+    private static void ring(Matrix4f matrix, VertexConsumer consumer, float radius, float alpha, float coreAlpha,
+                             int crestColor) {
+        float inner = radius * 0.88f;
+        float shoulder = radius * 0.965f;
+        float crest = radius * 0.985f;
+        // 外側に白銀の前縁を寄せ、土色の尾を同じ面の連続した帯として描く。
+        int earth = CapricornusHornVisuals.EARTH;
+        int shoulderColor = ARGB32.color(Math.round(alpha * 255), earth);
+        int brightCrest = ARGB32.color(Math.round((alpha * 0.7f + coreAlpha) * 255), crestColor);
         for (int i = 0; i < SEGMENTS; i++) {
             float from = i * (Mth.TWO_PI / SEGMENTS);
             float to = (i + 1) * (Mth.TWO_PI / SEGMENTS);
@@ -112,13 +121,9 @@ public final class CapricornusHornRenderer extends EntityRenderer<CapricornusHor
             float az = Mth.sin(from);
             float bx = Mth.cos(to);
             float bz = Mth.sin(to);
-            strip(matrix, consumer, ax, az, bx, bz, inner, middle - shoulderWidth, WAVE_COLOR, shoulders);
-            if (coreAlpha > 0) {
-                strip(matrix, consumer, ax, az, bx, bz, middle - shoulderWidth, middle - coreHalfWidth, shoulders, core);
-                strip(matrix, consumer, ax, az, bx, bz, middle - coreHalfWidth, middle + coreHalfWidth, core, core);
-                strip(matrix, consumer, ax, az, bx, bz, middle + coreHalfWidth, middle + shoulderWidth, core, shoulders);
-            }
-            strip(matrix, consumer, ax, az, bx, bz, middle + shoulderWidth, radius, shoulders, WAVE_COLOR);
+            strip(matrix, consumer, ax, az, bx, bz, inner, shoulder, earth, shoulderColor);
+            strip(matrix, consumer, ax, az, bx, bz, shoulder, crest, shoulderColor, brightCrest);
+            strip(matrix, consumer, ax, az, bx, bz, crest, radius, brightCrest, crestColor);
         }
     }
 

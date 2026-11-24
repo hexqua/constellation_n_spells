@@ -10,6 +10,17 @@
     ],
     "subtitle": "subtitle.constellationandspells.sound.armor_equip_cloth"
   },
+  "capricornus_blown": {
+    "sounds": [
+      "constellationandspells:capricornus_blown"
+    ],
+    "subtitle": "subtitle.constellationandspells.sound.capricornus_blown"
+  },
+  "capricornus_shock": {
+    "sounds": [
+      "constellationandspells:capricornus_shock"
+    ]
+  },
   "map_deploy": {
     "sounds": [
       "constellationandspells:map_deploy"

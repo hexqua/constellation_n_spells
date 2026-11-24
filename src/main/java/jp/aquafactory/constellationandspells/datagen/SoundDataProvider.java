@@ -22,8 +22,12 @@ public final class SoundDataProvider extends SoundDefinitionsProvider {
                 add(sound.getId(), cloth);
                 continue;
             }
-            add(sound.getId(), definition().subtitle("subtitle." + ConstellationnSpells.MODID + ".sound." + sound.getId().getPath())
-                    .with(sound(sound.getId())));
+            var soundDefinition = definition().with(sound(sound.getId()));
+            // 角笛と衝撃波は同時に鳴るので、発動を知らせる字幕は角笛にまとめる。
+            if (sound != SoundRegistry.CAPRICORNUS_SHOCK) {
+                soundDefinition.subtitle("subtitle." + ConstellationnSpells.MODID + ".sound." + sound.getId().getPath());
+            }
+            add(sound.getId(), soundDefinition);
         }
     }
 }
