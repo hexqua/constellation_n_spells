@@ -14,6 +14,7 @@ import jp.aquafactory.constellationandspells.registry.ParticleRegistry;
 import jp.aquafactory.constellationandspells.registry.RecipeSerializerRegistry;
 import jp.aquafactory.constellationandspells.registry.SoundRegistry;
 import jp.aquafactory.constellationandspells.registry.SpellRegistry;
+import jp.aquafactory.constellationandspells.spell.capricornushorn.CapricornusHornShakePayload;
 import jp.aquafactory.constellationandspells.spell.stardust.StardustImpactPayload;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
@@ -38,6 +39,7 @@ public class ConstellationnSpells {
         ParticleRegistry.PARTICLES.register(modEventBus);
         RecipeSerializerRegistry.RECIPE_SERIALIZERS.register(modEventBus);
         modEventBus.addListener(StardustImpactPayload::register);
+        modEventBus.addListener(CapricornusHornShakePayload::register);
         modEventBus.addListener(AttributeRegistry::modifyEntityAttributes);
         CreativeTabRegistry.CREATIVE_MODE_TABS.register(modEventBus);
         modEventBus.addListener(DataGenerators::gatherData);

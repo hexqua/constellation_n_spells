@@ -12,6 +12,7 @@ import jp.aquafactory.constellationandspells.magic.ZodiacSchool;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 
@@ -69,7 +70,9 @@ public final class CapricornusHornSpell extends AbstractSpell {
 
     @Override
     public void onCast(Level level, int spellLevel, LivingEntity caster, CastSource source, MagicData magicData) {
-        // todo:実装.
+        if (level instanceof ServerLevel server) {
+            CapricornusHorn.summon(server, caster, getRadius(spellLevel), getDamage(spellLevel, caster));
+        }
         super.onCast(level, spellLevel, caster, source, magicData);
     }
 }

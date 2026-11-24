@@ -51,6 +51,7 @@
 
   "entity.constellationandspells.stardust": "Star Cluster",
   "entity.constellationandspells.stargazing_field": "Magical Star Chart",
+  "entity.constellationandspells.capricornus_horn": "Horn of Capricornus",
 
   "spell.constellationandspells.stardust": "Stardust",
   "spell.constellationandspells.horoscope": "Horoscope",
@@ -60,7 +61,7 @@
   "spell.constellationandspells.stardust.guide": "Launches five small stars in a spread. A fundamental Zodiac spell, akin to Magic Missile. Its spread makes it less effective at long range, but each star bypasses the target's damage immunity period.",
   "spell.constellationandspells.horoscope.guide": "Channels the magic of the stars and converts it into mana. Requires concentration while casting, and restores mana only when the spell is complete.",
   "spell.constellationandspells.stargazing.guide": "Creates a star chart drawn with magic. The chart remains in place for a time, continuously damaging mobs within it. This damage causes no knockback.",
-  "spell.constellationandspells.capricornus_horn.guide": "(todo:翻訳)ヤギの角を模した魔法の角笛を呼び出す。角笛は魔力によって即座に吹かれ周囲へ衝撃波を発生させ、範囲内のモブを強く打ち上げて攻撃する。衝撃波は障害物で減衰するが無効化そのものはされない。",
+  "spell.constellationandspells.capricornus_horn.guide": "Summons a horn imbued with the power of Capricornus. The horn sounds instantly, unleashing a shockwave that damages nearby mobs and hurls them into the air. The shockwave passes through obstacles at reduced strength.",
 
   "ui.constellationandspells.revover_mana": "%s mana recovery",
   "ui.constellationandspells.projectile_count": "%s projectiles",
@@ -71,7 +72,7 @@
   "death.attack.zodiac_spell.player": "%1$s was reduced to stardust by %2$s",
   "death.attack.constellationandspells.stardust": "%1$s was reduced to stardust",
   "death.attack.constellationandspells.stargazing": "%1$s was reduced to constellation",
-  "death.attack.constellationandspells.capricornus_horn": "(todo:翻訳)%1$sは衝撃波によって砕け散った",
+  "death.attack.constellationandspells.capricornus_horn": "%1$s was shattered by a shockwave",
 
   "subtitle.constellationandspells.sound.zodiac_cast": "Stars twinkle",
   "subtitle.constellationandspells.sound.stellar_launch": "Stardust launches",
