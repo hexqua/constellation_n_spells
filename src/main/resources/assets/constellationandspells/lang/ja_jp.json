@@ -51,24 +51,34 @@
 
   "entity.constellationandspells.stardust": "星の塊",
   "entity.constellationandspells.stargazing_field": "魔法の星図",
+  "entity.constellationandspells.capricornus_horn": "山羊座の角笛",
 
   "spell.constellationandspells.stardust": "スターダスト",
   "spell.constellationandspells.horoscope": "星占い",
   "spell.constellationandspells.stargazing": "天体観測",
+  "spell.constellationandspells.capricornus_horn": "カプリコルヌスホーン",
+  "spell.constellationandspells.virgo_heal": "ヴィルゴヒール",
 
   "spell.constellationandspells.stardust.guide": "複数の小さな星屑を放つ。星座術におけるマジックミサイルのような基礎の魔法。飛ばす星屑は散らばるため遠距離攻撃には向かないが、対象の無敵時間を無視することができる。",
   "spell.constellationandspells.horoscope.guide": "星の魔力を練り、自身のマナとして還元する。詠唱中の練っている間は集中を必要とし、練り終わるまでは自身のマナとして還元されることはない。",
   "spell.constellationandspells.stargazing.guide": "魔力で描いた星図を展開する。描いた星図は暫くその場に残り、星図の中にいるモブに対してダメージを与え続ける。星図によるダメージはノックバックを発生させない。",
+  "spell.constellationandspells.capricornus_horn.guide": "山羊座の魔力を帯びた角笛を呼び出す。角笛は魔力によって即座に吹かれ周囲へ衝撃波を発生させ、範囲内のモブを強く打ち上げて攻撃する。衝撃波は障害物で減衰するが無効化そのものはされない。",
+  "spell.constellationandspells.virgo_heal.guide": "乙女座の魔力を周囲に零し続けて癒しを齎す。癒しはヒーリングサークルのように徐々に体力を回復させる。癒しの魔力は同時に浄化となり、不浄な存在を破壊する。詠唱による移動速度低下の影響を受けない。",
 
   "ui.constellationandspells.revover_mana": "%sマナ回復",
   "ui.constellationandspells.projectile_count": "弾数：%s",
   "ui.constellationandspells.side_length": "一辺の長さ：%s",
   "ui.constellationandspells.no_ground": "星図を展開できる地面がない！",
 
+  "effect.constellationandspells.virgo_heal_mobility": "乙女座の足取り",
+  "effect.constellationandspells.virgo_heal_mobility.description": "ヴィルゴヒールの詠唱による移動速度低下を打ち消す。既に移動速度が通常より高い場合は特に効果を発揮しない。",
+
   "death.attack.zodiac_spell": "%1$sの存在は星屑と化した",
   "death.attack.zodiac_spell.player": "%1$sは%2$sによって星屑と化した",
   "death.attack.constellationandspells.stardust": "%1$sの存在は星屑と化した",
   "death.attack.constellationandspells.stargazing": "%1$sを構成していたものは星座と化した",
+  "death.attack.constellationandspells.capricornus_horn": "%1$sは衝撃波によって砕け散った",
+  "death.attack.constellationandspells.virgo_heal": "%1$sは浄化の魔力で崩れ去った",
 
   "subtitle.constellationandspells.sound.zodiac_cast": "星が瞬く",
   "subtitle.constellationandspells.sound.stellar_launch": "星が飛翔する",
@@ -76,5 +86,8 @@
   "subtitle.constellationandspells.sound.armor_equip_cloth": "布の防具を装備する",
   "subtitle.constellationandspells.sound.star_mana": "星の魔力を練る",
   "subtitle.constellationandspells.sound.map_deploy": "星図を描く",
-  "subtitle.constellationandspells.sound.starcondense_break": "星の結晶が崩れる"
+  "subtitle.constellationandspells.sound.starcondense_break": "星の結晶が崩れる",
+  "subtitle.constellationandspells.sound.virgo_start": "星座が瞬く",
+  "subtitle.constellationandspells.sound.virgo_pulse": "魔力が零れる",
+  "subtitle.constellationandspells.sound.capricornus_blown": "角笛が鳴り響く"
 }

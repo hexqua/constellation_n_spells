@@ -10,6 +10,17 @@
     ],
     "subtitle": "subtitle.constellationandspells.sound.armor_equip_cloth"
   },
+  "capricornus_blown": {
+    "sounds": [
+      "constellationandspells:capricornus_blown"
+    ],
+    "subtitle": "subtitle.constellationandspells.sound.capricornus_blown"
+  },
+  "capricornus_shock": {
+    "sounds": [
+      "constellationandspells:capricornus_shock"
+    ]
+  },
   "map_deploy": {
     "sounds": [
       "constellationandspells:map_deploy"
@@ -39,6 +50,18 @@
       "constellationandspells:stellar_launch"
     ],
     "subtitle": "subtitle.constellationandspells.sound.stellar_launch"
+  },
+  "virgo_pulse": {
+    "sounds": [
+      "constellationandspells:virgo_pulse"
+    ],
+    "subtitle": "subtitle.constellationandspells.sound.virgo_pulse"
+  },
+  "virgo_start": {
+    "sounds": [
+      "constellationandspells:virgo_start"
+    ],
+    "subtitle": "subtitle.constellationandspells.sound.virgo_start"
   },
   "zodiac_cast": {
     "sounds": [

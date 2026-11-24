@@ -16,6 +16,10 @@ public final class SoundRegistry {
     public static final DeferredHolder<SoundEvent, SoundEvent> STAR_MANA = register("star_mana");
     public static final DeferredHolder<SoundEvent, SoundEvent> MAP_DEPLOY = register("map_deploy");
     public static final DeferredHolder<SoundEvent, SoundEvent> STARCONDENSE_BREAK = register("starcondense_break");
+    public static final DeferredHolder<SoundEvent, SoundEvent> VIRGO_START = register("virgo_start");
+    public static final DeferredHolder<SoundEvent, SoundEvent> VIRGO_PULSE = register("virgo_pulse");
+    public static final DeferredHolder<SoundEvent, SoundEvent> CAPRICORNUS_BLOWN = register("capricornus_blown");
+    public static final DeferredHolder<SoundEvent, SoundEvent> CAPRICORNUS_SHOCK = register("capricornus_shock");
 
     private SoundRegistry() {}
 

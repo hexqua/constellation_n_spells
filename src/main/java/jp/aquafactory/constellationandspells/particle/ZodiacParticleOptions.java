@@ -13,8 +13,13 @@ public final class ZodiacParticleOptions {
     private ZodiacParticleOptions() {}
 
     public static AdditiveGlowParticleOptions glow(ParticleType<AdditiveGlowParticleOptions> type, boolean gold, float size) {
+        return glow(type, gold, size, 12, 4);
+    }
+
+    public static AdditiveGlowParticleOptions glow(ParticleType<AdditiveGlowParticleOptions> type, boolean gold, float size,
+                                                  int lifetime, int lifetimeVariance) {
         return new AdditiveGlowParticleOptions(type, size,
                 gold ? GOLD_RED : BLUE_RED, gold ? GOLD_GREEN : BLUE_GREEN, gold ? GOLD_BLUE : BLUE_BLUE,
-                2, 12, 4, 0.85f, 1.25f, 0.7f, 0.95f, 0.05f, 0.7f, 0.65f, true);
+                2, lifetime, lifetimeVariance, 0.85f, 1.25f, 0.7f, 0.95f, 0.05f, 0.7f, 0.65f, true);
     }
 }

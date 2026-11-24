@@ -1,6 +1,7 @@
 package jp.aquafactory.constellationandspells.registry;
 
 import jp.aquafactory.constellationandspells.ConstellationnSpells;
+import jp.aquafactory.constellationandspells.spell.capricornushorn.CapricornusHorn;
 import jp.aquafactory.constellationandspells.spell.stardust.StardustProjectile;
 import jp.aquafactory.constellationandspells.spell.stargazing.StargazingField;
 import net.minecraft.core.registries.Registries;
@@ -20,6 +21,11 @@ public final class EntityRegistry {
             () -> EntityType.Builder.of(StargazingField::new, MobCategory.MISC)
                     .sized(0.1f, 0.1f).clientTrackingRange(8).updateInterval(1).noSave().fireImmune()
                     .build(ConstellationnSpells.MODID + ":stargazing_field"));
+
+    public static final DeferredHolder<EntityType<?>, EntityType<CapricornusHorn>> CAPRICORNUS_HORN = ENTITIES.register("capricornus_horn",
+            () -> EntityType.Builder.of(CapricornusHorn::new, MobCategory.MISC)
+                    .sized(0.75f, 0.75f).clientTrackingRange(8).updateInterval(1).noSave().fireImmune()
+                    .build(ConstellationnSpells.MODID + ":capricornus_horn"));
 
     private EntityRegistry() {}
 }
