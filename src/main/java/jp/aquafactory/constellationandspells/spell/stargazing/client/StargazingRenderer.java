@@ -81,25 +81,28 @@ public final class StargazingRenderer extends EntityRenderer<StargazingField> {
         float y = 0.5f + 0.04f * Mth.sin(age * 0.07f);
         var chart = StargazingCharts.INSTANCE.forSeed(field.seed());
         if (chart != null) {
+            // 星図の +X を詠唱者の右、+Z を手前に向けるため、星と接続線を水平面で半回転させる。
+            float chartScale = -half;
             var glow = buffers.getBuffer(LINE_GLOW);
-            drawConnections(glow, matrix, chart, age, half, y, brightness, pulse, true);
+            drawConnections(glow, matrix, chart, age, chartScale, y, brightness, pulse, true);
             var halo = buffers.getBuffer(STAR_GLOW);
             for (int i = 0; i < chart.stars().size(); i++) {
                 var star = chart.stars().get(i);
                 float appear = starReveal(age, i, chart.stars().size());
                 float strength = brightness * star.brightness() * appear;
                 float radius = (0.12f + pulse * 0.05f) * star.size();
-                starHalo(halo, matrix, star.x() * half, star.z() * half, y, radius * 1.8f, strength * 0.12f, BLUE);
-                starHalo(halo, matrix, star.x() * half, star.z() * half, y, radius, strength * 0.45f, GOLD);
+                float x = star.x() * chartScale, z = star.z() * chartScale;
+                starHalo(halo, matrix, x, z, y, radius * 1.8f, strength * 0.12f, BLUE);
+                starHalo(halo, matrix, x, z, y, radius, strength * 0.45f, GOLD);
             }
             var core = buffers.getBuffer(CORE);
-            drawConnections(core, matrix, chart, age, half, y, brightness, pulse, false);
+            drawConnections(core, matrix, chart, age, chartScale, y, brightness, pulse, false);
             for (int i = 0; i < chart.stars().size(); i++) {
                 var star = chart.stars().get(i);
                 float appear = starReveal(age, i, chart.stars().size());
                 float size = (0.024f + pulse * 0.009f) * star.size() * appear;
                 float strength = brightness * star.brightness() * appear;
-                float x = star.x() * half, z = star.z() * half;
+                float x = star.x() * chartScale, z = star.z() * chartScale;
                 coreLine(core, matrix, x - size, z, x + size, z, y, size * 0.23f, GOLD, strength);
                 coreLine(core, matrix, x, z - size, x, z + size, y, size * 0.23f, GOLD, strength);
             }
@@ -132,15 +135,15 @@ public final class StargazingRenderer extends EntityRenderer<StargazingField> {
     }
 
     private static void drawConnections(VertexConsumer consumer, Matrix4f matrix, StargazingChart chart, float age,
-                                        float half, float y, float brightness, float pulse, boolean glow) {
+                                        float chartScale, float y, float brightness, float pulse, boolean glow) {
         for (int i = 0; i < chart.edges().size(); i++) {
             var edge = chart.edges().get(i);
             var a = chart.stars().get(edge.a());
             var b = chart.stars().get(edge.b());
             float appear = Math.min(starReveal(age, edge.a(), chart.stars().size()), starReveal(age, edge.b(), chart.stars().size()));
             float progress = Mth.clamp((age - 5 - i * 12f / chart.edges().size()) / 3, 0, 1);
-            float ax = a.x() * half, az = a.z() * half;
-            float bx = Mth.lerp(progress, ax, b.x() * half), bz = Mth.lerp(progress, az, b.z() * half);
+            float ax = a.x() * chartScale, az = a.z() * chartScale;
+            float bx = Mth.lerp(progress, ax, b.x() * chartScale), bz = Mth.lerp(progress, az, b.z() * chartScale);
             float strength = brightness * appear;
             if (glow) {
                 connectionGlow(consumer, matrix, ax, az, bx, bz, y, strength, pulse, BLUE);
