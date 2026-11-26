@@ -4,6 +4,7 @@ import jp.aquafactory.constellationandspells.datagen.DataGenerators;
 import jp.aquafactory.constellationandspells.config.ServerConfig;
 import jp.aquafactory.constellationandspells.network.SchoolPowerSharingSync;
 import jp.aquafactory.constellationandspells.registry.BlockRegistry;
+import jp.aquafactory.constellationandspells.registry.BlockEntityRegistry;
 import jp.aquafactory.constellationandspells.registry.ArmorMaterialRegistry;
 import jp.aquafactory.constellationandspells.registry.CreativeTabRegistry;
 import jp.aquafactory.constellationandspells.registry.ItemRegistry;
@@ -31,6 +32,8 @@ public class ConstellationnSpells {
         container.registerConfig(ModConfig.Type.SERVER, ServerConfig.SPEC);
         SchoolPowerSharingSync.register(modEventBus);
         BlockRegistry.BLOCKS.register(modEventBus);
+        BlockEntityRegistry.BLOCK_ENTITIES.register(modEventBus);
+        modEventBus.addListener(BlockEntityRegistry::registerCapabilities);
         ItemRegistry.ITEMS.register(modEventBus);
         ArmorMaterialRegistry.ARMOR_MATERIALS.register(modEventBus);
         AttributeRegistry.ATTRIBUTES.register(modEventBus);
@@ -41,6 +44,7 @@ public class ConstellationnSpells {
         ParticleRegistry.PARTICLES.register(modEventBus);
         EffectRegistry.EFFECTS.register(modEventBus);
         RecipeSerializerRegistry.RECIPE_SERIALIZERS.register(modEventBus);
+        RecipeSerializerRegistry.RECIPE_TYPES.register(modEventBus);
         modEventBus.addListener(StardustImpactPayload::register);
         modEventBus.addListener(CapricornusHornShakePayload::register);
         modEventBus.addListener(VirgoHealPulsePayload::register);

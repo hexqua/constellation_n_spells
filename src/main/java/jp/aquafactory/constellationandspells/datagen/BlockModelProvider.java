@@ -17,6 +17,8 @@ public final class BlockModelProvider extends BlockStateProvider {
 
     @Override
     protected void registerStatesAndModels() {
+        var plate = BlockRegistry.STARLIGHT_GATHERING_PLATE.get();
+        simpleBlockWithItem(plate, models().getExistingFile(blockTexture(plate)));
         cube(BlockRegistry.STELLAR_DROP_ORE.get());
         cube(BlockRegistry.DEEPSLATE_STELLAR_DROP_ORE.get());
         cube(BlockRegistry.BLOCK_OF_STARDUST_SHARD.get());

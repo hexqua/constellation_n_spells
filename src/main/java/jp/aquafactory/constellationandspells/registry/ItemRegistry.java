@@ -30,6 +30,7 @@ public final class ItemRegistry {
             properties -> new UpgradeOrbItem(properties.rarity(Rarity.UNCOMMON).fireResistant()
                     .component(ComponentRegistry.UPGRADE_ORB_TYPE, MagicRegistry.ZODIAC_POWER)));
     public static final DeferredItem<BlockItem> STELLAR_DROP_ORE = ITEMS.registerSimpleBlockItem(BlockRegistry.STELLAR_DROP_ORE);
+    public static final DeferredItem<BlockItem> STARLIGHT_GATHERING_PLATE = ITEMS.registerSimpleBlockItem(BlockRegistry.STARLIGHT_GATHERING_PLATE);
     public static final DeferredItem<BlockItem> DEEPSLATE_STELLAR_DROP_ORE = ITEMS.registerSimpleBlockItem(BlockRegistry.DEEPSLATE_STELLAR_DROP_ORE);
     public static final DeferredItem<BlockItem> BLOCK_OF_STARDUST_SHARD = ITEMS.registerSimpleBlockItem(BlockRegistry.BLOCK_OF_STARDUST_SHARD);
     public static final DeferredItem<BlockItem> STARCONDENSE_SLAB = ITEMS.registerSimpleBlockItem(BlockRegistry.STARCONDENSE_SLAB);

@@ -31,6 +31,9 @@
   "block.constellationandspells.shimmer_starcondense_glass_pane": "輝きの凝縮星ガラス板",
   "block.constellationandspells.midnight_starcondense_glass": "常闇の凝縮星ガラス",
   "block.constellationandspells.starlight_gathering_plate": "星明かり集めの皿",
+  "block.constellationandspells.starlight_gathering_plate.enough_starlight": "この場所は稼働するには充分な星明かりを受けられそうだ",
+  "block.constellationandspells.starlight_gathering_plate.insufficient_starlight": "この場所では星明かりが足りない！",
+  "block.constellationandspells.starlight_gathering_plate.full": "皿はいっぱいだ！",
 
   "item.constellationandspells.stardust_shard": "星屑の欠片",
   "item.constellationandspells.zodiac_rune": "星座術のルーン",

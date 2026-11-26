@@ -1,6 +1,7 @@
 package jp.aquafactory.constellationandspells.registry;
 
 import jp.aquafactory.constellationandspells.ConstellationnSpells;
+import jp.aquafactory.constellationandspells.block.starlightgathering.StarlightGatheringPlateBlock;
 import jp.aquafactory.constellationandspells.block.StellarDropOreBlock;
 import jp.aquafactory.constellationandspells.block.ShimmerBlock;
 import jp.aquafactory.constellationandspells.block.StarcondenseGlassBlock;
@@ -20,6 +21,10 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 
 public final class BlockRegistry {
     public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(ConstellationnSpells.MODID);
+
+    public static final DeferredBlock<StarlightGatheringPlateBlock> STARLIGHT_GATHERING_PLATE =
+            BLOCKS.register("starlight_gathering_plate", () -> new StarlightGatheringPlateBlock(
+                    BlockBehaviour.Properties.of().strength(1.5F, 3.5F).sound(SoundType.DEEPSLATE).noOcclusion()));
 
     public static final DeferredBlock<DropExperienceBlock> STELLAR_DROP_ORE = BLOCKS.register("stellar_drop_ore",
             () -> new StellarDropOreBlock(UniformInt.of(4, 8), BlockBehaviour.Properties.of()

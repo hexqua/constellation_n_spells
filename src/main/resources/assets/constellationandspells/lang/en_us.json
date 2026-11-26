@@ -31,6 +31,9 @@
   "block.constellationandspells.shimmer_starcondense_glass_pane": "Shimmering Starcondense Glass Pane",
   "block.constellationandspells.midnight_starcondense_glass": "Midnight Starcondense Glass",
   "block.constellationandspells.starlight_gathering_plate": "Starlight Gathering Plate",
+  "block.constellationandspells.starlight_gathering_plate.enough_starlight": "This spot seems to get enough starlight for the plate to work.",
+  "block.constellationandspells.starlight_gathering_plate.insufficient_starlight": "There isn't enough starlight here!",
+  "block.constellationandspells.starlight_gathering_plate.full": "The plate is full!",
 
   "item.constellationandspells.stardust_shard": "Stardust Shard",
   "item.constellationandspells.zodiac_rune": "Zodiac Rune",

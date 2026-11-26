@@ -25,6 +25,7 @@ public final class CreativeTabRegistry {
 
     private static void displayItems(CreativeModeTab.ItemDisplayParameters parameters, CreativeModeTab.Output output) {
         addBlocks(output);
+        addMachines(output);
         addMaterials(output);
         addCurios(output);
         addTools(output);
@@ -80,6 +81,10 @@ public final class CreativeTabRegistry {
         output.accept(ItemRegistry.SMOOTH_MIDNIGHT_STARCONDENSE_SLAB.get());
         output.accept(ItemRegistry.SMOOTH_MIDNIGHT_STARCONDENSE_STAIRS.get());
         output.accept(ItemRegistry.MIDNIGHT_STARCONDENSE_GLASS.get());
+    }
+
+    private static void addMachines(CreativeModeTab.Output output) {
+        output.accept(ItemRegistry.STARLIGHT_GATHERING_PLATE.get());
     }
 
     private static void addSpellScrolls(CreativeModeTab.Output output) {
