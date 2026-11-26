@@ -28,11 +28,15 @@ import static io.redspace.ironsspellbooks.api.registry.SpellRegistry.COUNTERSPEL
 @PrefixGameTestTemplate(false)
 @SuppressWarnings("unused") // GameTest がアノテーションから探索する。
 public final class CapricornusHornGameTests {
+    // GameTest はテンプレート内のチャンクだけを強制ロードするため、角笛と標的を範囲内に置く。
+    private static final String ARENA = "gametest/capricornus_horn_arena";
+    private static final int COW_Y = 4;
+
     private CapricornusHornGameTests() {}
 
-    @GameTest(template = "gametest/basic_floor")
+    @GameTest(template = ARENA)
     public static void hornPlacementUsesAimAndOrderedFallbacks(GameTestHelper helper) {
-        var caster = cow(helper, 4.5, 10, 4.25);
+        var caster = cow(helper, 8.5, 8.25);
         caster.setXRot(-90);
         Vec3 eye = caster.getEyePosition();
         var upward = cast(helper, caster);
@@ -60,19 +64,19 @@ public final class CapricornusHornGameTests {
         helper.succeed();
     }
 
-    @GameTest(template = "gametest/basic_floor")
+    @GameTest(template = ARENA)
     public static void hornHitsBoundingBoxesAndLaunchesThroughWalls(GameTestHelper helper) {
-        var caster = cow(helper, 4.5, 10, 4.5);
-        var visible = cow(helper, 2.5, 10, 6.5);
-        var concealed = cow(helper, 7.5, 10, 6.5);
-        var resistant = cow(helper, 4.5, 10, 8.5);
-        var immune = cow(helper, 3.5, 10, 8.5);
-        var rising = cow(helper, 4.5, 10, 3.0);
-        var outside = cow(helper, 4.5, 10, 15.5);
-        var edge = cow(helper, 4.5, 10, 14.75);
-        var ally = cow(helper, 4.5, 10, 1.5);
-        for (int y = 10; y <= 12; y++) {
-            helper.setBlock(new BlockPos(6, y, 6), Blocks.STONE);
+        var caster = cow(helper, 8.5, 8.5);
+        var visible = cow(helper, 6.5, 10.5);
+        var concealed = cow(helper, 11.5, 10.5);
+        var resistant = cow(helper, 8.5, 12.5);
+        var immune = cow(helper, 7.5, 12.5);
+        var rising = cow(helper, 8.5, 7);
+        var outside = cow(helper, 8.5, 19.5);
+        var edge = cow(helper, 8.5, 18.75);
+        var ally = cow(helper, 8.5, 5.5);
+        for (int y = COW_Y; y <= COW_Y + 2; y++) {
+            helper.setBlock(new BlockPos(10, y, 10), Blocks.STONE);
         }
         Objects.requireNonNull(resistant.getAttribute(Attributes.KNOCKBACK_RESISTANCE)).setBaseValue(0.5);
         Objects.requireNonNull(immune.getAttribute(Attributes.KNOCKBACK_RESISTANCE)).setBaseValue(1.0);
@@ -86,6 +90,7 @@ public final class CapricornusHornGameTests {
         scoreboard.addPlayerToTeam(ally.getScoreboardName(), team);
         try {
             var horn = cast(helper, caster);
+            assertNear(helper, horn.getZ(), caster.getZ() + 2, "An open arena must allow the full forward placement");
             assertNear(helper, visible.getHealth(), 1, "Clear targets must take full base damage immediately");
             assertNear(helper, concealed.getHealth(), 5.5, "Stone must halve damage");
             assertNear(helper, visible.getDeltaMovement().y, 1, "A clear hit must lift a falling target");
@@ -108,12 +113,12 @@ public final class CapricornusHornGameTests {
         helper.succeed();
     }
 
-    @GameTest(template = "gametest/basic_floor", timeoutTicks = 70)
+    @GameTest(template = ARENA, timeoutTicks = 70)
     public static void hornUsesOneAttemptPerTargetInItsOwnHitWindow(GameTestHelper helper) {
-        var caster = cow(helper, 4.5, 10, 4.5);
-        var immuneOnCast = cow(helper, 2.5, 10, 6.5);
-        var entrant = cow(helper, 4.5, 10, 16.5);
-        var late = cow(helper, 7.5, 10, 16.5);
+        var caster = cow(helper, 8.5, 8.5);
+        var immuneOnCast = cow(helper, 6.5, 10.5);
+        var entrant = cow(helper, 8.5, 20.5);
+        var late = cow(helper, 11.5, 20.5);
         immuneOnCast.hurt(helper.getLevel().damageSources().generic(), 9);
         immuneOnCast.heal(9);
         immuneOnCast.setDeltaMovement(Vec3.ZERO);
@@ -130,16 +135,16 @@ public final class CapricornusHornGameTests {
 
         helper.runAfterDelay(2, () -> {
             immuneOnCast.invulnerableTime = 0;
-            entrant.setPos(helper.absoluteVec(new Vec3(4.5, 10, 9.5)));
+            entrant.setPos(helper.absoluteVec(new Vec3(8.5, COW_Y, 13.5)));
         });
         helper.runAfterDelay(6, () -> {
             assertNear(helper, immuneOnCast.getHealth(), 10, "The horn must not retry even after immunity ends");
             assertNear(helper, entrant.getHealth(), 1, "The horn must hit a later entrant after Counterspell and owner removal");
             entrant.invulnerableTime = 0;
             entrant.setDeltaMovement(Vec3.ZERO);
-            entrant.setPos(helper.absoluteVec(new Vec3(4.5, 10, 9.5)));
+            entrant.setPos(helper.absoluteVec(new Vec3(8.5, COW_Y, 13.5)));
         });
-        helper.runAfterDelay(10, () -> late.setPos(helper.absoluteVec(new Vec3(7.5, 10, 9.5))));
+        helper.runAfterDelay(10, () -> late.setPos(helper.absoluteVec(new Vec3(11.5, COW_Y, 13.5))));
         helper.runAfterDelay(13, () -> {
             assertNear(helper, late.getHealth(), 10, "The expanding effect must stop hitting at age ten");
             assertNear(helper, entrant.getHealth(), 1, "A successful hit must also consume the only attempt");
@@ -151,11 +156,11 @@ public final class CapricornusHornGameTests {
         });
     }
 
-    @GameTest(template = "gametest/basic_floor")
+    @GameTest(template = ARENA)
     public static void verticalLaunchHonorsKnockbackEvents(GameTestHelper helper) {
-        var caster = cow(helper, 4.5, 10, 4.5);
-        var canceled = cow(helper, 2.5, 10, 6.5);
-        var reduced = cow(helper, 4.5, 10, 9.5);
+        var caster = cow(helper, 8.5, 8.5);
+        var canceled = cow(helper, 6.5, 10.5);
+        var reduced = cow(helper, 8.5, 13.5);
         Consumer<LivingKnockBackEvent> listener = event -> {
             // 通常のダメージによる押し出しとは別に、打ち上げを受け取れることを確認する。
             if (event.getOriginalStrength() != 1.0f) return;
@@ -167,6 +172,7 @@ public final class CapricornusHornGameTests {
             var horn = cast(helper, caster);
             assertNear(helper, canceled.getHealth(), 1, "A canceled launch must leave damage intact");
             assertNear(helper, canceled.getDeltaMovement().lengthSqr(), 0, "A canceled launch must leave velocity intact");
+            assertNear(helper, reduced.getHealth(), 1, "The reduced-launch target must take full damage");
             assertNear(helper, reduced.getDeltaMovement().y, 0.25, "Modified knockback strength must set launch velocity");
             horn.discard();
         } finally {
@@ -183,9 +189,8 @@ public final class CapricornusHornGameTests {
         return horns.getFirst();
     }
 
-    private static Cow cow(GameTestHelper helper, double x, double y, double z) {
-        var cow = helper.spawn(EntityType.COW, BlockPos.containing(x, y, z));
-        cow.setPos(helper.absoluteVec(new Vec3(x, y, z)));
+    private static Cow cow(GameTestHelper helper, double x, double z) {
+        var cow = helper.spawn(EntityType.COW, new Vec3(x, COW_Y, z));
         cow.setYRot(0);
         cow.setXRot(0);
         cow.setNoAi(true);
