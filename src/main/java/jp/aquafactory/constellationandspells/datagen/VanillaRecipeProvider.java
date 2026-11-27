@@ -22,6 +22,7 @@ import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.block.Blocks;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.CompletableFuture;
@@ -36,6 +37,17 @@ public final class VanillaRecipeProvider extends RecipeProvider {
 
     @Override
     protected void buildRecipes(@NotNull RecipeOutput output) {
+        ShapedRecipeBuilder
+                .shaped(RecipeCategory.MISC, BlockRegistry.STARLIGHT_GATHERING_PLATE.get())
+                .pattern("S S")
+                .pattern("SSS")
+                .pattern("CDC")
+                .define('C', ItemRegistry.STARDUST_SHARD.get())
+                .define('S', Blocks.POLISHED_DEEPSLATE)
+                .define('D', Items.DIAMOND)
+                .unlockedBy("has_stardust_shard", has(ItemRegistry.STARDUST_SHARD.get()))
+                .save(output);
+
         ShapedRecipeBuilder
                 .shaped(RecipeCategory.MISC, ItemRegistry.ZODIAC_RUNE.get())
                 .pattern("FFF")
