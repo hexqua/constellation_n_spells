@@ -94,44 +94,6 @@ public final class VanillaRecipeProvider extends RecipeProvider {
                 .unlockedBy("has_zodiac_rune", has(ItemRegistry.ZODIAC_RUNE.get()))
                 .save(output);
 
-        ShapedRecipeBuilder
-                .shaped(RecipeCategory.COMBAT, ItemRegistry.STAR_GATHERERS_HOOD.get())
-                .pattern("WWW")
-                .pattern("WSW")
-                .define('S', ItemRegistry.STARDUST_SHARD.get())
-                .define('W', ItemTags.WOOL)
-                .unlockedBy("has_wools", has(ItemTags.WOOL))
-                .save(output);
-
-        ShapedRecipeBuilder
-                .shaped(RecipeCategory.COMBAT, ItemRegistry.STAR_GATHERERS_TUNIC.get())
-                .pattern("WSW")
-                .pattern("WWW")
-                .pattern("WWW")
-                .define('S', ItemRegistry.STARDUST_SHARD.get())
-                .define('W', ItemTags.WOOL)
-                .unlockedBy("has_wools", has(ItemTags.WOOL))
-                .save(output);
-
-        ShapedRecipeBuilder
-                .shaped(RecipeCategory.COMBAT, ItemRegistry.STAR_GATHERERS_TROUSERS.get())
-                .pattern("WWW")
-                .pattern("WSW")
-                .pattern("W W")
-                .define('S', ItemRegistry.STARDUST_SHARD.get())
-                .define('W', ItemTags.WOOL)
-                .unlockedBy("has_wools", has(ItemTags.WOOL))
-                .save(output);
-
-        ShapedRecipeBuilder
-                .shaped(RecipeCategory.COMBAT, ItemRegistry.STAR_GATHERERS_BOOTS.get())
-                .pattern("W W")
-                .pattern("WSW")
-                .define('S', ItemRegistry.STARDUST_SHARD.get())
-                .define('W', ItemTags.WOOL)
-                .unlockedBy("has_wools", has(ItemTags.WOOL))
-                .save(output);
-
         schoolArmorRecipes(output, ItemRegistry.ZODIAC_RUNE.get(), wizardBase("helmet"), ItemRegistry.ASTRAL_OBSERVERS_HOOD.get());
         schoolArmorRecipes(output, ItemRegistry.ZODIAC_RUNE.get(), wizardBase("chestplate"), ItemRegistry.ASTRAL_OBSERVERS_COAT.get());
         schoolArmorRecipes(output, ItemRegistry.ZODIAC_RUNE.get(), wizardBase("leggings"), ItemRegistry.ASTRAL_OBSERVERS_LEGGINGS.get());

@@ -14,10 +14,6 @@ public final class ItemModelProvider extends net.neoforged.neoforge.client.model
     protected void registerModels() {
         basicItem(ItemRegistry.STARDUST_SHARD.get());
         basicItem(ItemRegistry.ZODIAC_RUNE.get());
-        basicItem(ItemRegistry.STAR_GATHERERS_HOOD.get());
-        basicItem(ItemRegistry.STAR_GATHERERS_TUNIC.get());
-        basicItem(ItemRegistry.STAR_GATHERERS_TROUSERS.get());
-        basicItem(ItemRegistry.STAR_GATHERERS_BOOTS.get());
         basicItem(ItemRegistry.ASTRAL_OBSERVERS_HOOD.get());
         basicItem(ItemRegistry.ASTRAL_OBSERVERS_COAT.get());
         basicItem(ItemRegistry.ASTRAL_OBSERVERS_LEGGINGS.get());
