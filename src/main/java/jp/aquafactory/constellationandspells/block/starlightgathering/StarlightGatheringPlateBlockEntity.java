@@ -75,6 +75,23 @@ public final class StarlightGatheringPlateBlockEntity extends BlockEntity {
         if (!repeat) {
             recentInsertions.put(key, new RecentInsertion(stack.getItem(), now));
         }
+        insertMaterials(server, stack, count);
+        return count;
+    }
+
+    int insertFromGround(ServerLevel server, ItemStack stack) {
+        if (itemHandler.isItemValid(FUEL_SLOT, stack)) {
+            return insertFuel(server, stack) ? 1 : 0;
+        }
+        if (contents.size() == PLATE_CAPACITY || !itemHandler.isItemValid(0, stack)) {
+            return 0;
+        }
+        int count = Math.min(stack.getCount(), PLATE_CAPACITY - contents.size());
+        insertMaterials(server, stack, count);
+        return count;
+    }
+
+    private void insertMaterials(ServerLevel server, ItemStack stack, int count) {
         int remaining = count;
         for (int slot = 0; slot < PLATE_CAPACITY && remaining > 0; slot++) {
             if (!contents.containsKey(slot)) {
@@ -83,7 +100,6 @@ public final class StarlightGatheringPlateBlockEntity extends BlockEntity {
             }
         }
         inserted(server);
-        return count;
     }
 
     boolean insertFuel(ServerLevel server, ItemStack stack) {

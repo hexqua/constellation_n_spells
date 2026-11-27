@@ -33,6 +33,7 @@
   "block.constellationandspells.starlight_gathering_plate": "星明かり集めの皿",
   "block.constellationandspells.starlight_gathering_plate.enough_starlight": "この場所は稼働するには充分な星明かりを受けられそうだ",
   "block.constellationandspells.starlight_gathering_plate.insufficient_starlight": "この場所では星明かりが足りない！",
+  "block.constellationandspells.starlight_gathering_plate.invalid_recipe": "%sは星明かりに反応しなさそうだ",
   "block.constellationandspells.starlight_gathering_plate.full": "皿はいっぱいだ！",
 
   "item.constellationandspells.stardust_shard": "星屑の欠片",

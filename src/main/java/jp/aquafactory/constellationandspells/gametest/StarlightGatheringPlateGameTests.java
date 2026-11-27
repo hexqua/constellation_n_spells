@@ -11,6 +11,7 @@ import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -208,6 +209,12 @@ public final class StarlightGatheringPlateGameTests {
                 "The plate must reject items without a recipe");
 
         var player = helper.makeMockPlayer(GameType.SURVIVAL);
+        var unsupported = new ItemStack(Items.COBBLESTONE);
+        player.setItemInHand(InteractionHand.MAIN_HAND, unsupported);
+        var rejected = level.getBlockState(pos).useItemOn(unsupported, level, player, InteractionHand.MAIN_HAND, hit(pos));
+        helper.assertTrue(rejected.consumesAction() && unsupported.getCount() == 1 && handler.getStackInSlot(0).isEmpty(),
+                "A held item without a recipe must end the interaction and stay in the player's hand");
+
         player.setItemInHand(InteractionHand.MAIN_HAND, materials);
         useHeldItem(level, pos, player);
         helper.assertTrue(materials.getCount() == 9 && handler.getStackInSlot(0).is(Items.ROTTEN_FLESH),
@@ -224,6 +231,50 @@ public final class StarlightGatheringPlateGameTests {
         helper.assertItemEntityCountIs(Items.ROTTEN_FLESH, PLATE, 1.5, 8);
         helper.assertItemEntityCountIs(ItemRegistry.STARDUST_SHARD.get(), PLATE, 1.5, 1);
         helper.succeed();
+    }
+
+    @GameTest(template = "gametest/basic_floor")
+    public static void plateCollectsDroppedInputsWithinCapacityWhileShaded(GameTestHelper helper) {
+        var level = helper.getLevel();
+        var pos = helper.absolutePos(PLATE);
+        helper.setBlock(PLATE, BlockRegistry.STARLIGHT_GATHERING_PLATE.get());
+        helper.setBlock(PLATE.above(), Blocks.STONE);
+        var handler = handler(level, pos);
+        int fuelSlot = handler.getSlots() - 1;
+        var unsupported = dropOnCoveredPlate(level, pos, new ItemStack(Items.COBBLESTONE));
+
+        helper.startSequence()
+                .thenWaitUntil(() -> helper.assertTrue(skyLight(level, pos) < 12, "Plate must be shaded by its cover"))
+                .thenWaitUntil(() -> helper.assertTrue(unsupported.onGround(), "Unsupported item must land on the plate"))
+                .thenExecute(() -> {
+                    helper.assertTrue(unsupported.isAlive() && handler.getStackInSlot(0).isEmpty(),
+                            "An unsupported drop must remain even while the plate has room");
+                    var material = dropOnCoveredPlate(level, pos, new ItemStack(Items.ROTTEN_FLESH, 10));
+                    var fuel = dropOnCoveredPlate(level, pos, new ItemStack(ItemRegistry.STARDUST_SHARD.get(), 2));
+                    helper.runAfterDelay(10, () -> {
+                        for (int slot = 0; slot < fuelSlot; slot++) {
+                            var stored = handler.getStackInSlot(slot);
+                            helper.assertTrue(stored.is(Items.ROTTEN_FLESH) && stored.getCount() == 1,
+                                    "A dropped ingredient stack must fill the empty material slots");
+                        }
+                        var storedFuel = handler.getStackInSlot(fuelSlot);
+                        helper.assertTrue(storedFuel.is(ItemRegistry.STARDUST_SHARD.get()) && storedFuel.getCount() == 1,
+                                "A dropped fuel stack must supply one shard even while shaded");
+                        helper.assertTrue(material.isAlive() && material.getItem().getCount() == 2
+                                        && fuel.isAlive() && fuel.getItem().getCount() == 1
+                                        && unsupported.isAlive() && unsupported.getItem().is(Items.COBBLESTONE),
+                                "Overflow and unsupported inputs must remain as dropped items");
+                        helper.succeed();
+                    });
+                });
+    }
+
+    private static ItemEntity dropOnCoveredPlate(ServerLevel level, BlockPos pos, ItemStack stack) {
+        // 遮光ブロックとの隙間から落とし、皿の上面に接地させる。
+        var item = new ItemEntity(level, pos.getX() + 0.5, pos.getY() + 0.73, pos.getZ() + 0.5, stack);
+        item.setDeltaMovement(Vec3.ZERO);
+        level.addFreshEntity(item);
+        return item;
     }
 
     private static int skyLight(ServerLevel level, BlockPos pos) {

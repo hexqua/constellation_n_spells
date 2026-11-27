@@ -11,6 +11,8 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
@@ -74,7 +76,11 @@ public final class StarlightGatheringPlateBlock extends BaseEntityBlock {
         }
         boolean fuel = stack.is(ItemRegistry.STARDUST_SHARD.get());
         if (!fuel && StarlightGatheringRecipe.find(level, stack).isEmpty()) {
-            return ItemInteractionResult.SKIP_DEFAULT_BLOCK_INTERACTION;
+            if (!level.isClientSide) {
+                player.displayClientMessage(Component.translatable(MESSAGE_KEY + "invalid_recipe", stack.getHoverName())
+                        .withStyle(ChatFormatting.YELLOW), true);
+            }
+            return ItemInteractionResult.CONSUME_PARTIAL;
         }
         if (level instanceof ServerLevel server && server.getBlockEntity(pos) instanceof StarlightGatheringPlateBlockEntity plate) {
             if (fuel) {
@@ -106,6 +112,23 @@ public final class StarlightGatheringPlateBlock extends BaseEntityBlock {
             showStarlight(player, server, pos);
         }
         return InteractionResult.sidedSuccess(level.isClientSide);
+    }
+
+    @Override
+    public void stepOn(@NotNull Level level, @NotNull BlockPos pos, @NotNull BlockState state, @NotNull Entity entity) {
+        if (level instanceof ServerLevel server && entity instanceof ItemEntity item && item.isAlive()
+                && server.getBlockEntity(pos) instanceof StarlightGatheringPlateBlockEntity plate) {
+            var stack = item.getItem();
+            int inserted = plate.insertFromGround(server, stack);
+            if (inserted > 0) {
+                var remaining = stack.copyWithCount(stack.getCount() - inserted);
+                item.setItem(remaining);
+                if (remaining.isEmpty()) {
+                    item.discard();
+                }
+            }
+        }
+        super.stepOn(level, pos, state, entity);
     }
 
     @Override
