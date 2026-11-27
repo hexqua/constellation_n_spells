@@ -29,6 +29,7 @@ public final class DataGenerators {
         generator.addProvider(event.includeServer(), new LootTableProvider(output, Set.of(),
                 List.of(new LootTableProvider.SubProviderEntry(BlockLootProvider::new, LootContextParamSets.BLOCK)), lookup));
         generator.addProvider(event.includeServer(), new VanillaRecipeProvider(output, lookup));
+        generator.addProvider(event.includeServer(), new StarlightGatheringRecipeProvider(output, lookup));
         generator.addProvider(event.includeServer(), new WorldgenProvider(output, lookup));
     }
 }

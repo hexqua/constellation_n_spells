@@ -86,8 +86,6 @@ public final class AstralObserversArmorGameTests {
                 }
             }
         }
-        helper.assertTrue(!ISpellContainer.isSpellContainer(new ItemStack(ItemRegistry.STAR_GATHERERS_TUNIC.get())),
-                "Star Gatherer's armor must remain without Imbue slots");
         helper.succeed();
     }
 
@@ -118,9 +116,9 @@ public final class AstralObserversArmorGameTests {
         player.setItemSlot(EquipmentSlot.CHEST, new ItemStack(ItemRegistry.ASTRAL_OBSERVERS_COAT.get()));
         player.tick();
         assertAttributes(helper, player, mana + 500, power * 1.20, zodiac * 1.40, defense + 20);
-        player.setItemSlot(EquipmentSlot.CHEST, new ItemStack(ItemRegistry.STAR_GATHERERS_TUNIC.get()));
+        player.setItemSlot(EquipmentSlot.CHEST, new ItemStack(Items.IRON_CHESTPLATE));
         player.tick();
-        assertAttributes(helper, player, mana + 425, power * 1.15, zodiac * 1.35, defense + 16);
+        assertAttributes(helper, player, mana + 375, power * 1.15, zodiac * 1.30, defense + 18);
         for (var item : armor()) {
             player.setItemSlot(item.getEquipmentSlot(), ItemStack.EMPTY);
         }

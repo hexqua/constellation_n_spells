@@ -59,10 +59,6 @@ public final class ItemTagProvider extends ItemTagsProvider {
         var wisdomArmor = ItemTags.create(ResourceLocation.fromNamespaceAndPath("apprenticecodex", "wisdom/armor"));
         tag(wisdomHeld).add(ItemRegistry.CELESTIAL_SURVEY_STAFF.get());
         tag(wisdomArmor).add(
-                ItemRegistry.STAR_GATHERERS_HOOD.get(),
-                ItemRegistry.STAR_GATHERERS_TUNIC.get(),
-                ItemRegistry.STAR_GATHERERS_TROUSERS.get(),
-                ItemRegistry.STAR_GATHERERS_BOOTS.get(),
                 ItemRegistry.ASTRAL_OBSERVERS_HOOD.get(),
                 ItemRegistry.ASTRAL_OBSERVERS_COAT.get(),
                 ItemRegistry.ASTRAL_OBSERVERS_LEGGINGS.get(),
@@ -71,10 +67,6 @@ public final class ItemTagProvider extends ItemTagsProvider {
         tag(ItemTags.create(ResourceLocation.fromNamespaceAndPath("apprenticecodex", "wisdom_enchantable")))
                 .add(
                         ItemRegistry.CELESTIAL_SURVEY_STAFF.get(),
-                        ItemRegistry.STAR_GATHERERS_HOOD.get(),
-                        ItemRegistry.STAR_GATHERERS_TUNIC.get(),
-                        ItemRegistry.STAR_GATHERERS_TROUSERS.get(),
-                        ItemRegistry.STAR_GATHERERS_BOOTS.get(),
                         ItemRegistry.ASTRAL_OBSERVERS_HOOD.get(),
                         ItemRegistry.ASTRAL_OBSERVERS_COAT.get(),
                         ItemRegistry.ASTRAL_OBSERVERS_LEGGINGS.get(),
@@ -85,22 +77,10 @@ public final class ItemTagProvider extends ItemTagsProvider {
                 .add(ItemRegistry.CONSTELLATION_TABLET.get());
 
         // バニラの enchantable タグが部位別防具タグを参照するため、付与範囲は標準の定義に任せる。
-        tag(ItemTags.HEAD_ARMOR).add(
-                ItemRegistry.STAR_GATHERERS_HOOD.get(),
-                ItemRegistry.ASTRAL_OBSERVERS_HOOD.get()
-        );
-        tag(ItemTags.CHEST_ARMOR).add(
-                ItemRegistry.STAR_GATHERERS_TUNIC.get(),
-                ItemRegistry.ASTRAL_OBSERVERS_COAT.get()
-        );
-        tag(ItemTags.LEG_ARMOR).add(
-                ItemRegistry.STAR_GATHERERS_TROUSERS.get(),
-                ItemRegistry.ASTRAL_OBSERVERS_LEGGINGS.get()
-        );
-        tag(ItemTags.FOOT_ARMOR).add(
-                ItemRegistry.STAR_GATHERERS_BOOTS.get(),
-                ItemRegistry.ASTRAL_OBSERVERS_BOOTS.get()
-        );
+        tag(ItemTags.HEAD_ARMOR).add(ItemRegistry.ASTRAL_OBSERVERS_HOOD.get());
+        tag(ItemTags.CHEST_ARMOR).add(ItemRegistry.ASTRAL_OBSERVERS_COAT.get());
+        tag(ItemTags.LEG_ARMOR).add(ItemRegistry.ASTRAL_OBSERVERS_LEGGINGS.get());
+        tag(ItemTags.FOOT_ARMOR).add(ItemRegistry.ASTRAL_OBSERVERS_BOOTS.get());
 
         // Trim未対応防具を登録.
         tag(ItemTags.TRIMMABLE_ARMOR).remove(

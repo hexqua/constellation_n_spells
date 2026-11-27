@@ -13,6 +13,7 @@ public final class CreativeTabRegistry {
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS =
             DeferredRegister.create(Registries.CREATIVE_MODE_TAB, ConstellationnSpells.MODID);
 
+    @SuppressWarnings("unused")
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> MAIN_TAB =
             CREATIVE_MODE_TABS.register(ConstellationnSpells.MODID, () -> CreativeModeTab.builder()
                     .title(Component.translatable("itemGroup.constellationandspells"))
@@ -25,6 +26,7 @@ public final class CreativeTabRegistry {
 
     private static void displayItems(CreativeModeTab.ItemDisplayParameters parameters, CreativeModeTab.Output output) {
         addBlocks(output);
+        addMachines(output);
         addMaterials(output);
         addCurios(output);
         addTools(output);
@@ -42,10 +44,6 @@ public final class CreativeTabRegistry {
     }
 
     private static void addArmor(CreativeModeTab.Output output) {
-        output.accept(ItemRegistry.STAR_GATHERERS_HOOD.get());
-        output.accept(ItemRegistry.STAR_GATHERERS_TUNIC.get());
-        output.accept(ItemRegistry.STAR_GATHERERS_TROUSERS.get());
-        output.accept(ItemRegistry.STAR_GATHERERS_BOOTS.get());
         output.accept(ItemRegistry.ASTRAL_OBSERVERS_HOOD.get());
         output.accept(ItemRegistry.ASTRAL_OBSERVERS_COAT.get());
         output.accept(ItemRegistry.ASTRAL_OBSERVERS_LEGGINGS.get());
@@ -80,6 +78,10 @@ public final class CreativeTabRegistry {
         output.accept(ItemRegistry.SMOOTH_MIDNIGHT_STARCONDENSE_SLAB.get());
         output.accept(ItemRegistry.SMOOTH_MIDNIGHT_STARCONDENSE_STAIRS.get());
         output.accept(ItemRegistry.MIDNIGHT_STARCONDENSE_GLASS.get());
+    }
+
+    private static void addMachines(CreativeModeTab.Output output) {
+        output.accept(ItemRegistry.STARLIGHT_GATHERING_PLATE.get());
     }
 
     private static void addSpellScrolls(CreativeModeTab.Output output) {

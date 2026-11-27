@@ -22,6 +22,7 @@ import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.block.Blocks;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.CompletableFuture;
@@ -36,6 +37,17 @@ public final class VanillaRecipeProvider extends RecipeProvider {
 
     @Override
     protected void buildRecipes(@NotNull RecipeOutput output) {
+        ShapedRecipeBuilder
+                .shaped(RecipeCategory.MISC, BlockRegistry.STARLIGHT_GATHERING_PLATE.get())
+                .pattern("S S")
+                .pattern("SSS")
+                .pattern("CDC")
+                .define('C', ItemRegistry.STARDUST_SHARD.get())
+                .define('S', Blocks.POLISHED_DEEPSLATE)
+                .define('D', Items.DIAMOND)
+                .unlockedBy("has_stardust_shard", has(ItemRegistry.STARDUST_SHARD.get()))
+                .save(output);
+
         ShapedRecipeBuilder
                 .shaped(RecipeCategory.MISC, ItemRegistry.ZODIAC_RUNE.get())
                 .pattern("FFF")
@@ -92,44 +104,6 @@ public final class VanillaRecipeProvider extends RecipeProvider {
                 .define('W', Items.MAP)
                 .define('G', Items.GOLD_INGOT)
                 .unlockedBy("has_zodiac_rune", has(ItemRegistry.ZODIAC_RUNE.get()))
-                .save(output);
-
-        ShapedRecipeBuilder
-                .shaped(RecipeCategory.COMBAT, ItemRegistry.STAR_GATHERERS_HOOD.get())
-                .pattern("WWW")
-                .pattern("WSW")
-                .define('S', ItemRegistry.STARDUST_SHARD.get())
-                .define('W', ItemTags.WOOL)
-                .unlockedBy("has_wools", has(ItemTags.WOOL))
-                .save(output);
-
-        ShapedRecipeBuilder
-                .shaped(RecipeCategory.COMBAT, ItemRegistry.STAR_GATHERERS_TUNIC.get())
-                .pattern("WSW")
-                .pattern("WWW")
-                .pattern("WWW")
-                .define('S', ItemRegistry.STARDUST_SHARD.get())
-                .define('W', ItemTags.WOOL)
-                .unlockedBy("has_wools", has(ItemTags.WOOL))
-                .save(output);
-
-        ShapedRecipeBuilder
-                .shaped(RecipeCategory.COMBAT, ItemRegistry.STAR_GATHERERS_TROUSERS.get())
-                .pattern("WWW")
-                .pattern("WSW")
-                .pattern("W W")
-                .define('S', ItemRegistry.STARDUST_SHARD.get())
-                .define('W', ItemTags.WOOL)
-                .unlockedBy("has_wools", has(ItemTags.WOOL))
-                .save(output);
-
-        ShapedRecipeBuilder
-                .shaped(RecipeCategory.COMBAT, ItemRegistry.STAR_GATHERERS_BOOTS.get())
-                .pattern("W W")
-                .pattern("WSW")
-                .define('S', ItemRegistry.STARDUST_SHARD.get())
-                .define('W', ItemTags.WOOL)
-                .unlockedBy("has_wools", has(ItemTags.WOOL))
                 .save(output);
 
         schoolArmorRecipes(output, ItemRegistry.ZODIAC_RUNE.get(), wizardBase("helmet"), ItemRegistry.ASTRAL_OBSERVERS_HOOD.get());

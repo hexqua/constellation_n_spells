@@ -7,7 +7,6 @@ import jp.aquafactory.constellationandspells.item.ConstellationTabletItem;
 import jp.aquafactory.constellationandspells.item.CelestialSurveyStaffItem;
 import jp.aquafactory.constellationandspells.item.stardusthandlamp.StardustHandLampItem;
 import jp.aquafactory.constellationandspells.item.armor.AstralObserversArmorItem;
-import jp.aquafactory.constellationandspells.item.armor.StarGatherersArmorItem;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -30,6 +29,7 @@ public final class ItemRegistry {
             properties -> new UpgradeOrbItem(properties.rarity(Rarity.UNCOMMON).fireResistant()
                     .component(ComponentRegistry.UPGRADE_ORB_TYPE, MagicRegistry.ZODIAC_POWER)));
     public static final DeferredItem<BlockItem> STELLAR_DROP_ORE = ITEMS.registerSimpleBlockItem(BlockRegistry.STELLAR_DROP_ORE);
+    public static final DeferredItem<BlockItem> STARLIGHT_GATHERING_PLATE = ITEMS.registerSimpleBlockItem(BlockRegistry.STARLIGHT_GATHERING_PLATE);
     public static final DeferredItem<BlockItem> DEEPSLATE_STELLAR_DROP_ORE = ITEMS.registerSimpleBlockItem(BlockRegistry.DEEPSLATE_STELLAR_DROP_ORE);
     public static final DeferredItem<BlockItem> BLOCK_OF_STARDUST_SHARD = ITEMS.registerSimpleBlockItem(BlockRegistry.BLOCK_OF_STARDUST_SHARD);
     public static final DeferredItem<BlockItem> STARCONDENSE_SLAB = ITEMS.registerSimpleBlockItem(BlockRegistry.STARCONDENSE_SLAB);
@@ -50,14 +50,6 @@ public final class ItemRegistry {
     public static final DeferredItem<BlockItem> SMOOTH_MIDNIGHT_STARCONDENSE_SLAB = ITEMS.registerSimpleBlockItem(BlockRegistry.SMOOTH_MIDNIGHT_STARCONDENSE_SLAB);
     public static final DeferredItem<BlockItem> SMOOTH_MIDNIGHT_STARCONDENSE_STAIRS = ITEMS.registerSimpleBlockItem(BlockRegistry.SMOOTH_MIDNIGHT_STARCONDENSE_STAIRS);
     public static final DeferredItem<BlockItem> MIDNIGHT_STARCONDENSE_GLASS = ITEMS.registerSimpleBlockItem(BlockRegistry.MIDNIGHT_STARCONDENSE_GLASS);
-    public static final DeferredItem<StarGatherersArmorItem> STAR_GATHERERS_HOOD = ITEMS.registerItem(
-            "star_gatherers_hood", properties -> new StarGatherersArmorItem(ArmorItem.Type.HELMET, properties));
-    public static final DeferredItem<StarGatherersArmorItem> STAR_GATHERERS_TUNIC = ITEMS.registerItem(
-            "star_gatherers_tunic", properties -> new StarGatherersArmorItem(ArmorItem.Type.CHESTPLATE, properties));
-    public static final DeferredItem<StarGatherersArmorItem> STAR_GATHERERS_TROUSERS = ITEMS.registerItem(
-            "star_gatherers_trousers", properties -> new StarGatherersArmorItem(ArmorItem.Type.LEGGINGS, properties));
-    public static final DeferredItem<StarGatherersArmorItem> STAR_GATHERERS_BOOTS = ITEMS.registerItem(
-            "star_gatherers_boots", properties -> new StarGatherersArmorItem(ArmorItem.Type.BOOTS, properties));
 
     public static final DeferredItem<AstralObserversArmorItem> ASTRAL_OBSERVERS_HOOD = ITEMS.registerItem(
             "astral_observers_hood", properties -> new AstralObserversArmorItem(ArmorItem.Type.HELMET, properties));
